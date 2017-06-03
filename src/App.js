@@ -12,6 +12,12 @@ import Sidebar from "./components/Sidebar";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
+const styles = {
+  icon: {
+    marginRight: 0
+  }
+};
+
 class App extends Component {
   render() {
     return (
@@ -26,29 +32,43 @@ class App extends Component {
               href="/omk/"
               target="_blank"
               rel="noopener noreferrer"
-              className="pt-button pt-minimal pt-icon-mobile-phone"
+              className="pt-button pt-minimal"
             >
-              OMK
+              <span
+                className="pt-icon-large pt-icon-mobile-phone"
+                style={styles.icon}
+              />
             </a>
             <a
               href="/fp/"
               target="_blank"
+              title="Field Papers"
               rel="noopener noreferrer"
-              className="pt-button pt-minimal pt-icon-clipboard"
+              className="pt-button pt-minimal"
             >
-              FP
+              <span
+                className="pt-icon-large pt-icon-clipboard"
+                style={styles.icon}
+              />
             </a>
             {/* TODO don't hard-code this */}
             <a
               href="http://osm.posm.io/"
               target="_blank"
+              title="OpenStreetMap"
               rel="noopener noreferrer"
-              className="pt-button pt-minimal pt-icon-send-to-map"
+              className="pt-button pt-minimal"
             >
-              OSM
+              <span
+                className="pt-icon-large pt-icon-send-to-map"
+                style={styles.icon}
+              />
             </a>
             <span className="pt-navbar-divider" />
-            <button className="pt-button pt-minimal pt-icon-cog" />
+            <button
+              className="pt-button pt-minimal pt-icon-cog"
+              title="Settings"
+            />
           </div>
         </nav>
         <Sidebar>

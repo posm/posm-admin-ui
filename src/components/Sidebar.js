@@ -17,6 +17,14 @@ const Sidebar = ({ children }) =>
         AOIs
       </Link>
     </li>
+    <li>
+      <Link
+        to="/deployments"
+        className="pt-menu-item pt-popover-dismiss pt-icon-layers"
+      >
+        OMK Deployments
+      </Link>
+    </li>
     <MenuDivider />
     <MenuItem
       iconName="pt-icon-mobile-phone"

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import AdminPanel from "./components/AdminPanel";
 import AOIPanel from "./components/AOIPanel";
+import DeploymentPanel from "./components/DeploymentPanel";
 import DownloadsPanel from "./components/DownloadsPanel";
 import HomePanel from "./components/HomePanel";
 import ImageryPanel from "./components/ImageryPanel";
@@ -23,6 +24,7 @@ class App extends Component {
           <Sidebar />
           <Route exact path="/" component={HomePanel} />
           <Route path="/aois" component={AOIPanel} />
+          <Route path="/deployments" component={DeploymentPanel} />
           <Route path="/opendronemap" component={OpenDroneMapPanel} />
           <Route path="/imagery" component={ImageryPanel} />
           <Route path="/downloads" component={DownloadsPanel} />

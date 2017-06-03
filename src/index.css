@@ -6,6 +6,10 @@ a {
   color: #d33f49;
 }
 
+label.pt-control {
+  font-weight: normal;
+}
+
 .pt-navbar.pt-dark a {
   color: white;
   text-decoration: none;

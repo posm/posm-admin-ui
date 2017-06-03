@@ -52,7 +52,7 @@ const Navbar = ({ children, style }) =>
         />
       </a>
       <span className="pt-navbar-divider" />
-      <Link to="/aois">Active AOI: <strong>Bruxelles</strong></Link>
+      <Link to="/aois">Active AOI: <strong>Brussells-Ixelles</strong></Link>
       <span className="pt-navbar-divider" />
       <Link
         to="/settings"

@@ -1,16 +1,30 @@
 import React from "react";
 
+import { FocusStyleManager } from "@blueprintjs/core";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { linkTo } from "@storybook/addon-links";
-import { Col, Grid, Row } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/css/bootstrap-theme.css";
 import "@blueprintjs/core/dist/blueprint.css";
 
+import AdminPanel from "../components/AdminPanel";
+import AOIPanel from "../components/AOIPanel";
 import Button from "./Button";
+import Card from "../components/Card";
+import DownloadsPanel from "../components/DownloadsPanel";
+import HomePanel from "../components/HomePanel";
+import ImageryPanel from "../components/ImageryPanel";
+import OpenDroneMapPanel from "../components/OpenDroneMapPanel";
+import SettingsPanel from "../components/SettingsPanel";
+import Sidebar from "../components/Sidebar";
 import Welcome from "./Welcome";
+
+import "../index.css";
+
+FocusStyleManager.onlyShowFocusOnTabs();
 
 storiesOf("Welcome", module).add("to Storybook", () =>
   <Welcome showApp={linkTo("Button")} />
@@ -24,25 +38,22 @@ storiesOf("Button", module)
     <Button onClick={action("clicked")}>😀 😎 👍 💯</Button>
   );
 
-storiesOf("Card", module)
-  .addDecorator(story =>
-    <Grid>
-      <Row><Col md={12}>Title</Col></Row>
-      <Row>
-        <Col md={4}>{story()}</Col>
-      </Row>
-    </Grid>
-  )
-  .add("default", () => <div className="pt-card">blah blah</div>)
-  .add("elevation-1", () =>
-    <div className="pt-card pt-elevation-1">blah blah</div>
-  )
-  .add("elevation-2", () =>
-    <div className="pt-card pt-elevation-2">blah blah</div>
-  )
-  .add("elevation-3", () =>
-    <div className="pt-card pt-elevation-3">blah blah</div>
-  )
-  .add("elevation-4", () =>
-    <div className="pt-card pt-elevation-4">blah blah</div>
-  );
+storiesOf("Card", module).add("default", () =>
+  <Col md={4}><Card>blah blah</Card></Col>
+);
+
+storiesOf("Sidebar", module).add("default", () =>
+  <Sidebar>
+    <HomePanel />
+    <AOIPanel />
+    <OpenDroneMapPanel />
+    <ImageryPanel />
+    <DownloadsPanel />
+    <AdminPanel />
+    <SettingsPanel />
+  </Sidebar>
+);
+
+storiesOf("HomePanel", module).add("default", () => <HomePanel />);
+
+storiesOf("DownloadsPanel", module).add("default", () => <DownloadsPanel />);

@@ -4,6 +4,7 @@ import App from "./App";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/css/bootstrap-theme.css";
+import "@blueprintjs/core/dist/blueprint.css";
 
 import "./index.css";
 

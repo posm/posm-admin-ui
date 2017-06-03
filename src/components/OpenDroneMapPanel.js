@@ -10,8 +10,6 @@ const OpenDroneMapPanel = () =>
     </Panel>
   </div>;
 
-OpenDroneMapPanel.title = "OpenDroneMap";
-
 OpenDroneMapPanel.propTypes = {};
 
 export default OpenDroneMapPanel;

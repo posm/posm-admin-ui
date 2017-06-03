@@ -10,8 +10,6 @@ const ImageryPanel = () =>
     </Panel>
   </div>;
 
-ImageryPanel.title = "Imagery";
-
 ImageryPanel.propTypes = {};
 
 export default ImageryPanel;

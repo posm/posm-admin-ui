@@ -10,8 +10,6 @@ const SettingsPanel = () =>
     </Panel>
   </div>;
 
-SettingsPanel.title = "Settings";
-
 SettingsPanel.propTypes = {};
 
 export default SettingsPanel;

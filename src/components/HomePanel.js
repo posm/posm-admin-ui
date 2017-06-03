@@ -56,8 +56,6 @@ const HomePanel = () =>
     <DownloadsPanel />
   </div>;
 
-HomePanel.title = "Home";
-
 HomePanel.propTypes = {};
 
 export default HomePanel;

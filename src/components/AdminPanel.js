@@ -10,8 +10,6 @@ const AdminPanel = () =>
     </Panel>
   </div>;
 
-AdminPanel.title = "Admin";
-
 AdminPanel.propTypes = {};
 
 export default AdminPanel;

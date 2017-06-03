@@ -60,8 +60,6 @@ const DownloadsPanel = () =>
     </Panel>
   </div>;
 
-DownloadsPanel.title = "Downloads";
-
 DownloadsPanel.propTypes = {};
 
 export default DownloadsPanel;

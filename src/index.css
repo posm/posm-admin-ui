@@ -2,6 +2,15 @@ body {
   padding-top: 50px;
 }
 
+a {
+  color: #d33f49;
+}
+
+.pt-navbar.pt-dark a {
+  color: white;
+  text-decoration: none;
+}
+
 .pt-tab-list {
   min-width: 120px;
 }

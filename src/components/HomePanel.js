@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Col, Grid, Image, Row } from "react-bootstrap";
+import { Col, Grid, Image, PageHeader, Row } from "react-bootstrap";
 
 import Card from "./Card";
 import DownloadsPanel from "./DownloadsPanel";
@@ -18,9 +18,7 @@ const styles = {
 const HomePanel = () =>
   <div>
     <div className="posm-panel">
-      <Alert bsStyle="success">
-        <a href="TODO">Active AOI</a>: <strong>Bruxelles</strong>
-      </Alert>
+      <PageHeader>Home</PageHeader>
       <Grid fluid>
         <Row>
           <Col md={4}>

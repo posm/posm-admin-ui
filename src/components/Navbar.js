@@ -52,6 +52,8 @@ const Navbar = ({ children, style }) =>
         />
       </a>
       <span className="pt-navbar-divider" />
+      <Link to="/aois">Active AOI: <strong>Bruxelles</strong></Link>
+      <span className="pt-navbar-divider" />
       <Link
         to="/settings"
         className="pt-button pt-minimal pt-icon-cog"

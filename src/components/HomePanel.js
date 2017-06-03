@@ -18,7 +18,7 @@ const styles = {
 const HomePanel = () =>
   <div>
     <div className="posm-panel">
-      <PageHeader>Home</PageHeader>
+      <PageHeader>Apps</PageHeader>
       <Grid fluid>
         <Row>
           <Col md={4}>

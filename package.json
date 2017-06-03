@@ -33,10 +33,6 @@
     "*.js": [
       "prettier --write",
       "git add"
-    ],
-    "*.jsx": [
-      "prettier --write",
-      "git add"
     ]
   }
 }

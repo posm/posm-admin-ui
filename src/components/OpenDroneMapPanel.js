@@ -3,7 +3,7 @@ import React from "react";
 import { PageHeader, Panel } from "react-bootstrap";
 
 const OpenDroneMapPanel = () =>
-  <div>
+  <div className="posm-panel">
     <PageHeader>OpenDroneMap</PageHeader>
     <Panel>
       TODO

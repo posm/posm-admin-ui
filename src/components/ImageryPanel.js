@@ -3,7 +3,7 @@ import React from "react";
 import { PageHeader, Panel } from "react-bootstrap";
 
 const ImageryPanel = () =>
-  <div>
+  <div className="posm-panel">
     <PageHeader>Imagery</PageHeader>
     <Panel>
       TODO

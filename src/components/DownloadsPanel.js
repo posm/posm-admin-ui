@@ -49,7 +49,7 @@ const styles = {
 };
 
 const DownloadsPanel = () =>
-  <div>
+  <div className="posm-panel">
     <PageHeader>Downloads</PageHeader>
     <Panel>
       <ul style={styles.ul}>

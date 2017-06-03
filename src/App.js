@@ -1,5 +1,6 @@
 import { FocusStyleManager } from "@blueprintjs/core";
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import AdminPanel from "./components/AdminPanel";
 import AOIPanel from "./components/AOIPanel";
@@ -16,18 +17,19 @@ FocusStyleManager.onlyShowFocusOnTabs();
 class App extends Component {
   render() {
     return (
-      <div>
-        <Navbar />
-        <Sidebar>
-          <HomePanel />
-          <AOIPanel />
-          <OpenDroneMapPanel />
-          <ImageryPanel />
-          <DownloadsPanel />
-          <AdminPanel />
-          <SettingsPanel />
-        </Sidebar>
-      </div>
+      <Router>
+        <div>
+          <Navbar />
+          <Sidebar />
+          <Route exact path="/" component={HomePanel} />
+          <Route path="/aois" component={AOIPanel} />
+          <Route path="/opendronemap" component={OpenDroneMapPanel} />
+          <Route path="/imagery" component={ImageryPanel} />
+          <Route path="/downloads" component={DownloadsPanel} />
+          <Route path="/admin" component={AdminPanel} />
+          <Route path="/settings" component={SettingsPanel} />
+        </div>
+      </Router>
     );
   }
 }

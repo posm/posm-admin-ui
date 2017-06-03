@@ -3,7 +3,7 @@ import React from "react";
 import { PageHeader, Panel } from "react-bootstrap";
 
 const AOIPanel = () =>
-  <div>
+  <div className="posm-panel">
     <PageHeader>Areas of Interest</PageHeader>
     <Panel>
       TODO

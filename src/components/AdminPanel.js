@@ -3,7 +3,7 @@ import React from "react";
 import { PageHeader, Panel } from "react-bootstrap";
 
 const AdminPanel = () =>
-  <div>
+  <div className="posm-panel">
     <PageHeader>Backups</PageHeader>
     <Panel>
       TODO

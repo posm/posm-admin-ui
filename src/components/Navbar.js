@@ -1,4 +1,8 @@
 import React from "react";
+import { Image } from "react-bootstrap";
+import { Link } from "react-router-dom";
+
+import posmLogo from "../images/posm.png";
 
 const styles = {
   icon: {
@@ -9,7 +13,9 @@ const styles = {
 const Navbar = ({ children, style }) =>
   <nav className="pt-navbar pt-fixed-top pt-dark">
     <div className="pt-navbar-group pt-align-left">
-      <div className="pt-navbar-heading">POSM</div>
+      <div className="pt-navbar-heading">
+        <Link to="/" title="Home"><Image src={posmLogo} /></Link>
+      </div>
     </div>
     <div className="pt-navbar-group pt-align-right">
       <a
@@ -46,7 +52,11 @@ const Navbar = ({ children, style }) =>
         />
       </a>
       <span className="pt-navbar-divider" />
-      <button className="pt-button pt-minimal pt-icon-cog" title="Settings" />
+      <Link
+        to="/settings"
+        className="pt-button pt-minimal pt-icon-cog"
+        title="Settings"
+      />
     </div>
   </nav>;
 

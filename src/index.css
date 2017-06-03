@@ -1,7 +1,12 @@
+body {
+  padding-top: 50px;
+}
+
 .pt-tab-list {
   min-width: 120px;
 }
 
 .pt-tab-panel {
+  padding-top: 20px;
   /*padding-right: 20px;*/
 }

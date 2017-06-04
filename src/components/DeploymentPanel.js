@@ -43,7 +43,7 @@ const DeploymentPanel = () =>
             Create a new OMK deployment
             <input
               className="pt-input"
-              text="text"
+              type="text"
               placeholder="http://fieldpapers.org/atlases/4ncr1bzn.geojson"
               style={styles.urlField}
               dir="auto"

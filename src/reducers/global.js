@@ -8,7 +8,9 @@ export default (state = {}, { type, remoteState }) => {
         aois: {
           active: remoteState.activeAOI,
           available: remoteState["aoi-list"]
-        }
+        },
+        network: remoteState.network,
+        osm: remoteState.osm
       };
 
     default:

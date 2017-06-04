@@ -3,9 +3,13 @@ import { combineReducers } from "redux";
 
 import aois from "./aois";
 import global from "./global";
+import network from "./network";
+import osm from "./osm";
 
 const reducer = combineReducers({
   aois,
+  network,
+  osm,
   router: routerReducer
 });
 

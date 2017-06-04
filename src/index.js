@@ -7,9 +7,11 @@ import "bootstrap/dist/css/bootstrap-theme.css";
 import "@blueprintjs/core/dist/blueprint.css";
 
 import App from "./App";
-import store from "./config/store";
+import configureStore from "./config/store";
 
 import "./index.css";
+
+const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
@@ -17,3 +19,14 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
+
+if (module.hot) {
+  module.hot.accept("./App", () => {
+    ReactDOM.render(
+      <Provider store={store}>
+        <App />
+      </Provider>,
+      document.getElementById("root")
+    );
+  });
+}

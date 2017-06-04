@@ -1,5 +1,6 @@
 import { routerReducer } from "react-router-redux";
 import { combineReducers } from "redux";
+import { reducer as form } from "redux-form";
 
 import aois from "./aois";
 import global from "./global";
@@ -8,6 +9,7 @@ import osm from "./osm";
 
 const reducer = combineReducers({
   aois,
+  form,
   network,
   osm,
   router: routerReducer

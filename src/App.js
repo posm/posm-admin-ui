@@ -1,6 +1,8 @@
 import { FocusStyleManager } from "@blueprintjs/core";
+import createHistory from "history/createBrowserHistory";
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
+import { ConnectedRouter } from "react-router-redux";
 
 import AdminPanel from "./components/AdminPanel";
 import AOIPanel from "./components/AOIPanel";
@@ -15,10 +17,12 @@ import Sidebar from "./components/Sidebar";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
+const history = createHistory();
+
 class App extends Component {
   render() {
     return (
-      <Router>
+      <ConnectedRouter history={history}>
         <div>
           <Navbar />
           <Sidebar />
@@ -31,7 +35,7 @@ class App extends Component {
           <Route path="/admin" component={AdminPanel} />
           <Route path="/settings" component={SettingsPanel} />
         </div>
-      </Router>
+      </ConnectedRouter>
     );
   }
 }

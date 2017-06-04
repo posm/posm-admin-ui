@@ -1,5 +1,6 @@
 import React from "react";
 import { Image } from "react-bootstrap";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import posmLogo from "../images/posm.png";
@@ -10,7 +11,7 @@ const styles = {
   }
 };
 
-const Navbar = ({ children, style }) =>
+const Navbar = ({ aois, children, style }) =>
   <nav className="pt-navbar pt-fixed-top pt-dark">
     <div className="pt-navbar-group pt-align-left">
       <div className="pt-navbar-heading">
@@ -52,7 +53,10 @@ const Navbar = ({ children, style }) =>
         />
       </a>
       <span className="pt-navbar-divider" />
-      <Link to="/aois">Active AOI: <strong>Brussells-Ixelles</strong></Link>
+      <Link to="/aois">
+        Active AOI:
+        {" "}{aois.active ? <strong>{aois.active}</strong> : <em>none</em>}
+      </Link>
       <span className="pt-navbar-divider" />
       <Link
         to="/settings"
@@ -64,4 +68,8 @@ const Navbar = ({ children, style }) =>
 
 Navbar.propTypes = {};
 
-export default Navbar;
+const mapStateToProps = state => ({
+  aois: state.aois
+});
+
+export default connect(mapStateToProps)(Navbar);

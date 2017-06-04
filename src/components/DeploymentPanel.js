@@ -21,12 +21,12 @@ const DeploymentPanel = () =>
       </p>
       <p>
         Available deployments:
-        <ul>
-          <li>Pandamatenga</li>
-          <li>Foray</li>
-          <li>Downtown Bellingham</li>
-        </ul>
       </p>
+      <ul>
+        <li>Pandamatenga</li>
+        <li>Foray</li>
+        <li>Downtown Bellingham</li>
+      </ul>
       <p>
         To create a new OMK Deployment, either create an atlas using the
         {" "}

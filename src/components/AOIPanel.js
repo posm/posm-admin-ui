@@ -1,18 +1,18 @@
 import { Button, Intent, Radio, RadioGroup } from "@blueprintjs/core";
 import React from "react";
+import { connect } from "react-redux";
 import { PageHeader, Panel } from "react-bootstrap";
 
-const AOIPanel = () =>
+const AOIPanel = ({ aois: { active, available } }) =>
   <div className="posm-panel">
     <PageHeader>Areas of Interest</PageHeader>
     <Panel>
       <form>
         <div className="pt-form-group pt-control-group">
-          <RadioGroup label="Active AOI" selectedValue="other">
-            <Radio label="Brussells-Ixelles" value="brussellsixelles" />
-            <Radio label="Dzveresekwa Export" value="dzveresekwa_export" />
-            <Radio label="test area" value="test_area" />
-            <Radio label="dc_test" value="dc_test" />
+          <RadioGroup label="Active AOI" selectedValue={active}>
+            {available.map(({ label, name }, idx) =>
+              <Radio key={idx} label={label} value={name} />
+            )}
             <Radio label="Other:" value="other" />
             <input
               className="pt-input"
@@ -33,4 +33,8 @@ const AOIPanel = () =>
 
 AOIPanel.propTypes = {};
 
-export default AOIPanel;
+const mapStateToProps = state => ({
+  aois: state.aois
+});
+
+export default connect(mapStateToProps)(AOIPanel);

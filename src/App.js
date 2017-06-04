@@ -1,9 +1,11 @@
 import { FocusStyleManager } from "@blueprintjs/core";
 import createHistory from "history/createBrowserHistory";
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "react-router-redux";
 
+import { receivePOSMState } from "./actions";
 import AdminPanel from "./components/AdminPanel";
 import AOIPanel from "./components/AOIPanel";
 import DeploymentPanel from "./components/DeploymentPanel";
@@ -20,6 +22,12 @@ FocusStyleManager.onlyShowFocusOnTabs();
 const history = createHistory();
 
 class App extends Component {
+  componentWillMount() {
+    const { dispatch } = this.props;
+
+    dispatch(receivePOSMState());
+  }
+
   render() {
     return (
       <ConnectedRouter history={history}>
@@ -40,4 +48,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect()(App);

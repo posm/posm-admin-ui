@@ -77,11 +77,6 @@ const renderTextInput = ({
 const renderSwitch = ({ className, input, label }) =>
   <Switch className={className} label={label} {...input} />;
 
-// TODO only if wpa is set; this should done done in a validation function; see http://redux-form.com/6.7.0/examples/syncValidation/
-const passphrase = value =>
-  (value != null && value.length >= 8 && value.length <= 64) ||
-  "Must be between 8 and 63 characters.";
-
 class NetworkSettingsForm extends Component {
   static propTypes = {};
 
@@ -91,12 +86,13 @@ class NetworkSettingsForm extends Component {
     return (
       <form onSubmit={handleSubmit}>
         <div className="pt-form-group pt-control-group">
-          <Field
+          {/* TODO not possible to expose in posm-admin yet */}
+          {/* <Field
             name="bridged"
             component={renderSwitch}
             type="checkbox"
             label="Bridged"
-          />
+          /> */}
           <Field
             name="wpa"
             component={renderSwitch}
@@ -116,7 +112,6 @@ class NetworkSettingsForm extends Component {
             component={renderTextInput}
             label="WPA Passphrase"
             placeholder="Passphrase"
-            validate={passphrase}
           />
         </div>
         <Button
@@ -132,5 +127,15 @@ class NetworkSettingsForm extends Component {
 }
 
 export default reduxForm({
-  form: "networkSettings"
+  form: "networkSettings",
+  validate: values => {
+    const { wpa, wpa_passphrase } = values;
+    const errors = {};
+
+    if (wpa && (wpa_passphrase.length < 8 || wpa_passphrase.length > 63)) {
+      errors.wpa_passphrase = "Must be between 8 and 63 characters.";
+    }
+
+    return errors;
+  }
 })(NetworkSettingsForm);

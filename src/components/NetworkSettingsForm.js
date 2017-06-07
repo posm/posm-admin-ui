@@ -2,6 +2,18 @@ import { Button, Intent, Position, Switch, Tooltip } from "@blueprintjs/core";
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 
+const decorate = (content, intent, child) =>
+  <Tooltip
+    content={content}
+    intent={intent}
+    position={Position.RIGHT}
+    inline
+    defaultIsOpen
+    isOpen
+  >
+    {child}
+  </Tooltip>;
+
 const renderTextInput = ({
   input,
   label,
@@ -9,60 +21,10 @@ const renderTextInput = ({
   placeholder,
   required
 }) => {
-  // TODO clean this up
-  if (touched) {
-    if (error) {
-      return (
-        <Tooltip
-          content={error}
-          intent={Intent.DANGER}
-          position={Position.RIGHT}
-          inline
-          defaultIsOpen
-          isOpen
-        >
-          <label className="pt-label">
-            {label}
-            {" "}{required && <span className="pt-text-muted">(required)</span>}
-            <input
-              className="pt-input"
-              type="text"
-              dir="auto"
-              placeholder={placeholder}
-              {...input}
-            />
-          </label>
-        </Tooltip>
-      );
-    }
-    if (warning) {
-      return (
-        <Tooltip
-          content={warning}
-          intent={Intent.WARNING}
-          position={Position.RIGHT}
-          inline
-          defaultIsOpen
-          isOpen
-        >
-          <label className="pt-label">
-            {label}
-            {" "}{required && <span className="pt-text-muted">(required)</span>}
-            <input
-              className="pt-input"
-              type="text"
-              dir="auto"
-              placeholder={placeholder}
-              {...input}
-            />
-          </label>
-        </Tooltip>
-      );
-    }
-  }
-  return (
+  const widget = (
     <label className="pt-label">
-      {label} {required && <span className="pt-text-muted">(required)</span>}
+      {label}
+      {" "}{required && <span className="pt-text-muted">(required)</span>}
       <input
         className="pt-input"
         type="text"
@@ -72,10 +34,22 @@ const renderTextInput = ({
       />
     </label>
   );
+
+  if (touched) {
+    if (error) {
+      return decorate(error, Intent.DANGER, widget);
+    }
+
+    if (warning) {
+      return decorate(warning, Intent.WARNING, widget);
+    }
+  }
+
+  return widget;
 };
 
-const renderSwitch = ({ className, input, label }) =>
-  <Switch className={className} label={label} {...input} />;
+const renderSwitch = ({ className, disabled, input, label }) =>
+  <Switch className={className} label={label} disabled={disabled} {...input} />;
 
 class NetworkSettingsForm extends Component {
   static propTypes = {};
@@ -87,12 +61,13 @@ class NetworkSettingsForm extends Component {
       <form onSubmit={handleSubmit}>
         <div className="pt-form-group pt-control-group">
           {/* TODO not possible to expose in posm-admin yet */}
-          {/* <Field
+          <Field
             name="bridged"
             component={renderSwitch}
             type="checkbox"
+            disabled
             label="Bridged"
-          /> */}
+          />
           <Field
             name="wpa"
             component={renderSwitch}

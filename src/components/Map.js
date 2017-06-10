@@ -1,4 +1,5 @@
 import Leaflet from "leaflet";
+import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Col } from "react-bootstrap";
 
@@ -24,14 +25,14 @@ export default class Map extends Component {
   };
 
   static propTypes = {
-    bounds: React.PropTypes.array,
-    maxzoom: React.PropTypes.integer,
-    minHeight: React.PropTypes.string,
-    minzoom: React.PropTypes.integer,
-    showBackground: React.PropTypes.boolean,
-    tileJSON: React.PropTypes.string,
-    url: React.PropTypes.string,
-    width: React.PropTypes.string
+    bounds: PropTypes.array,
+    maxzoom: PropTypes.integer,
+    minHeight: PropTypes.string,
+    minzoom: PropTypes.integer,
+    showBackground: PropTypes.boolean,
+    tileJSON: PropTypes.string,
+    url: PropTypes.string,
+    width: PropTypes.string
   };
 
   state = {

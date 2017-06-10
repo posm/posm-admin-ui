@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import Dropzone from "react-dropzone-component";
 import React, { Component } from "react";
 import { PageHeader, Panel } from "react-bootstrap";
@@ -17,7 +18,7 @@ class ImageryPanel extends Component {
   };
 
   static propTypes = {
-    endpoint: React.PropTypes.string.isRequired
+    endpoint: PropTypes.string.isRequired
   };
 
   state = {

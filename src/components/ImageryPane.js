@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 import {
   Button,
@@ -16,10 +17,10 @@ export default class ImageryPane extends React.Component {
   };
 
   static propTypes = {
-    endpoint: React.PropTypes.string.isRequired,
-    name: React.PropTypes.string.isRequired,
-    refreshInterval: React.PropTypes.integer,
-    source: React.PropTypes.object.isRequired
+    endpoint: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    refreshInterval: PropTypes.integer,
+    source: PropTypes.object.isRequired
   };
 
   state = {
@@ -438,11 +439,8 @@ export default class ImageryPane extends React.Component {
                     </span>
                   : <span>
                       <a tabIndex="-1" onClick={this.toggle}>{sourceName}</a>
-                      {" "}<a
-                        tabIndex="-1"
-                        role="button"
-                        onClick={this.editName}
-                      >
+                      {" "}
+                      <a tabIndex="-1" role="button" onClick={this.editName}>
                         <i className="fa fa-pencil" />
                       </a>
                     </span>}

@@ -1,28 +1,10 @@
-import hljs from "highlight.js";
 import prettyBytes from "pretty-bytes";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Image } from "react-bootstrap";
 
+import { highlight } from "../lib";
 import Map from "./Map";
-
-const highlight = (str, lang) => {
-  if (lang != null && hljs.getLanguage(lang)) {
-    try {
-      return hljs.highlight(lang, str).value;
-    } catch (err) {
-      console.error(err.stack);
-    }
-  }
-
-  try {
-    return hljs.highlightAuto(str).value;
-  } catch (err) {
-    console.error(err.stack);
-  }
-
-  return "";
-};
 
 export default class ProjectSourcesPanel extends Component {
   static propTypes = {

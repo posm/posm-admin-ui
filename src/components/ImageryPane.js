@@ -8,11 +8,13 @@ import {
   Form,
   FormControl,
   FormGroup,
+  Modal,
   Panel,
   Row
 } from "react-bootstrap";
 
 import Map from "./Map";
+import { highlight } from "../lib";
 
 export default class ImageryPane extends React.Component {
   static defaultProps = {
@@ -28,6 +30,7 @@ export default class ImageryPane extends React.Component {
 
   state = {
     pending: [],
+    showModal: false,
     shown: false,
     showSpinner:
       ["PENDING", "RUNNING"].indexOf(
@@ -153,6 +156,16 @@ export default class ImageryPane extends React.Component {
     }
   }
 
+  showModal = () =>
+    this.setState({
+      showModal: true
+    });
+
+  hideModal = () =>
+    this.setState({
+      showModal: false
+    });
+
   getFailure() {
     const { status } = this.state.source.meta;
 
@@ -226,12 +239,10 @@ export default class ImageryPane extends React.Component {
 
   getSpinner() {
     if (this.shouldShowSpinner()) {
-      const { name } = this.state.source;
-
       return (
-        <a data-toggle="modal" data-target={`.${name}-status-modal`}>
-          {" "}<i className="fa fa-circle-o-notch fa-spin blue" />
-        </a>
+        <Button onClick={this.showModal} bsStyle="link">
+          <i className="fa fa-circle-o-notch fa-spin blue" />
+        </Button>
       );
     }
 
@@ -392,7 +403,7 @@ export default class ImageryPane extends React.Component {
   };
 
   render() {
-    const { shown, source, sourceName } = this.state;
+    const { showModal, shown, source, sourceName } = this.state;
     const { name } = source;
 
     // TODO delete button
@@ -427,43 +438,27 @@ export default class ImageryPane extends React.Component {
           </div>
         }
       >
-        <div
-          className={`modal fade ${name}-status-modal`}
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="mySmallModalLabel"
-        >
-          <div className="modal-dialog modal-md" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-                <h4 className="modal-title" id="mySmallModalLabel">
-                  {name} Status
-                </h4>
-              </div>
-              <div className="modal-body">
-                <pre
-                  dangerouslySetInnerHTML={{
-                    __html: JSON.stringify(
-                      {
-                        source
-                      },
-                      null,
-                      2
-                    )
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <Modal show={showModal} onHide={this.hideModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>{sourceName} Status</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <pre
+              dangerouslySetInnerHTML={{
+                __html: highlight(
+                  JSON.stringify(
+                    {
+                      source
+                    },
+                    null,
+                    2
+                  ),
+                  "json"
+                )
+              }}
+            />
+          </Modal.Body>
+        </Modal>
 
         {map}
       </Panel>

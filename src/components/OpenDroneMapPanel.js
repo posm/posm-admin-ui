@@ -9,20 +9,11 @@ import {
   Modal,
   PageHeader
 } from "react-bootstrap";
+import { connect } from "react-redux";
 
 import ProjectPane from "../components/ProjectPane";
 
-const config = {
-  imageryEndpoint: "http://posm.local",
-  odmEndpoint: "http://posm.local"
-};
-
-export default class Index extends React.Component {
-  static defaultProps = {
-    endpoint: config.odmEndpoint,
-    imageryEndpoint: config.imageryEndpoint
-  };
-
+class OpenDroneMapPanel extends React.Component {
   static propTypes = {
     endpoint: PropTypes.string.isRequired,
     imageryEndpoint: PropTypes.string.isRequired
@@ -38,8 +29,20 @@ export default class Index extends React.Component {
     this.getProjects();
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    const { endpoint } = this.props;
+
+    if (endpoint !== nextProps.endpoint) {
+      this.getProjects();
+    }
+  }
+
   getProjects = () => {
     const { endpoint } = this.props;
+
+    if (endpoint == null) {
+      return;
+    }
 
     this.setState({
       loading: true
@@ -178,3 +181,10 @@ export default class Index extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  imageryEndpoint: state.config.imageryEndpoint,
+  endpoint: state.config.odmEndpoint
+});
+
+export default connect(mapStateToProps)(OpenDroneMapPanel);

@@ -3,23 +3,16 @@ import PropTypes from "prop-types";
 import Dropzone from "react-dropzone-component";
 import React, { Component } from "react";
 import { PageHeader } from "react-bootstrap";
+import { connect } from "react-redux";
 
 import "react-dropzone-component/styles/filepicker.css";
 import "dropzone/dist/dropzone.css";
 
 import ImageryPane from "../components/ImageryPane";
 
-const config = {
-  imageryEndpoint: "http://posm.local"
-};
-
 class ImageryPanel extends Component {
-  static defaultProps = {
-    endpoint: config.imageryEndpoint
-  };
-
   static propTypes = {
-    endpoint: PropTypes.string.isRequired
+    endpoint: PropTypes.string
   };
 
   state = {
@@ -30,8 +23,20 @@ class ImageryPanel extends Component {
     this.getSources();
   }
 
+  componentDidUpdate(nextProps, nextState) {
+    const { endpoint } = this.props;
+
+    if (endpoint !== nextProps.endpoint) {
+      this.getSources();
+    }
+  }
+
   getSources = (callback = () => {}) => {
     const { endpoint } = this.props;
+
+    if (endpoint == null) {
+      return callback();
+    }
 
     return fetch(`${endpoint}/imagery`)
       .then(rsp => rsp.json())
@@ -40,7 +45,7 @@ class ImageryPanel extends Component {
           sources
         });
 
-        callback(sources);
+        callback(null, sources);
       })
       .catch(err => console.warn(err.stack));
   };
@@ -52,7 +57,7 @@ class ImageryPanel extends Component {
   }
 
   render() {
-    const { endpoint } = this.props;
+    const { endpoint, refreshInterval } = this.props;
     const { sources } = this.state;
 
     const imagery = Object.keys(sources)
@@ -67,7 +72,7 @@ class ImageryPanel extends Component {
           name={name}
           source={sources[name]}
           endpoint={`${endpoint}/imagery/${name}`}
-          refreshInterval={config.refreshInterval}
+          refreshInterval={refreshInterval}
         />
       );
 
@@ -108,4 +113,9 @@ class ImageryPanel extends Component {
   }
 }
 
-export default ImageryPanel;
+const mapStateToProps = state => ({
+  endpoint: state.config.imageryEndpoint,
+  refreshInterval: state.config.refreshInterval
+});
+
+export default connect(mapStateToProps)(ImageryPanel);

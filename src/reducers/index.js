@@ -3,12 +3,14 @@ import { combineReducers } from "redux";
 import { reducer as form } from "redux-form";
 
 import aois from "./aois";
+import config from "./config";
 import global from "./global";
 import network from "./network";
 import osm from "./osm";
 
 const reducer = combineReducers({
   aois,
+  config,
   form,
   network,
   osm,

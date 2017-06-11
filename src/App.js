@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "react-router-redux";
 
-import { receivePOSMState } from "./actions";
+import { receiveConfig, receivePOSMState } from "./actions";
 import AdminPanel from "./components/AdminPanel";
 import AOIPanel from "./components/AOIPanel";
 import DeploymentPanel from "./components/DeploymentPanel";
@@ -25,6 +25,7 @@ class App extends Component {
   componentWillMount() {
     const { dispatch } = this.props;
 
+    dispatch(receiveConfig());
     dispatch(receivePOSMState());
   }
 

@@ -55,13 +55,17 @@ export default class Map extends Component {
       fetch(tileJSON)
         .then(rsp => rsp.json())
         .then(info => {
-          const bounds = [
-            info.bounds.slice(0, 2).reverse(),
-            info.bounds.slice(2, 4).reverse()
-          ];
+          let _bounds = bounds;
+
+          if (info.bounds != null) {
+            _bounds = [
+              info.bounds.slice(0, 2).reverse(),
+              info.bounds.slice(2, 4).reverse()
+            ];
+          }
 
           this.setState({
-            bounds,
+            bounds: _bounds,
             maxzoom: info.maxzoom,
             minzoom: info.minzoom,
             url: info.tiles[0]

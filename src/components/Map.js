@@ -22,15 +22,16 @@ export default class Map extends Component {
     minHeight: "500px",
     minzoom: 0,
     showBackground: true,
+    url: "",
     width: "100%"
   };
 
   static propTypes = {
     bounds: PropTypes.array,
-    maxzoom: PropTypes.integer,
+    maxzoom: PropTypes.number,
     minHeight: PropTypes.string,
-    minzoom: PropTypes.integer,
-    showBackground: PropTypes.boolean,
+    minzoom: PropTypes.number,
+    showBackground: PropTypes.bool,
     tileJSON: PropTypes.string,
     url: PropTypes.string,
     width: PropTypes.string

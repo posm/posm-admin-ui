@@ -1,8 +1,9 @@
 import { Menu, MenuDivider, MenuItem } from "@blueprintjs/core";
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-const Sidebar = ({ children }) =>
+const Sidebar = ({ osm, posm }) =>
   <Menu className="pt-elevation-1 inline-block menu">
     <li>
       <Link to="/" className="pt-menu-item pt-popover-dismiss pt-icon-home">
@@ -29,7 +30,7 @@ const Sidebar = ({ children }) =>
     <MenuItem
       iconName="pt-icon-mobile-phone"
       text="OpenMapKit"
-      href="/omk/"
+      href={`${posm}/omk/`}
       target="_blank"
       title="OpenMapKit"
       rel="noopener noreferrer"
@@ -39,7 +40,7 @@ const Sidebar = ({ children }) =>
     <MenuItem
       iconName="pt-icon-clipboard"
       text="Field Papers"
-      href="/fp/"
+      href={`${posm}/fp/`}
       target="_blank"
       title="Field Papers"
       rel="noopener noreferrer"
@@ -48,8 +49,7 @@ const Sidebar = ({ children }) =>
     <MenuItem
       iconName="pt-icon-send-to-map"
       text="OpenStreetMap"
-      // TODO don't hard-code me
-      href="http://osm.posm.io/"
+      href={`http://${osm.fqdn}/`}
       target="_blank"
       title="OpenStreetMap"
       rel="noopener noreferrer"
@@ -83,7 +83,7 @@ const Sidebar = ({ children }) =>
     <MenuItem
       iconName="pt-icon-book"
       text="Guide"
-      href="/guide"
+      href={`${posm}/guide/`}
       target="_blank"
       title="Guide"
       rel="noopener noreferrer"
@@ -107,4 +107,9 @@ const Sidebar = ({ children }) =>
     </li>
   </Menu>;
 
-export default Sidebar;
+const mapStateToProps = state => ({
+  osm: state.osm,
+  posm: state.config.posm
+});
+
+export default connect(mapStateToProps)(Sidebar);

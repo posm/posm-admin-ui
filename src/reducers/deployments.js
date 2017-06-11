@@ -1,9 +1,9 @@
 import types from "../actions";
 
-export default (state = {}, { type, remoteState }) => {
+export default (state = [], { type, remoteState }) => {
   switch (type) {
     case types.RECEIVE_POSM_STATE:
-      return remoteState.osm;
+      return remoteState.deployments;
 
     default:
       return state;

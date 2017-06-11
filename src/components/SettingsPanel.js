@@ -3,20 +3,14 @@ import { connect } from "react-redux";
 import { PageHeader, Panel } from "react-bootstrap";
 
 import NetworkSettingsForm from "./NetworkSettingsForm";
+import updateNetworkConfig from "../actions";
 
 class SettingsPanel extends Component {
   static propTypes = {};
 
-  submit = values => {
-    const { bridged, ssid, wpa, wpa_passphrase } = values;
-
-    // TODO don't hard-code this
-    return fetch("http://posm.local/posm-admin/network-config", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
+  submit = ({ bridged, ssid, wpa, wpa_passphrase }, dispatch, { posm }) =>
+    dispatch(
+      updateNetworkConfig(posm, {
         wifi: {
           ssid,
           wpa,
@@ -24,8 +18,7 @@ class SettingsPanel extends Component {
         },
         bridged
       })
-    });
-  };
+    );
 
   render() {
     const { network: { wifi: { ssid, wpa, wpa_passphrase } } } = this.props;
@@ -53,7 +46,8 @@ class SettingsPanel extends Component {
 }
 
 const mapStateToProps = state => ({
-  network: state.network
+  network: state.network,
+  posm: state.config.posm
 });
 
 export default connect(mapStateToProps)(SettingsPanel);

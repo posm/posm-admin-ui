@@ -1,52 +1,8 @@
-import { Button, Intent, Position, Switch, Tooltip } from "@blueprintjs/core";
+import { Button, Intent, Switch } from "@blueprintjs/core";
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 
-const decorate = (content, intent, child) =>
-  <Tooltip
-    content={content}
-    intent={intent}
-    position={Position.RIGHT}
-    inline
-    defaultIsOpen
-    isOpen
-  >
-    {child}
-  </Tooltip>;
-
-const renderTextInput = ({
-  input,
-  label,
-  meta: { touched, error, warning },
-  placeholder,
-  required
-}) => {
-  const widget = (
-    <label className="pt-label">
-      {label}
-      {" "}{required && <span className="pt-text-muted">(required)</span>}
-      <input
-        className="pt-input"
-        type="text"
-        dir="auto"
-        placeholder={placeholder}
-        {...input}
-      />
-    </label>
-  );
-
-  if (touched) {
-    if (error) {
-      return decorate(error, Intent.DANGER, widget);
-    }
-
-    if (warning) {
-      return decorate(warning, Intent.WARNING, widget);
-    }
-  }
-
-  return widget;
-};
+import { renderTextInput } from "../lib";
 
 const renderSwitch = ({ className, disabled, input, label }) =>
   <Switch className={className} label={label} disabled={disabled} {...input} />;

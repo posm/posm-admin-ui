@@ -32,3 +32,23 @@ export const initializeState = () => dispatch =>
     .catch(err => {
       console.warn(err.stack);
     });
+
+export const createDeployment = (posm, url) => dispatch =>
+  fetch(`${posm}/posm-admin/atlas-deploy`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      url
+    })
+  }).then(rsp => dispatch(loadPOSMState(posm)));
+
+export const updateNetworkConfig = (posm, body) => dispatch =>
+  fetch(`${posm}/posm-admin/network-config`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(body)
+  });

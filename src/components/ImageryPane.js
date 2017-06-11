@@ -154,7 +154,6 @@ export default class ImageryPane extends React.Component {
   }
 
   getFailure() {
-    const { name } = this.props;
     const { status } = this.state.source.meta;
 
     if (
@@ -165,9 +164,9 @@ export default class ImageryPane extends React.Component {
     }
 
     return (
-      <a data-toggle="modal" data-target={`.${name}-status-modal`}>
-        {" "}<i className="fa fa-exclamation-triangle red" />
-      </a>
+      <Button onClick={this.showModal} bsStyle="link">
+        <i className="fa fa-exclamation-triangle red" />
+      </Button>
     );
   }
 
@@ -406,15 +405,20 @@ export default class ImageryPane extends React.Component {
       <Panel
         header={
           <div>
-            <a tabIndex="-1" onClick={this.toggle}>
-              <i
-                className={shown ? "fa fa-chevron-down" : "fa fa-chevron-right"}
-              />&nbsp;
+            <a tabIndex="-1" onClick={this.toggle} className="toggle">
+              <span
+                className={
+                  shown
+                    ? "pt-icon-standard pt-icon-minus"
+                    : "pt-icon-standard pt-icon-plus"
+                }
+              />
             </a>
             <EditableText
               defaultValue={sourceName}
               onConfirm={this.updateSourceName}
               selectAllOnFocus
+              className="baseline"
             />
             {failure} {spinner}
             <div className="pull-right">

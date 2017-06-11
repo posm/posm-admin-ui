@@ -1,7 +1,8 @@
+import { NonIdealState } from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import Dropzone from "react-dropzone-component";
 import React, { Component } from "react";
-import { PageHeader, Panel } from "react-bootstrap";
+import { PageHeader } from "react-bootstrap";
 
 import "react-dropzone-component/styles/filepicker.css";
 import "dropzone/dist/dropzone.css";
@@ -68,32 +69,36 @@ class ImageryPanel extends Component {
 
     return (
       <div className="posm-panel">
-        <PageHeader>Imagery <small>Sources</small></PageHeader>
+        <PageHeader>Imagery</PageHeader>
 
-        <Panel>
-          <Dropzone
-            config={{
-              postUrl: `${endpoint}/imagery/upload`
-            }}
-            eventHandlers={{
-              init: dropzone => {
-                this.dropzone = dropzone;
-              },
-              success: (file, rsp) => {
-                this.getSources(() => {
-                  this.dropzone.removeFile(file);
-                });
-              }
-            }}
-            djsConfig={{
-              acceptedFiles: "image/tiff",
-              addRemoveLinks: false,
-              method: "PUT"
-            }}
+        <Dropzone
+          config={{
+            postUrl: `${endpoint}/imagery/upload`
+          }}
+          eventHandlers={{
+            init: dropzone => {
+              this.dropzone = dropzone;
+            },
+            success: (file, rsp) => {
+              this.getSources(() => {
+                this.dropzone.removeFile(file);
+              });
+            }
+          }}
+          djsConfig={{
+            acceptedFiles: "image/tiff",
+            addRemoveLinks: false,
+            method: "PUT"
+          }}
+        >
+          <NonIdealState
+            className="dz-message"
+            visual="cloud-upload"
+            action="Drop GeoTIFFs here to upload"
           />
+        </Dropzone>
 
-          {imagery}
-        </Panel>
+        {imagery}
       </div>
     );
   }

@@ -10,8 +10,26 @@ a, a:hover, a:visited, a:link, a:active, a:focus {
   text-decoration: none;
 }
 
+a.toggle {
+  margin-right: 10px;
+}
+
+.dropzone.filepicker {
+  border-width: 1px;
+  margin-bottom: 20px;
+  background-color: #c8e0f0;
+}
+
+.pt-non-ideal-state.dz-message {
+  margin: 0 auto;
+}
+
 label.pt-control {
   font-weight: normal;
+}
+
+.pt-editable-text.baseline {
+  vertical-align: baseline;
 }
 
 .pt-navbar.pt-dark a {

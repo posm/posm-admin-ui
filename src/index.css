@@ -64,6 +64,11 @@ label.pt-control {
   margin-right: 20px;
 }
 
+.posm-panel code {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
 .panel .row {
   margin: 10px;
 }

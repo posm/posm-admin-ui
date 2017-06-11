@@ -1,3 +1,4 @@
+import { NonIdealState } from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import React from "react";
 import {
@@ -168,6 +169,15 @@ export default class Index extends React.Component {
         </Modal>
 
         <Panel>
+          <NonIdealState
+            visual="airplane"
+            title="No Projects"
+            action={
+              <Button bsSize="small" bsStyle="primary" onClick={this.open}>
+                Create a New Project
+              </Button>
+            }
+          />
           {projects}
         </Panel>
       </div>

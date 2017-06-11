@@ -7,12 +7,12 @@ const initialState = {
   wifi: {}
 };
 
-export default (state = initialState, { type, remoteState: network }) => {
+export default (state = initialState, { type, remoteState }) => {
   switch (type) {
     case types.RECEIVE_POSM_STATE:
       return {
         ...state,
-        network
+        ...remoteState.network
       };
 
     default:

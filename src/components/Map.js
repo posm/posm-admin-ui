@@ -139,7 +139,7 @@ export default class Map extends Component {
       <div>
         <div ref={c => (this.container = c)} style={{ minHeight, width }} />
 
-        <h3>Opacity</h3>
+        <h4>Opacity</h4>
         <Slider
           labelStepSize={10}
           value={opacity}

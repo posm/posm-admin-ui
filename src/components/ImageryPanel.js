@@ -57,6 +57,10 @@ class ImageryPanel extends Component {
 
     const imagery = Object.keys(sources)
       .filter(name => sources[name] !== {})
+      .sort(
+        (a, b) =>
+          (sources[a].meta.user.name || a) > (sources[b].meta.user.name || b)
+      )
       .map(name =>
         <ImageryPane
           key={name}

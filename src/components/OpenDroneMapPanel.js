@@ -104,17 +104,21 @@ export default class Index extends React.Component {
 
   render() {
     const { endpoint, imageryEndpoint } = this.props;
+    const { projects } = this.state;
 
-    // TODO sort alphabetically (not by UUID)
-    const projects = Object.keys(this.state.projects).map(name =>
-      <ProjectPane
-        key={name}
-        name={name}
-        project={this.state.projects[name]}
-        endpoint={`${endpoint}/projects/${name}`}
-        imageryEndpoint={imageryEndpoint}
-      />
-    );
+    const projectPanes = Object.keys(projects)
+      .sort(
+        (a, b) => (projects[a].user.name || a) > (projects[b].user.name || b)
+      )
+      .map(name =>
+        <ProjectPane
+          key={name}
+          name={name}
+          project={projects[name]}
+          endpoint={`${endpoint}/projects/${name}`}
+          imageryEndpoint={imageryEndpoint}
+        />
+      );
 
     const { projectName } = this.state;
 
@@ -159,7 +163,7 @@ export default class Index extends React.Component {
           </Modal.Footer>
         </Modal>
 
-        {projects.length === 0
+        {projectPanes.length === 0
           ? <NonIdealState
               visual="airplane"
               title="No Projects"
@@ -169,7 +173,7 @@ export default class Index extends React.Component {
                 </Button>
               }
             />
-          : projects}
+          : projectPanes}
       </div>
     );
   }

@@ -169,16 +169,16 @@ export default class Index extends React.Component {
         </Modal>
 
         <Panel>
-          { projects.length === 0 &&
-          <NonIdealState
-            visual="airplane"
-            title="No Projects"
-            action={
-              <Button bsSize="small" bsStyle="primary" onClick={this.open}>
-                Create a New Project
-              </Button>
-            }
-          />}
+          {projects.length === 0 &&
+            <NonIdealState
+              visual="airplane"
+              title="No Projects"
+              action={
+                <Button bsSize="small" bsStyle="primary" onClick={this.open}>
+                  Create a New Project
+                </Button>
+              }
+            />}
           {projects}
         </Panel>
       </div>

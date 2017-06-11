@@ -8,7 +8,8 @@ import {
   Form,
   FormControl,
   FormGroup,
-  Panel
+  Panel,
+  Row
 } from "react-bootstrap";
 
 import Map from "./Map";
@@ -189,7 +190,7 @@ export default class ImageryPane extends React.Component {
 
     return (
       <div className="x_content">
-        <div className="row">
+        <Row>
           <Form horizontal>
             <FormGroup controlId={`${name}-url`}>
               <Col componentClass={ControlLabel} sm={2}>
@@ -216,8 +217,10 @@ export default class ImageryPane extends React.Component {
               </Col>
             </FormGroup>
           </Form>
-        </div>
-        <Map bounds={bounds} maxzoom={maxzoom} minzoom={minzoom} url={url} />
+        </Row>
+        <Row>
+          <Map bounds={bounds} maxzoom={maxzoom} minzoom={minzoom} url={url} />
+        </Row>
       </div>
     );
   }

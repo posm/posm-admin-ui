@@ -42,6 +42,14 @@ label.pt-control {
   margin-right: 20px;
 }
 
+.panel .row {
+  margin: 10px;
+}
+
+.panel .row h3 {
+  margin-top: 20px;
+}
+
 .red {
   color: red;
 }

@@ -1,7 +1,8 @@
+import { Slider } from "@blueprintjs/core";
 import Leaflet from "leaflet";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
-import { Col } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 
 import "leaflet/dist/leaflet.css";
 
@@ -125,11 +126,10 @@ export default class Map extends Component {
     this.leaflet.remove();
   }
 
-  updateOpacity = evt => {
+  updateOpacity = opacity =>
     this.setState({
-      opacity: evt.target.value
+      opacity
     });
-  };
 
   render() {
     const { minHeight, width } = this.props;
@@ -138,16 +138,14 @@ export default class Map extends Component {
     return (
       <div>
         <div ref={c => (this.container = c)} style={{ minHeight, width }} />
-        <div className="row">
-          <Col md={3}>
-            <input
-              type="range"
-              step="10"
-              value={opacity}
-              onChange={this.updateOpacity}
-            />
-          </Col>
-        </div>
+
+        <h3>Opacity</h3>
+        <Slider
+          labelStepSize={10}
+          value={opacity}
+          max={100}
+          onChange={this.updateOpacity}
+        />
       </div>
     );
   }

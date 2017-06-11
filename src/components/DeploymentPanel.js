@@ -1,6 +1,7 @@
 import { Button, Intent } from "@blueprintjs/core";
 import React from "react";
 import { PageHeader, Panel } from "react-bootstrap";
+import { connect } from "react-redux";
 
 const styles = {
   urlField: {
@@ -8,7 +9,7 @@ const styles = {
   }
 };
 
-const DeploymentPanel = () =>
+const DeploymentPanel = ({ deployments, posm }) =>
   <div className="posm-panel">
     <PageHeader>OpenMapKit Deployments</PageHeader>
     <Panel>
@@ -19,18 +20,32 @@ const DeploymentPanel = () =>
         {" "}menu within OpenMapKit Android when connected to the POSM WiFi
         network.
       </p>
-      <p>
-        Available deployments:
-      </p>
-      <ul>
-        <li>Pandamatenga</li>
-        <li>Foray</li>
-        <li>Downtown Bellingham</li>
-      </ul>
+      <hr />
+      <h3>
+        Available Deployments
+      </h3>
+      {deployments.length > 0
+        ? <ul>
+            {deployments.map(({ description, name, title }, i) =>
+              <li key={i}>
+                <a
+                  href={`${posm}/fp/atlases/${name}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {title}
+                  {" "}{description && <span> - <em>{description}</em></span>}
+                </a>
+              </li>
+            )}
+          </ul>
+        : <p>None loaded.</p>}
+      <hr />
+      <h3>Create a New Deployment</h3>
       <p>
         To create a new OMK Deployment, either create an atlas using the
         {" "}
-        <a href="/fp/" target="_blank" rel="noopener noreferrer">
+        <a href={`${posm}/fp/`} target="_blank" rel="noopener noreferrer">
           local Field Papers instance
         </a>
         {" "}or paste in the publicly-accessibly URL of a Field Papers atlas
@@ -40,7 +55,7 @@ const DeploymentPanel = () =>
       <form>
         <div className="pt-form-group pt-control-group">
           <label className="pt-label">
-            Create a new OMK deployment
+            Field Papers Atlas GeoJSON URL
             <input
               className="pt-input"
               type="text"
@@ -59,6 +74,9 @@ const DeploymentPanel = () =>
     </Panel>
   </div>;
 
-DeploymentPanel.propTypes = {};
+const mapStateToProps = state => ({
+  deployments: state.deployments,
+  posm: state.config.posm
+});
 
-export default DeploymentPanel;
+export default connect(mapStateToProps)(DeploymentPanel);

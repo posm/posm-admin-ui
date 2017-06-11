@@ -32,6 +32,11 @@ label.pt-control {
   vertical-align: baseline;
 }
 
+.panel-title .pt-editable-text {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
 .pt-navbar {
   z-index: 10000;
 }
@@ -77,8 +82,12 @@ label.pt-control {
   margin-top: 20px;
 }
 
+.blue {
+  color: #3498db;
+}
+
 .red {
-  color: red;
+  color: #e74c3c;
 }
 
 .hljs-comment,

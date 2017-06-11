@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import {
   Button,
+  ButtonGroup,
   Col,
   ControlLabel,
   Form,
@@ -87,29 +88,29 @@ export default class ImageryPane extends React.Component {
 
     if (this.isIngesting()) {
       return (
-        <button type="button" className="btn btn-dark btn-sm">
+        <Button bsStyle="info">
           Ingesting <i className="fa fa-circle-o-notch fa-spin" />
-        </button>
+        </Button>
       );
     }
 
     if (this.isTiling()) {
       if (pending.indexOf("cancelling") >= 0) {
         return (
-          <button type="button" className="btn btn-warning btn-sm">
+          <Button bsStyle="warning">
             Cancelling <i className="fa fa-circle-o-notch fa-spin" />
-          </button>
+          </Button>
         );
       }
 
       return (
-        <button
-          type="button"
+        <Button
+          bsStyle="warning"
           className="btn btn-warning btn-sm"
           onClick={this.cancel}
         >
           Cancel
-        </button>
+        </Button>
       );
     }
 
@@ -117,40 +118,32 @@ export default class ImageryPane extends React.Component {
       case "SUCCESS": {
         if (pending.indexOf("processing") >= 0) {
           return (
-            <button type="button" className="btn btn-primary btn-sm">
+            <Button bsStyle="primary">
               Processing <i className="fa fa-circle-o-notch fa-spin" />
-            </button>
+            </Button>
           );
         }
 
         if (status.mbtiles.state !== "SUCCESS") {
           return (
-            <button
-              type="button"
-              className="btn btn-success btn-sm"
-              onClick={this.makeMBTiles}
-            >
+            <Button bsStyle="success" onClick={this.makeMBTiles}>
               Make MBTiles
-            </button>
+            </Button>
           );
         }
 
         return (
-          <a
-            href={`${endpoint}/mbtiles`}
-            role="button"
-            className="btn btn-success btn-sm"
-          >
+          <Button href={`${endpoint}/mbtiles`} bsStyle="success">
             Download MBTiles
-          </a>
+          </Button>
         );
       }
 
       default: {
         return (
-          <button type="button" className="btn btn-danger btn-sm">
+          <Button bsStyle="danger">
             Failed
-          </button>
+          </Button>
         );
       }
     }
@@ -404,7 +397,6 @@ export default class ImageryPane extends React.Component {
 
   render() {
     const { showModal, shown, source, sourceName } = this.state;
-    const { name } = source;
 
     // TODO delete button
     const buttons = this.getButtons();
@@ -433,7 +425,9 @@ export default class ImageryPane extends React.Component {
             />
             {failure} {spinner}
             <div className="pull-right">
-              {buttons}
+              <ButtonGroup bsSize="small">
+                {buttons}
+              </ButtonGroup>
             </div>
           </div>
         }

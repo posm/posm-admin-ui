@@ -79,13 +79,14 @@ export default class Index extends React.Component {
     });
   };
 
-  saveProject = evt => {
-    evt.preventDefault();
+  updateProjectName = projectName => {
+    this.setState({
+      projectName
+    });
 
     const { endpoint } = this.props;
-    const { projectName } = this.state;
 
-    if (projectName !== "") {
+    if (projectName !== this.state.projectName) {
       // update metadata
       fetch(`${endpoint}/projects`, {
         body: JSON.stringify({
@@ -96,20 +97,7 @@ export default class Index extends React.Component {
         .then(rsp => this.getProjects())
         .catch(err => console.warn(err.stack));
     }
-
-    // reset the new project name for the next upload
-    this.setState({
-      projectName: ""
-    });
-
-    this.close();
-  };
-
-  updateProjectName = evt => {
-    this.setState({
-      projectName: evt.target.value
-    });
-  };
+  }
 
   render() {
     const { endpoint, imageryEndpoint } = this.props;
@@ -168,9 +156,8 @@ export default class Index extends React.Component {
           </Modal.Footer>
         </Modal>
 
-        <Panel>
-          {projects.length === 0 &&
-            <NonIdealState
+        {projects.length === 0
+          ? <NonIdealState
               visual="airplane"
               title="No Projects"
               action={
@@ -178,9 +165,8 @@ export default class Index extends React.Component {
                   Create a New Project
                 </Button>
               }
-            />}
-          {projects}
-        </Panel>
+            />
+          : projects}
       </div>
     );
   }

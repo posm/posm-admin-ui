@@ -1,7 +1,9 @@
+import { EditableText } from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import React from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, ButtonGroup, Modal, Panel } from "react-bootstrap";
 
+import { highlight } from "../lib";
 import ProjectOutputPanel from "./ProjectOutputPanel";
 import ProjectSourcesPanel from "./ProjectSourcesPanel";
 
@@ -19,11 +21,11 @@ export default class ProjectPane extends React.Component {
   };
 
   state = {
-    editing: false,
     ingesting: false,
     pending: [],
     project: this.props.project,
     projectName: this.props.project.user.name || this.props.name,
+    showModal: false,
     shown: false,
     showSpinner: false,
     tiling: false
@@ -64,20 +66,16 @@ export default class ProjectPane extends React.Component {
 
     if (pending.indexOf("deleting") >= 0) {
       return (
-        <button type="button" className="btn btn-danger btn-sm">
+        <Button bsStyle="danger">
           Deleting <i className="fa fa-circle-o-notch fa-spin" />
-        </button>
+        </Button>
       );
     }
 
     return (
-      <button
-        type="button"
-        className="btn btn-danger btn-sm"
-        onClick={this.delete}
-      >
+      <Button bsStyle="danger" onClick={this.delete}>
         Delete
-      </button>
+      </Button>
     );
   }
 
@@ -87,21 +85,17 @@ export default class ProjectPane extends React.Component {
 
     if (ingesting || pending.indexOf("ingesting") >= 0) {
       return (
-        <button type="button" className="btn btn-warning btn-sm">
+        <Button bsStype="warning">
           Ingesting <i className="fa fa-circle-o-notch fa-spin" />
-        </button>
+        </Button>
       );
     }
 
     if (user.imagery == null && pending.indexOf("mbtiles") < 0) {
       return (
-        <button
-          type="button"
-          className="btn btn-dark btn-sm"
-          onClick={this.ingestSource}
-        >
+        <Button bsStyle="info" onClick={this.ingestSource}>
           Ingest
-        </button>
+        </Button>
       );
     }
 
@@ -114,36 +108,32 @@ export default class ProjectPane extends React.Component {
 
     if (tiling || pending.indexOf("mbtiles") >= 0) {
       return (
-        <button type="button" className="btn btn-warning btn-sm">
+        <Button bsStyle="warning">
           Making MBTiles <i className="fa fa-circle-o-notch fa-spin" />
-        </button>
+        </Button>
       );
     }
 
     if (user.mbtiles == null) {
       if (pending.indexOf("ingesting") >= 0) {
         return (
-          <button type="button" className="btn btn-dark btn-sm">
+          <Button bsStyle="info">
             Make MBTiles
-          </button>
+          </Button>
         );
       }
 
       return (
-        <button
-          type="button"
-          className="btn btn-dark btn-sm"
-          onClick={this.makeMBTiles}
-        >
+        <Button bsStyle="info" onClick={this.makeMBTiles}>
           Make MBTiles
-        </button>
+        </Button>
       );
     }
 
     return (
-      <a href={user.mbtiles} role="button" className="btn btn-success btn-sm">
+      <Button href={user.mbtiles} bsStyle="success">
         Download MBTiles
-      </a>
+      </Button>
     );
   }
 
@@ -155,37 +145,32 @@ export default class ProjectPane extends React.Component {
     if (this.isRunning()) {
       if (pending.indexOf("cancelling") >= 0) {
         return (
-          <button type="button" className="btn btn-warning btn-sm">
+          <Button bsStyle="warning">
             Cancelling <i className="fa fa-circle-o-notch fa-spin" />
-          </button>
+          </Button>
         );
       }
 
       return (
-        <button
-          type="button"
-          className="btn btn-warning btn-sm"
-          onClick={this.cancel}
-        >
+        <Button bsStyle="warning" onClick={this.cancel}>
           Cancel
-        </button>
+        </Button>
       );
     }
 
     switch (status.state) {
       case "SUCCESS": {
         return (
-          <span>
-            <a
+          <ButtonGroup bsSize="small">
+            <Button
+              bsStyle="success"
               href={`${endpoint}/artifacts/odm_orthophoto.tif`}
-              role="button"
-              className="btn btn-success btn-sm"
             >
               Download GeoTIFF
-            </a>
+            </Button>
             {this.getIngestButton()}
             {this.getMBTilesButton()}
-          </span>
+          </ButtonGroup>
         );
       }
 
@@ -193,47 +178,38 @@ export default class ProjectPane extends React.Component {
       case "REVOKED": {
         if (pending.indexOf("processing") >= 0 && !this.isRunning()) {
           return (
-            <button type="button" className="btn btn-dark btn-sm">
+            <Button bsStyle="info">
               Re-processing <i className="fa fa-circle-o-notch fa-spin" />
-            </button>
+            </Button>
           );
         }
 
         return (
-          <button
-            type="button"
-            className="btn btn-dark btn-sm"
-            onClick={this.reprocess}
-          >
+          <Button bsStyle="info" onClick={this.reprocess}>
             Re-process
-          </button>
+          </Button>
         );
       }
 
       default: {
         if (pending.indexOf("processing") >= 0 && !this.isRunning()) {
           return (
-            <button type="button" className="btn btn-dark btn-sm">
+            <Button bsStyle="info">
               Processing <i className="fa fa-circle-o-notch fa-spin" />
-            </button>
+            </Button>
           );
         }
 
         return (
-          <button
-            type="button"
-            className="btn btn-dark btn-sm"
-            onClick={this.process}
-          >
+          <Button bsStyle="info" onClick={this.process}>
             Process
-          </button>
+          </Button>
         );
       }
     }
   }
 
   getFailure() {
-    const { name } = this.props;
     const { status } = this.state.project;
 
     if (status.state !== "FAILURE") {
@@ -241,20 +217,18 @@ export default class ProjectPane extends React.Component {
     }
 
     return (
-      <a data-toggle="modal" data-target={`.${name}-status-modal`}>
-        {" "}<i className="fa fa-exclamation-triangle red" />
-      </a>
+      <Button onClick={this.showModal} bsStyle="link">
+        <i className="fa fa-exclamation-triangle red" />
+      </Button>
     );
   }
 
   getSpinner() {
     if (this.shouldShowSpinner()) {
-      const { name } = this.props;
-
       return (
-        <a data-toggle="modal" data-target={`.${name}-status-modal`}>
-          {" "}<i className="fa fa-circle-o-notch fa-spin blue" />
-        </a>
+        <Button onClick={this.showModal} bsStyle="link">
+          <i className="fa fa-circle-o-notch fa-spin blue" />
+        </Button>
       );
     }
 
@@ -323,29 +297,25 @@ export default class ProjectPane extends React.Component {
     });
   };
 
-  editName = () => {
+  updateProjectName = projectName => {
     this.setState({
-      editing: true
+      projectName
     });
-  };
-
-  updateProjectName = evt => {
-    this.setState({
-      projectName: evt.target.value
-    });
-  };
-
-  saveProject = evt => {
-    evt.preventDefault();
 
     this.updateMetadata({
-      name: this.state.projectName
-    });
-
-    this.setState({
-      editing: false
+      name: projectName
     });
   };
+
+  showModal = () =>
+    this.setState({
+      showModal: true
+    });
+
+  hideModal = () =>
+    this.setState({
+      showModal: false
+    });
 
   delete = () => {
     const { endpoint } = this.props;
@@ -692,7 +662,7 @@ export default class ProjectPane extends React.Component {
 
   render() {
     const { name } = this.props;
-    const { editing, project, projectName, shown } = this.state;
+    const { project, projectName, showModal, shown } = this.state;
     const { artifacts, images, status } = project;
 
     const buttons = this.getButtons();
@@ -701,144 +671,109 @@ export default class ProjectPane extends React.Component {
     const spinner = this.getSpinner();
 
     return (
-      <div className="row">
-        <div className="x_panel">
-          <Form inline onSubmit={this.saveProject}>
-            <div className="x_title">
-              <h2>
-                <a tabIndex="-1" onClick={this.toggle}>
-                  <i
-                    className={
-                      shown ? "fa fa-chevron-down" : "fa fa-chevron-right"
-                    }
-                  />&nbsp;
-                </a>
-                {editing
-                  ? <span>
-                      <input
-                        type="text"
-                        placeholder={name}
-                        value={projectName}
-                        onChange={this.updateProjectName}
-                      />
-                      <Button type="submit" bsStyle="link">
-                        <i className="fa fa-check" />
-                      </Button>
-                    </span>
-                  : <span>
-                      <a tabIndex="-1" onClick={this.toggle}>{projectName}</a>
-                      {" "}
-                      <a tabIndex="-1" role="button" onClick={this.editName}>
-                        <i className="fa fa-pencil" />
-                      </a>
-                    </span>}
-                {failure} {spinner}
-              </h2>
-
-              <div className="pull-right">
+      <Panel
+        header={
+          <div>
+            <a tabIndex="-1" onClick={this.toggle} className="toggle">
+              <span
+                className={
+                  shown
+                    ? "pt-icon-standard pt-icon-minus"
+                    : "pt-icon-standard pt-icon-plus"
+                }
+              />
+            </a>
+            <EditableText
+              defaultValue={projectName}
+              onConfirm={this.updateProjectName}
+              selectAllOnFocus
+              className="baseline"
+            />
+            {failure} {spinner}
+            <div className="pull-right">
+              <ButtonGroup bsSize="small">
                 {buttons}
                 {/* TODO wire this up (needs API implementation) deleteButton */}
-              </div>
-              <div className="clearfix" />
+              </ButtonGroup>
             </div>
+          </div>
+        }
+      >
+        <Modal show={showModal} onHide={this.hideModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>{projectName} Status</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <pre
+              dangerouslySetInnerHTML={{
+                __html: highlight(
+                  JSON.stringify(
+                    {
+                      project
+                    },
+                    null,
+                    2
+                  ),
+                  "json"
+                )
+              }}
+            />
+          </Modal.Body>
+        </Modal>
 
-            <div
-              className={`modal fade ${name}-status-modal`}
-              tabIndex="-1"
-              role="dialog"
-              aria-labelledby="mySmallModalLabel"
-            >
-              <div className="modal-dialog modal-md" role="document">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <button
-                      type="button"
-                      className="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">×</span>
-                    </button>
-                    <h4 className="modal-title" id="mySmallModalLabel">
-                      {name} Status
-                    </h4>
-                  </div>
-                  <div className="modal-body">
-                    <pre
-                      dangerouslySetInnerHTML={{
-                        __html: JSON.stringify(
-                          {
-                            project
-                          },
-                          null,
-                          2
-                        )
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {shown &&
-              <div className="x_content">
-                <div role="tabpanel">
-                  <ul
-                    id="images"
-                    className="nav nav-tabs bar_tabs"
-                    role="tablist"
+        {shown &&
+          <div className="x_content">
+            <div role="tabpanel">
+              <ul id="images" className="nav nav-tabs bar_tabs" role="tablist">
+                <li
+                  role="presentation"
+                  className={status.state == null ? "active" : null}
+                >
+                  <a
+                    href={`#${name}_images`}
+                    id={`${name}-images-tab`}
+                    role="tab"
+                    data-toggle="tab"
+                    aria-expanded="true"
                   >
-                    <li
-                      role="presentation"
-                      className={status.state == null ? "active" : null}
-                    >
-                      <a
-                        href={`#${name}_images`}
-                        id={`${name}-images-tab`}
-                        role="tab"
-                        data-toggle="tab"
-                        aria-expanded="true"
-                      >
-                        Sources
-                      </a>
-                    </li>
-                    <li
-                      role="presentation"
-                      className={status.state ? "active" : null}
-                    >
-                      <a
-                        href={`#${name}_artifacts`}
-                        id={`${name}-artifacts-tab`}
-                        role="tab"
-                        data-toggle="tab"
-                        aria-expanded="false"
-                      >
-                        Output
-                      </a>
-                    </li>
-                  </ul>
+                    Sources
+                  </a>
+                </li>
+                <li
+                  role="presentation"
+                  className={status.state ? "active" : null}
+                >
+                  <a
+                    href={`#${name}_artifacts`}
+                    id={`${name}-artifacts-tab`}
+                    role="tab"
+                    data-toggle="tab"
+                    aria-expanded="false"
+                  >
+                    Output
+                  </a>
+                </li>
+              </ul>
 
-                  <div className="tab-content">
-                    <ProjectOutputPanel
-                      {...this.props}
-                      active={status.state != null}
-                      artifacts={artifacts}
-                      project={project}
-                    />
+              <div className="tab-content">
+                <ProjectOutputPanel
+                  {...this.props}
+                  active={status.state != null}
+                  artifacts={artifacts}
+                  project={project}
+                />
 
-                    <ProjectSourcesPanel
-                      {...this.props}
-                      active={status.state == null}
-                      getProject={this.getProject}
-                      project={project}
-                      sources={images}
-                    />
-                  </div>
-                </div>
-              </div>}
-          </Form>
-        </div>
-      </div>
+                <ProjectSourcesPanel
+                  {...this.props}
+                  active={status.state == null}
+                  getProject={this.getProject}
+                  project={project}
+                  sources={images}
+                />
+              </div>
+            </div>
+          </div>}
+      </Panel>
     );
   }
 }

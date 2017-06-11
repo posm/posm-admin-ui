@@ -424,11 +424,12 @@ export default class ImageryPane extends React.Component {
               selectAllOnFocus
               className="baseline"
             />
-            {failure} {spinner}
+            {spinner}
             <div className="pull-right">
               <ButtonGroup bsSize="small">
                 {buttons}
               </ButtonGroup>
+              {failure}
             </div>
           </div>
         }

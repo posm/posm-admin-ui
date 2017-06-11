@@ -689,12 +689,13 @@ export default class ProjectPane extends React.Component {
               selectAllOnFocus
               className="baseline"
             />
-            {failure} {spinner}
+            {spinner}
             <div className="pull-right">
               <ButtonGroup bsSize="small">
                 {buttons}
                 {/* TODO wire this up (needs API implementation) deleteButton */}
               </ButtonGroup>
+              {failure}
             </div>
           </div>
         }

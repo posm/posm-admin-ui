@@ -2,6 +2,7 @@ import hljs from "highlight.js";
 import prettyBytes from "pretty-bytes";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
+import { Image } from "react-bootstrap";
 
 import Map from "./Map";
 
@@ -115,7 +116,7 @@ export default class ProjectSourcesPanel extends Component {
         <div className="col-md-4">
           <div className="thumbnail">
             <a href={`${endpoint}/artifacts/odm_orthophoto.tif`}>
-              <img src={`${endpoint}/artifacts/ortho_thumb.png`} />
+              <Image src={`${endpoint}/artifacts/ortho_thumb.png`} />
             </a>
             <div className="caption">
               <dl>

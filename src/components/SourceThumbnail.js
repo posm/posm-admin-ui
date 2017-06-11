@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React, { Component } from "react";
+import { Image } from "react-bootstrap";
 
 export default class SourceThumbnail extends Component {
   static propTypes = {
@@ -14,8 +15,8 @@ export default class SourceThumbnail extends Component {
       <div className="col-md-2">
         <div className="thumbnail">
           <div className="image view view-first">
-            <img
-              className="img-responsive"
+            <Image
+              responsive
               style={{ width: "100%", display: "block" }}
               src={`${endpoint}/images/${image}/thumb`}
             />

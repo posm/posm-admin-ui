@@ -1,4 +1,5 @@
 {
+  "posm": "http://posm.io",
   "imageryEndpoint": "http://posm.io",
   "odmEndpoint": "http://posm.io",
   "refreshInterval": 10000

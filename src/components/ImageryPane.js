@@ -1,3 +1,4 @@
+import { EditableText } from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import React from "react";
 import {
@@ -6,7 +7,8 @@ import {
   ControlLabel,
   Form,
   FormControl,
-  FormGroup
+  FormGroup,
+  Panel
 } from "react-bootstrap";
 
 import Map from "./Map";
@@ -24,7 +26,6 @@ export default class ImageryPane extends React.Component {
   };
 
   state = {
-    editing: false,
     pending: [],
     shown: false,
     showSpinner:
@@ -378,32 +379,18 @@ export default class ImageryPane extends React.Component {
       .catch(err => console.warn(err.stack));
   }
 
-  editName = () => {
+  updateSourceName = sourceName => {
     this.setState({
-      editing: true
+      sourceName
     });
-  };
-
-  updateSourceName = evt => {
-    this.setState({
-      sourceName: evt.target.value
-    });
-  };
-
-  saveSource = evt => {
-    evt.preventDefault();
 
     this.updateMetadata({
-      name: this.state.sourceName
-    });
-
-    this.setState({
-      editing: false
+      name: sourceName
     });
   };
 
   render() {
-    const { editing, shown, source, sourceName } = this.state;
+    const { shown, source, sourceName } = this.state;
     const { name } = source;
 
     // TODO delete button
@@ -413,88 +400,66 @@ export default class ImageryPane extends React.Component {
     const map = this.getMap();
 
     return (
-      <div className="row">
-        <div className="x_panel">
-          <Form inline onSubmit={this.saveSource}>
-            <div className="x_title">
-              <h2>
-                <a tabIndex="-1" onClick={this.toggle}>
-                  <i
-                    className={
-                      shown ? "fa fa-chevron-down" : "fa fa-chevron-right"
-                    }
-                  />&nbsp;
-                </a>
-                {editing
-                  ? <span>
-                      <input
-                        type="text"
-                        placeholder={name}
-                        value={sourceName}
-                        onChange={this.updateSourceName}
-                      />
-                      <Button type="submit" bsStyle="link">
-                        <i className="fa fa-check" />
-                      </Button>
-                    </span>
-                  : <span>
-                      <a tabIndex="-1" onClick={this.toggle}>{sourceName}</a>
-                      {" "}
-                      <a tabIndex="-1" role="button" onClick={this.editName}>
-                        <i className="fa fa-pencil" />
-                      </a>
-                    </span>}
-                {failure} {spinner}
-              </h2>
-
-              <div className="pull-right">
-                {buttons}
-              </div>
-              <div className="clearfix" />
+      <Panel
+        header={
+          <div>
+            <a tabIndex="-1" onClick={this.toggle}>
+              <i
+                className={shown ? "fa fa-chevron-down" : "fa fa-chevron-right"}
+              />&nbsp;
+            </a>
+            <EditableText
+              defaultValue={sourceName}
+              onConfirm={this.updateSourceName}
+              selectAllOnFocus
+            />
+            {failure} {spinner}
+            <div className="pull-right">
+              {buttons}
             </div>
-
-            <div
-              className={`modal fade ${name}-status-modal`}
-              tabIndex="-1"
-              role="dialog"
-              aria-labelledby="mySmallModalLabel"
-            >
-              <div className="modal-dialog modal-md" role="document">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <button
-                      type="button"
-                      className="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">×</span>
-                    </button>
-                    <h4 className="modal-title" id="mySmallModalLabel">
-                      {name} Status
-                    </h4>
-                  </div>
-                  <div className="modal-body">
-                    <pre
-                      dangerouslySetInnerHTML={{
-                        __html: JSON.stringify(
-                          {
-                            source
-                          },
-                          null,
-                          2
-                        )
-                      }}
-                    />
-                  </div>
-                </div>
+          </div>
+        }
+      >
+        <div
+          className={`modal fade ${name}-status-modal`}
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="mySmallModalLabel"
+        >
+          <div className="modal-dialog modal-md" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4 className="modal-title" id="mySmallModalLabel">
+                  {name} Status
+                </h4>
+              </div>
+              <div className="modal-body">
+                <pre
+                  dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(
+                      {
+                        source
+                      },
+                      null,
+                      2
+                    )
+                  }}
+                />
               </div>
             </div>
-          </Form>
-
-          {map}
+          </div>
         </div>
-      </div>
+
+        {map}
+      </Panel>
     );
   }
 }

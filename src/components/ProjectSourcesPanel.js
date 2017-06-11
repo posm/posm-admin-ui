@@ -14,7 +14,7 @@ export default class ProjectSourcesPanel extends React.Component {
 
   static propTypes = {
     active: PropTypes.bool.isRequired,
-    count: PropTypes.integer,
+    count: PropTypes.number,
     endpoint: PropTypes.string.isRequired,
     getProject: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,

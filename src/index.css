@@ -6,6 +6,10 @@ a {
   color: #d33f49;
 }
 
+a, a:hover, a:visited, a:link, a:active, a:focus {
+  text-decoration: none;
+}
+
 label.pt-control {
   font-weight: normal;
 }
@@ -36,6 +40,10 @@ label.pt-control {
 .posm-panel {
   margin-left: 200px;
   margin-right: 20px;
+}
+
+.red {
+  color: red;
 }
 
 .hljs-comment,

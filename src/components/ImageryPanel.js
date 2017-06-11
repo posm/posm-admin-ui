@@ -91,9 +91,9 @@ class ImageryPanel extends Component {
               method: "PUT"
             }}
           />
-        </Panel>
 
-        {imagery}
+          {imagery}
+        </Panel>
       </div>
     );
   }

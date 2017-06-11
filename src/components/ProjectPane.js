@@ -15,7 +15,7 @@ export default class ProjectPane extends React.Component {
     imageryEndpoint: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     project: PropTypes.object.isRequired,
-    refreshInterval: PropTypes.integer
+    refreshInterval: PropTypes.number
   };
 
   state = {
@@ -727,11 +727,8 @@ export default class ProjectPane extends React.Component {
                     </span>
                   : <span>
                       <a tabIndex="-1" onClick={this.toggle}>{projectName}</a>
-                      {" "}<a
-                        tabIndex="-1"
-                        role="button"
-                        onClick={this.editName}
-                      >
+                      {" "}
+                      <a tabIndex="-1" role="button" onClick={this.editName}>
                         <i className="fa fa-pencil" />
                       </a>
                     </span>}

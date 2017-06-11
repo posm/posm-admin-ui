@@ -169,6 +169,7 @@ export default class Index extends React.Component {
         </Modal>
 
         <Panel>
+          { projects.length === 0 &&
           <NonIdealState
             visual="airplane"
             title="No Projects"
@@ -177,7 +178,7 @@ export default class Index extends React.Component {
                 Create a New Project
               </Button>
             }
-          />
+          />}
           {projects}
         </Panel>
       </div>

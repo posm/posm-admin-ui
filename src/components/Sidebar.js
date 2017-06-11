@@ -80,6 +80,15 @@ const Sidebar = ({ children }) =>
       </Link>
     </li>
     <MenuDivider />
+    <MenuItem
+      iconName="pt-icon-book"
+      text="Guide"
+      href="/guide"
+      target="_blank"
+      title="Guide"
+      rel="noopener noreferrer"
+      label={<span className="pt-icon-standard pt-icon-share" />}
+    />
     <li>
       <Link
         to="/admin"

@@ -19,7 +19,7 @@ export default class ImageryPane extends React.Component {
   static propTypes = {
     endpoint: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    refreshInterval: PropTypes.integer,
+    refreshInterval: PropTypes.number,
     source: PropTypes.object.isRequired
   };
 

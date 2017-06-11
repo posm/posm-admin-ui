@@ -7,8 +7,7 @@ import {
   FormControl,
   FormGroup,
   Modal,
-  PageHeader,
-  Panel
+  PageHeader
 } from "react-bootstrap";
 
 import ProjectPane from "../components/ProjectPane";
@@ -60,11 +59,15 @@ export default class Index extends React.Component {
   getRefreshSpinner() {
     const { loading } = this.state;
 
-    if (loading) {
-      return <i className="fa fa-refresh fa-spin" />;
-    }
-
-    return <a onClick={this.getProjects}><i className="fa fa-refresh" /></a>;
+    return (
+      <Button
+        bsStyle="link"
+        bsSize="large"
+        onClick={loading ? null : this.getProjects}
+      >
+        <i className={loading ? "fa fa-refresh fa-spin" : "fa fa-refresh"} />
+      </Button>
+    );
   }
 
   close = () => {
@@ -97,7 +100,7 @@ export default class Index extends React.Component {
         .then(rsp => this.getProjects())
         .catch(err => console.warn(err.stack));
     }
-  }
+  };
 
   render() {
     const { endpoint, imageryEndpoint } = this.props;
@@ -118,7 +121,7 @@ export default class Index extends React.Component {
     return (
       <div className="posm-panel">
         <PageHeader>
-          OpenDroneMap <small>Projects {this.getRefreshSpinner()}</small>
+          OpenDroneMap {this.getRefreshSpinner()}
           <Button
             className="pull-right"
             bsSize="small"
@@ -138,7 +141,7 @@ export default class Index extends React.Component {
             <Modal.Title>New Project</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form horizontal onSubmit={this.saveProject}>
+            <Form onSubmit={this.saveProject}>
               <FormGroup>
                 <FormControl
                   type="text"

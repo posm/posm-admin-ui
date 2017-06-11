@@ -46,15 +46,6 @@ label.pt-control {
   text-decoration: none;
 }
 
-.pt-tab-list {
-  min-width: 120px;
-}
-
-.pt-tab-panel {
-  padding-top: 20px;
-  /*padding-right: 20px;*/
-}
-
 .inline-block {
   display: inline-block;
 }
@@ -62,6 +53,15 @@ label.pt-control {
 .menu {
   position: fixed;
   top: 48px;
+}
+
+.modal {
+  z-index: 10001;
+}
+
+.panel-heading + .panel-body {
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 .posm-panel {

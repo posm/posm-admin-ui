@@ -8,7 +8,6 @@ import Map from "./Map";
 
 export default class ProjectSourcesPanel extends Component {
   static propTypes = {
-    active: PropTypes.bool.isRequired,
     artifacts: PropTypes.array.isRequired,
     endpoint: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -125,8 +124,6 @@ export default class ProjectSourcesPanel extends Component {
   }
 
   render() {
-    const { active, name } = this.props;
-
     // TODO extract these into components
     const preview = this.getPreview();
     const outputs = this.getOutputs();
@@ -134,12 +131,7 @@ export default class ProjectSourcesPanel extends Component {
     const apiOutput = this.getAPIOutput();
 
     return (
-      <div
-        role="tabpanel"
-        className={active ? "tab-pane fade active in" : "tab-pane fade"}
-        id={`${name}_artifacts`}
-        aria-labelledby={`${name}-artifacts-tab`}
-      >
+      <div>
 
         {preview}
 

@@ -1,3 +1,4 @@
+import { NonIdealState } from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import React from "react";
 import Dropzone from "react-dropzone-component";
@@ -13,7 +14,6 @@ export default class ProjectSourcesPanel extends React.Component {
   };
 
   static propTypes = {
-    active: PropTypes.bool.isRequired,
     count: PropTypes.number,
     endpoint: PropTypes.string.isRequired,
     getProject: PropTypes.func.isRequired,
@@ -56,7 +56,7 @@ export default class ProjectSourcesPanel extends React.Component {
   };
 
   render() {
-    const { active, endpoint, getProject, name, sources } = this.props;
+    const { endpoint, getProject, sources } = this.props;
     const { count } = this.state;
 
     const thumbnails = sources
@@ -68,12 +68,7 @@ export default class ProjectSourcesPanel extends React.Component {
     const showAllButton = this.getShowAllButton();
 
     return (
-      <div
-        role="tabpanel"
-        className={active ? "tab-pane fade active in" : "tab-pane fade"}
-        id={`${name}_images`}
-        aria-labelledby={`${name}-images-tab`}
-      >
+      <div>
         <Dropzone
           config={{
             postUrl: `${endpoint}/upload`
@@ -87,7 +82,13 @@ export default class ProjectSourcesPanel extends React.Component {
             acceptedFiles: "image/jpeg,image/png",
             method: "PUT"
           }}
-        />
+        >
+          <NonIdealState
+            className="dz-message"
+            visual="cloud-upload"
+            action="Drop images here to upload"
+          />
+        </Dropzone>
 
         <div className="row sources">
           {thumbnails}

@@ -2,7 +2,6 @@ import { Slider } from "@blueprintjs/core";
 import Leaflet from "leaflet";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
-import { Row } from "react-bootstrap";
 
 import "leaflet/dist/leaflet.css";
 

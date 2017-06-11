@@ -1,4 +1,4 @@
-import { EditableText } from "@blueprintjs/core";
+import { EditableText, Tab2, Tabs2 } from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import React from "react";
 import { Button, ButtonGroup, Modal, Panel } from "react-bootstrap";
@@ -661,12 +661,11 @@ export default class ProjectPane extends React.Component {
   }
 
   render() {
-    const { name } = this.props;
     const { project, projectName, showModal, shown } = this.state;
     const { artifacts, images, status } = project;
 
     const buttons = this.getButtons();
-    const deleteButton = this.getDeleteButton();
+    // const deleteButton = this.getDeleteButton();
     const failure = this.getFailure();
     const spinner = this.getSpinner();
 
@@ -722,57 +721,35 @@ export default class ProjectPane extends React.Component {
         </Modal>
 
         {shown &&
-          <div className="x_content">
-            <div role="tabpanel">
-              <ul id="images" className="nav nav-tabs bar_tabs" role="tablist">
-                <li
-                  role="presentation"
-                  className={status.state == null ? "active" : null}
-                >
-                  <a
-                    href={`#${name}_images`}
-                    id={`${name}-images-tab`}
-                    role="tab"
-                    data-toggle="tab"
-                    aria-expanded="true"
-                  >
-                    Sources
-                  </a>
-                </li>
-                <li
-                  role="presentation"
-                  className={status.state ? "active" : null}
-                >
-                  <a
-                    href={`#${name}_artifacts`}
-                    id={`${name}-artifacts-tab`}
-                    role="tab"
-                    data-toggle="tab"
-                    aria-expanded="false"
-                  >
-                    Output
-                  </a>
-                </li>
-              </ul>
-
-              <div className="tab-content">
-                <ProjectOutputPanel
-                  {...this.props}
-                  active={status.state != null}
-                  artifacts={artifacts}
-                  project={project}
-                />
-
+          <Tabs2
+            id={projectName}
+            // onChange={this.handleNavbarTabChange}
+            defaultSelectedTabId={status.state != null ? "Output" : "Sources"}
+          >
+            <Tab2
+              id="Sources"
+              title="Sources"
+              panel={
                 <ProjectSourcesPanel
                   {...this.props}
-                  active={status.state == null}
                   getProject={this.getProject}
                   project={project}
                   sources={images}
                 />
-              </div>
-            </div>
-          </div>}
+              }
+            />
+            <Tab2
+              id="Output"
+              title="Output"
+              panel={
+                <ProjectOutputPanel
+                  {...this.props}
+                  artifacts={artifacts}
+                  project={project}
+                />
+              }
+            />
+          </Tabs2>}
       </Panel>
     );
   }

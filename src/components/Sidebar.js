@@ -33,7 +33,9 @@ const Sidebar = ({ children }) =>
       target="_blank"
       title="OpenMapKit"
       rel="noopener noreferrer"
+      label={<span className="pt-icon-standard pt-icon-share" />}
     />
+
     <MenuItem
       iconName="pt-icon-clipboard"
       text="Field Papers"
@@ -41,6 +43,7 @@ const Sidebar = ({ children }) =>
       target="_blank"
       title="Field Papers"
       rel="noopener noreferrer"
+      label={<span className="pt-icon-standard pt-icon-share" />}
     />
     <MenuItem
       iconName="pt-icon-send-to-map"
@@ -50,6 +53,7 @@ const Sidebar = ({ children }) =>
       target="_blank"
       title="OpenStreetMap"
       rel="noopener noreferrer"
+      label={<span className="pt-icon-standard pt-icon-share" />}
     />
     <li>
       <Link

@@ -671,6 +671,7 @@ export default class ProjectPane extends React.Component {
 
     return (
       <Panel
+        className="possibly-empty"
         header={
           <div>
             <a tabIndex="-1" onClick={this.toggle} className="toggle">

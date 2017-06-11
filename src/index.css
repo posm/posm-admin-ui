@@ -32,6 +32,10 @@ label.pt-control {
   vertical-align: baseline;
 }
 
+.pt-navbar {
+  z-index: 10000;
+}
+
 .pt-navbar.pt-dark a {
   color: white;
   text-decoration: none;

@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { PageHeader, Panel } from "react-bootstrap";
-import { Event } from "react-socket-io";
 
+import LogViewer from "./LogViewer";
 import NetworkSettingsForm from "./NetworkSettingsForm";
 import { updateNetworkConfig } from "../actions";
 
 class SettingsPanel extends Component {
-  onMessage = msg => console.log(msg.output);
-
   submit = ({ bridged, ssid, wpa, wpa_passphrase }, dispatch) =>
     dispatch(
       updateNetworkConfig(this.props.posm, {
@@ -33,8 +31,10 @@ class SettingsPanel extends Component {
 
     return (
       <div className="posm-panel">
-        <Event event="network-config" handler={this.onMessage} />
         <PageHeader>Network Settings</PageHeader>
+        <Panel>
+          <LogViewer name="network-config" />
+        </Panel>
         <Panel header="Wi-Fi">
           <NetworkSettingsForm
             initialValues={initialValues}

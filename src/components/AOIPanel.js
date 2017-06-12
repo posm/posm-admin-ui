@@ -2,16 +2,14 @@ import { Button, Intent, Radio, RadioGroup } from "@blueprintjs/core";
 import React from "react";
 import { connect } from "react-redux";
 import { PageHeader, Panel } from "react-bootstrap";
-import { Event } from "react-socket-io";
 import { Field, reduxForm } from "redux-form";
 
 import { activateAOI } from "../actions";
+import LogViewer from "./LogViewer";
 import { renderTextInput } from "../lib";
 
 const renderRadio = ({ className, disabled, input, label }) =>
   <Radio className={className} label={label} disabled={disabled} {...input} />;
-
-const onMessage = msg => console.log(msg.output);
 
 const AOIPanel = ({
   aois: { active, available },
@@ -21,8 +19,10 @@ const AOIPanel = ({
   submitting
 }) =>
   <div className="posm-panel">
-    <Event event="aoi-deploy" handler={onMessage} />
     <PageHeader>Areas of Interest</PageHeader>
+    <Panel>
+      <LogViewer name="aoi-deploy" />
+    </Panel>
     <Panel>
       <form onSubmit={handleSubmit}>
         <div className="pt-form-group pt-control-group">

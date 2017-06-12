@@ -2,21 +2,21 @@ import { Button, Intent } from "@blueprintjs/core";
 import React, { Component } from "react";
 import { PageHeader, Panel } from "react-bootstrap";
 import { connect } from "react-redux";
-import { Event } from "react-socket-io";
 import { reduxForm } from "redux-form";
 
 import { backup } from "../actions";
+import LogViewer from "./LogViewer";
 
 class AdminPanel extends Component {
-  onMessage = msg => console.log(msg.output);
-
   render() {
     const { handleSubmit, submitting } = this.props;
 
     return (
       <div className="posm-panel">
-        <Event event="backup-data" handler={this.onMessage} />
         <PageHeader>Backups</PageHeader>
+        <Panel>
+          <LogViewer name="backup-data" />
+        </Panel>
         <Panel>
           <p>
             This will back up the following datasets to

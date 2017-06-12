@@ -11,7 +11,7 @@ const styles = {
   }
 };
 
-const Navbar = ({ aois, children, style }) =>
+const Navbar = ({ aois, osm, posm }) =>
   <nav className="pt-navbar pt-fixed-top pt-dark">
     <div className="pt-navbar-group pt-align-left">
       <div className="pt-navbar-heading">
@@ -20,7 +20,7 @@ const Navbar = ({ aois, children, style }) =>
     </div>
     <div className="pt-navbar-group pt-align-right">
       <a
-        href="/omk/"
+        href={`${posm}/omk/`}
         target="_blank"
         rel="noopener noreferrer"
         className="pt-button pt-minimal"
@@ -31,7 +31,7 @@ const Navbar = ({ aois, children, style }) =>
         />
       </a>
       <a
-        href="/fp/"
+        href={`${posm}/fp/`}
         target="_blank"
         title="Field Papers"
         rel="noopener noreferrer"
@@ -39,9 +39,8 @@ const Navbar = ({ aois, children, style }) =>
       >
         <span className="pt-icon-large pt-icon-clipboard" style={styles.icon} />
       </a>
-      {/* TODO don't hard-code this */}
       <a
-        href="http://osm.posm.io/"
+        href={`http://${osm.fqdn}/`}
         target="_blank"
         title="OpenStreetMap"
         rel="noopener noreferrer"
@@ -55,7 +54,12 @@ const Navbar = ({ aois, children, style }) =>
       <span className="pt-navbar-divider" />
       <Link to="/aois">
         Active AOI:
-        {" "}{aois.active ? <strong>{aois.active}</strong> : <em>none</em>}
+        {" "}
+        {aois.active
+          ? <strong>
+              {aois.available.find(x => x.name === aois.active).label}
+            </strong>
+          : <em>none</em>}
       </Link>
       <span className="pt-navbar-divider" />
       <Link
@@ -69,7 +73,9 @@ const Navbar = ({ aois, children, style }) =>
 Navbar.propTypes = {};
 
 const mapStateToProps = state => ({
-  aois: state.aois
+  aois: state.aois,
+  osm: state.osm,
+  posm: state.config.posm
 });
 
 export default connect(mapStateToProps)(Navbar);

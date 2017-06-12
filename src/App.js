@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "react-router-redux";
 
-import { initializeState } from "./actions";
+import { initializeState, loadPOSMState } from "./actions";
 import AdminPanel from "./components/AdminPanel";
 import AOIPanel from "./components/AOIPanel";
 import DeploymentPanel from "./components/DeploymentPanel";
@@ -28,6 +28,21 @@ class App extends Component {
     dispatch(initializeState());
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    const { dispatch, posm: prevPosm } = this.props;
+    const { posm, refreshInterval } = nextProps;
+
+    if (prevPosm == null && posm != null) {
+      this.stateUpdater = setInterval(() => {
+        dispatch(loadPOSMState(posm));
+      }, refreshInterval);
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.stateUpdater);
+  }
+
   render() {
     return (
       <ConnectedRouter history={history}>
@@ -48,4 +63,9 @@ class App extends Component {
   }
 }
 
-export default connect()(App);
+const mapStateToProps = state => ({
+  posm: state.config.posm,
+  refreshInterval: state.config.refreshInterval
+});
+
+export default connect(mapStateToProps)(App);

@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "react-router-redux";
+import { Socket } from "react-socket-io";
 
 import { initializeState, loadPOSMState } from "./actions";
 import AdminPanel from "./components/AdminPanel";
@@ -20,6 +21,11 @@ import Sidebar from "./components/Sidebar";
 FocusStyleManager.onlyShowFocusOnTabs();
 
 const history = createHistory();
+
+const SOCKET_OPTIONS = {
+  path: "/posm-admin/socket.io",
+  transports: ["websocket"]
+};
 
 class App extends Component {
   componentWillMount() {
@@ -44,7 +50,8 @@ class App extends Component {
   }
 
   render() {
-    return (
+    const { posm } = this.props;
+    const app = (
       <ConnectedRouter history={history}>
         <div>
           <Navbar />
@@ -60,6 +67,16 @@ class App extends Component {
         </div>
       </ConnectedRouter>
     );
+
+    if (posm != null) {
+      return (
+        <Socket uri={posm} options={SOCKET_OPTIONS}>
+          {app}
+        </Socket>
+      );
+    }
+
+    return app;
   }
 }
 

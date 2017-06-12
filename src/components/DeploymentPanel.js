@@ -2,6 +2,7 @@ import { Button, Intent } from "@blueprintjs/core";
 import React, { Component } from "react";
 import { PageHeader, Panel } from "react-bootstrap";
 import { connect } from "react-redux";
+import { Event } from "react-socket-io";
 import { Field, reduxForm } from "redux-form";
 
 import { createDeployment } from "../actions";
@@ -13,12 +14,15 @@ const styles = {
   }
 };
 
+const onMessage = msg => console.log(msg.output);
+
 class DeploymentPanel extends Component {
   render() {
     const { deployments, handleSubmit, posm, submitting } = this.props;
 
     return (
       <div className="posm-panel">
+        <Event event="atlas-deploy" handler={onMessage} />
         <PageHeader>OpenMapKit Deployments</PageHeader>
         <Panel>
           <p>

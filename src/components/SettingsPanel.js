@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { PageHeader, Panel } from "react-bootstrap";
+import { Event } from "react-socket-io";
 
 import NetworkSettingsForm from "./NetworkSettingsForm";
 import { updateNetworkConfig } from "../actions";
 
 class SettingsPanel extends Component {
-  static propTypes = {};
+  onMessage = msg => console.log(msg.output);
 
   submit = ({ bridged, ssid, wpa, wpa_passphrase }, dispatch) =>
     dispatch(
@@ -32,6 +33,7 @@ class SettingsPanel extends Component {
 
     return (
       <div className="posm-panel">
+        <Event event="network-config" handler={this.onMessage} />
         <PageHeader>Network Settings</PageHeader>
         <Panel header="Wi-Fi">
           <NetworkSettingsForm

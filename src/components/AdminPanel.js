@@ -1,8 +1,12 @@
 import { Button, Intent } from "@blueprintjs/core";
 import React from "react";
 import { PageHeader, Panel } from "react-bootstrap";
+import { connect } from "react-redux";
+import { reduxForm } from "redux-form";
 
-const AdminPanel = () =>
+import { backup } from "../actions";
+
+const AdminPanel = ({ handleSubmit, submitting }) =>
   <div className="posm-panel">
     <PageHeader>Backups</PageHeader>
     <Panel>
@@ -21,9 +25,11 @@ const AdminPanel = () =>
         <li>Field Papers snapshots</li>
         <li>POSM AOIs</li>
       </ul>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Button
           text="Backup Data"
+          type="submit"
+          disabled={submitting}
           intent={Intent.PRIMARY}
           rightIconName="arrow-right"
         />
@@ -31,6 +37,13 @@ const AdminPanel = () =>
     </Panel>
   </div>;
 
-AdminPanel.propTypes = {};
+const mapStateToProps = state => ({
+  posm: state.config.posm
+});
 
-export default AdminPanel;
+export default connect(mapStateToProps)(
+  reduxForm({
+    form: "backup",
+    onSubmit: (values, dispatch, { posm }) => dispatch(backup(posm, values))
+  })(AdminPanel)
+);

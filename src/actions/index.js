@@ -55,6 +55,15 @@ export const activateAOI = (posm, { aoi, url }) => dispatch => {
   }).then(rsp => dispatch(loadPOSMState(posm)));
 };
 
+export const backup = posm => dispatch =>
+  fetch(`${posm}/posm-admin/backup-data`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    }
+    // TODO monitor state
+  }).catch(err => console.warn(err));
+
 export const createDeployment = (posm, url) => dispatch =>
   fetch(`${posm}/posm-admin/atlas-deploy`, {
     method: "POST",

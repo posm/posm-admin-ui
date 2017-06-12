@@ -29,9 +29,7 @@ export const initializeState = () => dispatch =>
 
       dispatch(loadPOSMState(config.posm));
     })
-    .catch(err => {
-      console.warn(err.stack);
-    });
+    .catch(err => console.warn(err));
 
 // aoi:bend_posm_export
 export const activateAOI = (posm, { aoi, url }) => dispatch => {
@@ -52,7 +50,9 @@ export const activateAOI = (posm, { aoi, url }) => dispatch => {
     },
     body: JSON.stringify(body)
     // TODO monitor state
-  }).then(rsp => dispatch(loadPOSMState(posm)));
+  })
+    .then(rsp => dispatch(loadPOSMState(posm)))
+    .catch(err => console.warn(err));
 };
 
 export const backup = posm => dispatch =>
@@ -74,7 +74,9 @@ export const createDeployment = (posm, url) => dispatch =>
       url
     })
     // TODO monitor state
-  }).then(rsp => dispatch(loadPOSMState(posm)));
+  })
+    .then(rsp => dispatch(loadPOSMState(posm)))
+    .catch(err => console.warn(err));
 
 export const updateNetworkConfig = (posm, body) => dispatch =>
   fetch(`${posm}/posm-admin/network-config`, {
@@ -84,4 +86,6 @@ export const updateNetworkConfig = (posm, body) => dispatch =>
     },
     body: JSON.stringify(body)
     // TODO monitor state
-  }).then(rsp => dispatch(loadPOSMState(posm)));
+  })
+    .then(rsp => dispatch(loadPOSMState(posm)))
+    .catch(err => console.warn(err));

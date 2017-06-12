@@ -3,7 +3,7 @@ import { Image } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import posmLogo from "../images/posm.png";
+import posmLogo from "../images/posm@2x.png";
 
 const styles = {
   icon: {
@@ -15,7 +15,7 @@ const Navbar = ({ aois, osm, posm }) =>
   <nav className="pt-navbar pt-fixed-top pt-dark">
     <div className="pt-navbar-group pt-align-left">
       <div className="pt-navbar-heading">
-        <Link to="/" title="Home"><Image src={posmLogo} /></Link>
+        <Link to="/" title="Home"><Image src={posmLogo} height={32} /></Link>
       </div>
     </div>
     <div className="pt-navbar-group pt-align-right">

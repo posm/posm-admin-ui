@@ -63,6 +63,7 @@ class DeploymentPanel extends Component {
             (from <a href="http://fieldpapers.org/">fieldpapers.org</a> or
             elsewhere).
           </p>
+          <p>TODO show output</p>
           <form onSubmit={handleSubmit}>
             <div className="pt-form-group pt-control-group">
               <Field

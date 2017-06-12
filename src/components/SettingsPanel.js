@@ -3,14 +3,14 @@ import { connect } from "react-redux";
 import { PageHeader, Panel } from "react-bootstrap";
 
 import NetworkSettingsForm from "./NetworkSettingsForm";
-import updateNetworkConfig from "../actions";
+import { updateNetworkConfig } from "../actions";
 
 class SettingsPanel extends Component {
   static propTypes = {};
 
-  submit = ({ bridged, ssid, wpa, wpa_passphrase }, dispatch, { posm }) =>
+  submit = ({ bridged, ssid, wpa, wpa_passphrase }, dispatch) =>
     dispatch(
-      updateNetworkConfig(posm, {
+      updateNetworkConfig(this.props.posm, {
         wifi: {
           ssid,
           wpa,

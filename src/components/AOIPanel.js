@@ -2,28 +2,59 @@ import { Button, Intent, Radio, RadioGroup } from "@blueprintjs/core";
 import React from "react";
 import { connect } from "react-redux";
 import { PageHeader, Panel } from "react-bootstrap";
+import { Field, reduxForm } from "redux-form";
 
-const AOIPanel = ({ aois: { active, available } }) =>
+import { activateAOI } from "../actions";
+import { renderTextInput } from "../lib";
+
+// http://posm.local/posm-admin/aoi-deploy
+// url: url
+
+const renderRadio = ({ className, disabled, input, label }) =>
+  <Radio className={className} label={label} disabled={disabled} {...input} />;
+
+const AOIPanel = ({
+  aois: { active, available },
+  change,
+  form,
+  handleSubmit,
+  submitting
+}) =>
   <div className="posm-panel">
     <PageHeader>Areas of Interest</PageHeader>
     <Panel>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="pt-form-group pt-control-group">
-          <RadioGroup label="Active AOI" selectedValue={active}>
+          <RadioGroup label="Active AOI">
             {available.map(({ label, name }, idx) =>
-              <Radio key={idx} label={label} value={name} />
+              <Field
+                key={idx}
+                name="aoi"
+                component={renderRadio}
+                type="radio"
+                label={label}
+                value={name}
+              />
             )}
-            <Radio label="Other:" value="other" />
-            <input
-              className="pt-input"
-              type="text"
+            <Field
+              name="aoi"
+              component={renderRadio}
+              type="radio"
+              label="Other:"
+              value="other"
+            />
+            <Field
+              name="url"
+              component={renderTextInput}
               placeholder="POSM bundle URL"
-              dir="auto"
+              onFocus={() => change("aoi", "other")}
             />
           </RadioGroup>
         </div>
         <Button
           text="Activate"
+          type="submit"
+          disabled={submitting}
           intent={Intent.PRIMARY}
           rightIconName="arrow-right"
         />
@@ -31,10 +62,19 @@ const AOIPanel = ({ aois: { active, available } }) =>
     </Panel>
   </div>;
 
-AOIPanel.propTypes = {};
-
 const mapStateToProps = state => ({
-  aois: state.aois
+  aois: state.aois,
+  initialValues: {
+    aoi: state.aois.active
+  },
+  posm: state.config.posm
 });
 
-export default connect(mapStateToProps)(AOIPanel);
+export default connect(mapStateToProps)(
+  reduxForm({
+    enableReinitialize: true,
+    form: "activateAOI",
+    onSubmit: (values, dispatch, { posm }) =>
+      dispatch(activateAOI(posm, values))
+  })(AOIPanel)
+);

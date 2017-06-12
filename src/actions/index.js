@@ -33,6 +33,28 @@ export const initializeState = () => dispatch =>
       console.warn(err.stack);
     });
 
+// aoi:bend_posm_export
+export const activateAOI = (posm, { aoi, url }) => dispatch => {
+  let body = {
+    url
+  };
+
+  if (aoi !== "other") {
+    body = {
+      aoi
+    };
+  }
+
+  fetch(`${posm}/posm-admin/aoi-deploy`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(body)
+    // TODO monitor state
+  }).then(rsp => dispatch(loadPOSMState(posm)));
+};
+
 export const createDeployment = (posm, url) => dispatch =>
   fetch(`${posm}/posm-admin/atlas-deploy`, {
     method: "POST",
@@ -42,6 +64,7 @@ export const createDeployment = (posm, url) => dispatch =>
     body: JSON.stringify({
       url
     })
+    // TODO monitor state
   }).then(rsp => dispatch(loadPOSMState(posm)));
 
 export const updateNetworkConfig = (posm, body) => dispatch =>
@@ -51,4 +74,5 @@ export const updateNetworkConfig = (posm, body) => dispatch =>
       "Content-Type": "application/json"
     },
     body: JSON.stringify(body)
-  });
+    // TODO monitor state
+  }).then(rsp => dispatch(loadPOSMState(posm)));

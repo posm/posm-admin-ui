@@ -63,7 +63,12 @@ export default reduxForm({
     const { wpa, wpa_passphrase } = values;
     const errors = {};
 
-    if (wpa && (wpa_passphrase.length < 8 || wpa_passphrase.length > 63)) {
+    if (
+      wpa &&
+      (wpa_passphrase == null ||
+        wpa_passphrase.length < 8 ||
+        wpa_passphrase.length > 63)
+    ) {
       errors.wpa_passphrase = "Must be between 8 and 63 characters.";
     }
 

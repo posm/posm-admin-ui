@@ -5,9 +5,18 @@ import { Button as BSButton, PageHeader, Panel, Well } from "react-bootstrap";
 import { Event } from "react-socket-io";
 import { Field, reduxForm } from "redux-form";
 
-import { activateAOI } from "../actions";
+import AOIFiles from "./AOIFiles";
 import LogModal from "./LogModal";
+import { activateAOI } from "../actions";
+import { getAOIFiles } from "../selectors";
 import { renderTextInput } from "../lib";
+
+const styles = {
+  ul: {
+    listStyle: "none",
+    paddingLeft: 10
+  }
+};
 
 const renderRadio = ({ className, disabled, input, label }) =>
   <Radio className={className} label={label} disabled={disabled} {...input} />;
@@ -48,10 +57,12 @@ class AOIPanel extends Component {
 
   render() {
     const {
+      aoiFiles,
       aois: { available },
       change,
       form,
       handleSubmit,
+      posm,
       submitting
     } = this.props;
     const { running, showLogs, statusMessage } = this.state;
@@ -76,13 +87,18 @@ class AOIPanel extends Component {
           <form onSubmit={handleSubmit}>
             <div className="pt-form-group pt-control-group">
               <RadioGroup label="Active AOI">
-                {available.map(({ label, name }, idx) =>
+                {available.map(({ description, name, title }, idx) =>
                   <Field
                     key={idx}
                     name="aoi"
                     component={renderRadio}
                     type="radio"
-                    label={label}
+                    label={
+                      <span>
+                        {title}
+                        {description && <span> - <em>{description}</em></span>}
+                      </span>
+                    }
                     value={name}
                   />
                 )}
@@ -110,12 +126,14 @@ class AOIPanel extends Component {
             />
           </form>
         </Panel>
+        <AOIFiles files={aoiFiles} posm={posm} style={styles.ul} />
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  aoiFiles: getAOIFiles(state),
   aois: state.aois,
   complete: state.tasks.deployments.complete,
   initialValues: {

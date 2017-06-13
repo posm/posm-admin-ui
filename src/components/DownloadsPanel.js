@@ -1,8 +1,11 @@
-import { basename } from "path";
+import path from "path";
 
 import React from "react";
 import { PageHeader, Panel } from "react-bootstrap";
 import { connect } from "react-redux";
+
+import AOIFiles from "./AOIFiles";
+import { getAOIFiles } from "../selectors";
 
 const availableDownloads = [
   {
@@ -44,22 +47,28 @@ const availableDownloads = [
 ];
 
 const styles = {
-  ul: {
+  outerUL: {
     columnCount: 3,
-    listStyle: "none"
+    listStyle: "none",
+    paddingLeft: 10
+  },
+  ul: {
+    listStyle: "none",
+    paddingLeft: 10
   }
 };
 
-const DownloadsPanel = ({ posm, publicFiles }) =>
+const DownloadsPanel = ({ aoiFiles, posm, publicFiles }) =>
   <div className="posm-panel">
     <PageHeader>Downloads</PageHeader>
     <Panel header="System">
-      <ul style={styles.ul}>
+      <ul style={styles.outerUL}>
         {availableDownloads.map((x, idx) =>
           <li key={idx}><a href={x.url}>{x.name}</a></li>
         )}
       </ul>
     </Panel>
+    <AOIFiles files={aoiFiles} posm={posm} style={styles.ul} />
     {publicFiles.length > 0 &&
       <Panel header="Misc.">
         <p>
@@ -67,10 +76,12 @@ const DownloadsPanel = ({ posm, publicFiles }) =>
           {" "}<a href="smb://posm/public"><code>smb://posm/public</code></a>
           {" "}(Windows: <code>\\POSM\public</code>).
         </p>
-        <ul style={styles.ul}>
-          {publicFiles.map((path, idx) =>
+        <ul style={styles.outerUL}>
+          {publicFiles.map((file, idx) =>
             <li key={idx}>
-              <a href={`${posm}/public${path}`}>{basename(path)}</a>
+              <a href={`${posm}/public${file}`}>
+                <code>{path.basename(file)}</code>
+              </a>
             </li>
           )}
         </ul>
@@ -78,6 +89,7 @@ const DownloadsPanel = ({ posm, publicFiles }) =>
   </div>;
 
 const mapStateToProps = state => ({
+  aoiFiles: getAOIFiles(state),
   posm: state.config.posm,
   publicFiles: state.publicFiles
 });

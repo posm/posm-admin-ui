@@ -16,12 +16,10 @@ class NetworkSettingsForm extends Component {
     return (
       <form onSubmit={handleSubmit}>
         <div className="pt-form-group pt-control-group">
-          {/* TODO not possible to expose in posm-admin yet */}
           <Field
             name="bridged"
             component={renderSwitch}
             type="checkbox"
-            disabled
             label="Bridged"
           />
           <Field

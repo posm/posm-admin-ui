@@ -30,12 +30,26 @@ class SettingsPanel extends Component {
     });
   };
 
+  componentWillUpdate(nextProps, nextState) {
+    const { network: { changing } } = nextProps;
+    const { running } = this.state;
+
+    if (running && !changing) {
+      // reset running since we probably dropped a message
+      this.setState({
+        running: false
+      });
+    }
+  }
+
   render() {
-    const { network: { wifi: { ssid, wpa, wpa_passphrase } } } = this.props;
+    const {
+      network: { bridged, wifi: { ssid, wpa, wpa_passphrase } }
+    } = this.props;
     const { running, statusMessage } = this.state;
 
     const initialValues = {
-      bridged: false,
+      bridged,
       ssid,
       wpa,
       wpa_passphrase

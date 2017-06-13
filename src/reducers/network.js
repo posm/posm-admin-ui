@@ -12,7 +12,8 @@ export default (state = initialState, { type, remoteState }) => {
     case types.RECEIVE_POSM_STATE:
       return {
         ...state,
-        ...remoteState.network
+        ...remoteState.network,
+        changing: remoteState["network-config"].initialized
       };
 
     default:

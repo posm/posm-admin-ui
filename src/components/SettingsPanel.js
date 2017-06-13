@@ -33,10 +33,10 @@ class SettingsPanel extends Component {
     );
 
   onMessage = message => {
-    const { status: { complete, initialized, msg } } = message;
+    const { status: { msg, running } } = message;
 
     this.setState({
-      running: initialized && !complete,
+      running,
       statusMessage: msg
     });
   };

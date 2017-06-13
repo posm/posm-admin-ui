@@ -11,7 +11,7 @@
     "highlight.js": "^9.12.0",
     "history": "^4.6.1",
     "leaflet": "^1.0.3",
-    "pretty-bytes": "^4.0.2",
+    "pretty-bytes": "^3.0.1",
     "react": "^15.5.4",
     "react-addons-css-transition-group": "^15.5.2",
     "react-bootstrap": "^0.31.0",

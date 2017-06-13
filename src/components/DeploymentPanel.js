@@ -37,6 +37,18 @@ class DeploymentPanel extends Component {
     });
   };
 
+  componentWillUpdate(nextProps, nextState) {
+    const { complete } = nextProps;
+    const { running: wasRunning } = this.state;
+
+    if (wasRunning && complete) {
+      // reset running since we probably dropped a message
+      this.setState({
+        running: false
+      });
+    }
+  }
+
   render() {
     const { deployments, handleSubmit, posm, submitting } = this.props;
     const { running, showLogs, statusMessage } = this.state;
@@ -126,6 +138,7 @@ class DeploymentPanel extends Component {
 }
 
 const mapStateToProps = state => ({
+  complete: state.tasks.deployments.complete,
   deployments: state.deployments,
   posm: state.config.posm
 });

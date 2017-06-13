@@ -7,6 +7,7 @@ import config from "./config";
 import deployments from "./deployments";
 import network from "./network";
 import osm from "./osm";
+import tasks from "./tasks";
 
 export default combineReducers({
   aois,
@@ -15,5 +16,6 @@ export default combineReducers({
   form,
   network,
   osm,
-  router: routerReducer
+  router: routerReducer,
+  tasks
 });

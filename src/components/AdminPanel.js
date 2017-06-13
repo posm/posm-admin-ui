@@ -30,6 +30,18 @@ class AdminPanel extends Component {
     });
   };
 
+  componentWillUpdate(nextProps, nextState) {
+    const { complete } = nextProps;
+    const { running: wasRunning } = this.state;
+
+    if (wasRunning && complete) {
+      // reset running since we probably dropped a message
+      this.setState({
+        running: false
+      });
+    }
+  }
+
   render() {
     const { handleSubmit, submitting } = this.props;
     const { running, showLogs, statusMessage } = this.state;
@@ -83,6 +95,7 @@ class AdminPanel extends Component {
 }
 
 const mapStateToProps = state => ({
+  complete: state.tasks.deployments.complete,
   posm: state.config.posm
 });
 

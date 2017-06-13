@@ -34,6 +34,18 @@ class AOIPanel extends Component {
     });
   };
 
+  componentWillUpdate(nextProps, nextState) {
+    const { complete } = nextProps;
+    const { running: wasRunning } = this.state;
+
+    if (wasRunning && complete) {
+      // reset running since we probably dropped a message
+      this.setState({
+        running: false
+      });
+    }
+  }
+
   render() {
     const {
       aois: { available },
@@ -105,6 +117,7 @@ class AOIPanel extends Component {
 
 const mapStateToProps = state => ({
   aois: state.aois,
+  complete: state.tasks.deployments.complete,
   initialValues: {
     aoi: state.aois.active
   },

@@ -67,7 +67,8 @@ class AdminPanel extends Component {
             This will back up the following datasets to
             {" "}<code>/opt/data/backups</code> on the POSM device (available as
             {" "}
-            <a href="smb://posm/backups"><code>smb://posm/backups</code></a>):
+            <a href="smb://posm/backups"><code>smb://posm/backups</code></a>
+            {" "}(Windows: <code>\\POSM\backups</code>)):
           </p>
           <ul>
             <li>ODK/OMK forms</li>

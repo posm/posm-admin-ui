@@ -11,7 +11,7 @@ class NetworkSettingsForm extends Component {
   static propTypes = {};
 
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, running, submitting } = this.props;
 
     return (
       <form onSubmit={handleSubmit}>
@@ -48,7 +48,7 @@ class NetworkSettingsForm extends Component {
         <Button
           text="Apply"
           type="submit"
-          disabled={submitting}
+          disabled={submitting || running}
           intent={Intent.PRIMARY}
           rightIconName="arrow-right"
         />

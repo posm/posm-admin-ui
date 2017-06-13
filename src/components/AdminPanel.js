@@ -1,16 +1,15 @@
 import { Button, Intent } from "@blueprintjs/core";
 import React, { Component } from "react";
-import { Button as BSButton, PageHeader, Panel } from "react-bootstrap";
+import { Button as BSButton, PageHeader, Panel, Well } from "react-bootstrap";
 import { connect } from "react-redux";
+import { Event } from "react-socket-io";
 import { reduxForm } from "redux-form";
 
 import { backup } from "../actions";
 import LogModal from "./LogModal";
 
 class AdminPanel extends Component {
-  state = {
-    showLogs: false
-  };
+  state = {};
 
   showLogs = () =>
     this.setState({
@@ -22,12 +21,22 @@ class AdminPanel extends Component {
       showLogs: false
     });
 
+  onMessage = message => {
+    const { status: { complete, initialized, msg } } = message;
+
+    this.setState({
+      running: initialized && !complete,
+      statusMessage: msg
+    });
+  };
+
   render() {
     const { handleSubmit, submitting } = this.props;
-    const { showLogs } = this.state;
+    const { running, showLogs, statusMessage } = this.state;
 
     return (
       <div className="posm-panel">
+        <Event event="backup-data" handler={this.onMessage} />
         <PageHeader>
           Backups
           <BSButton
@@ -41,6 +50,7 @@ class AdminPanel extends Component {
         </PageHeader>
         <LogModal onHide={this.hideLogs} event="backup-data" show={showLogs} />
         <Panel>
+          {running && <Well bsSize="small">{statusMessage}</Well>}
           <p>
             This will back up the following datasets to
             {" "}<code>/opt/data/backups</code> on the POSM device (available as
@@ -61,7 +71,7 @@ class AdminPanel extends Component {
             <Button
               text="Backup Data"
               type="submit"
-              disabled={submitting}
+              disabled={submitting || running}
               intent={Intent.PRIMARY}
               rightIconName="arrow-right"
             />

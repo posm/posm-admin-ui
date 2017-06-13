@@ -1,7 +1,8 @@
 import { Button, Intent } from "@blueprintjs/core";
 import React, { Component } from "react";
-import { Button as BSButton, PageHeader, Panel } from "react-bootstrap";
+import { Button as BSButton, PageHeader, Panel, Well } from "react-bootstrap";
 import { connect } from "react-redux";
+import { Event } from "react-socket-io";
 import { Field, reduxForm } from "redux-form";
 
 import { createDeployment } from "../actions";
@@ -15,9 +16,7 @@ const styles = {
 };
 
 class DeploymentPanel extends Component {
-  state = {
-    showLogs: false
-  };
+  state = {};
 
   showLogs = () =>
     this.setState({
@@ -29,12 +28,22 @@ class DeploymentPanel extends Component {
       showLogs: false
     });
 
+  onMessage = message => {
+    const { status: { complete, initialized, msg } } = message;
+
+    this.setState({
+      running: initialized && !complete,
+      statusMessage: msg
+    });
+  };
+
   render() {
     const { deployments, handleSubmit, posm, submitting } = this.props;
-    const { showLogs } = this.state;
+    const { running, showLogs, statusMessage } = this.state;
 
     return (
       <div className="posm-panel">
+        <Event event="atlas-deploy" handler={this.onMessage} />
         <PageHeader>
           OpenMapKit Deployments
           <BSButton
@@ -80,6 +89,7 @@ class DeploymentPanel extends Component {
             : <p>None loaded.</p>}
           <hr />
           <h3>Create a New Deployment</h3>
+          {running && <Well bsSize="small">{statusMessage}</Well>}
           <p>
             To create a new OMK Deployment, either create an atlas using the
             {" "}
@@ -104,7 +114,7 @@ class DeploymentPanel extends Component {
             <Button
               text="Create"
               type="submit"
-              disabled={submitting}
+              disabled={submitting || running}
               intent={Intent.PRIMARY}
               rightIconName="arrow-right"
             />

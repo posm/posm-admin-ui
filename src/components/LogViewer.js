@@ -10,7 +10,6 @@ const styles = {
 
 export default class LogViewer extends Component {
   onMessage = msg => {
-    console.log(msg.output);
     this.terminal.writeln(msg.output.replace(/\n/, "\r\n"));
   };
 

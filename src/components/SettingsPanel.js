@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button as BSButton, PageHeader, Panel } from "react-bootstrap";
+import { Button as BSButton, PageHeader, Panel, Well } from "react-bootstrap";
+import { Event } from "react-socket-io";
 
 import LogModal from "./LogModal";
 import NetworkSettingsForm from "./NetworkSettingsForm";
 import { updateNetworkConfig } from "../actions";
 
 class SettingsPanel extends Component {
-  state = {
-    showLogs: false
-  };
+  state = {};
 
   showLogs = () =>
     this.setState({
@@ -33,9 +32,18 @@ class SettingsPanel extends Component {
       })
     );
 
+  onMessage = message => {
+    const { status: { complete, initialized, msg } } = message;
+
+    this.setState({
+      running: initialized && !complete,
+      statusMessage: msg
+    });
+  };
+
   render() {
     const { network: { wifi: { ssid, wpa, wpa_passphrase } } } = this.props;
-    const { showLogs } = this.state;
+    const { running, showLogs, statusMessage } = this.state;
 
     const initialValues = {
       bridged: false,
@@ -46,6 +54,7 @@ class SettingsPanel extends Component {
 
     return (
       <div className="posm-panel">
+        <Event event="network-config" handler={this.onMessage} />
         <PageHeader>
           Network Settings
           <BSButton
@@ -63,10 +72,12 @@ class SettingsPanel extends Component {
           show={showLogs}
         />
         <Panel header="Wi-Fi">
+          {running && <Well bsSize="small">{statusMessage}</Well>}
           <NetworkSettingsForm
             initialValues={initialValues}
             enableReinitialize
             onSubmit={this.submit}
+            running={running}
           />
         </Panel>
       </div>

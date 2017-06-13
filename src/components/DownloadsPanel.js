@@ -1,6 +1,8 @@
-import React from "react";
+import { basename } from "path";
 
+import React from "react";
 import { PageHeader, Panel } from "react-bootstrap";
+import { connect } from "react-redux";
 
 const availableDownloads = [
   {
@@ -48,18 +50,36 @@ const styles = {
   }
 };
 
-const DownloadsPanel = () =>
+const DownloadsPanel = ({ posm, publicFiles }) =>
   <div className="posm-panel">
     <PageHeader>Downloads</PageHeader>
-    <Panel>
+    <Panel header="System">
       <ul style={styles.ul}>
         {availableDownloads.map((x, idx) =>
           <li key={idx}><a href={x.url}>{x.name}</a></li>
         )}
       </ul>
     </Panel>
+    {publicFiles.length > 0 &&
+      <Panel header="Misc.">
+        <p>
+          To add to this list, copy files to
+          {" "}<a href="smb://posm/public"><code>smb://posm/public</code></a>
+          {" "}(Windows: <code>\\POSM\public</code>).
+        </p>
+        <ul style={styles.ul}>
+          {publicFiles.map((path, idx) =>
+            <li key={idx}>
+              <a href={`${posm}/public${path}`}>{basename(path)}</a>
+            </li>
+          )}
+        </ul>
+      </Panel>}
   </div>;
 
-DownloadsPanel.propTypes = {};
+const mapStateToProps = state => ({
+  posm: state.config.posm,
+  publicFiles: state.publicFiles
+});
 
-export default DownloadsPanel;
+export default connect(mapStateToProps)(DownloadsPanel);

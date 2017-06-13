@@ -7,6 +7,7 @@ import config from "./config";
 import deployments from "./deployments";
 import network from "./network";
 import osm from "./osm";
+import publicFiles from "./publicFiles";
 import tasks from "./tasks";
 
 export default combineReducers({
@@ -16,6 +17,7 @@ export default combineReducers({
   form,
   network,
   osm,
+  publicFiles,
   router: routerReducer,
   tasks
 });

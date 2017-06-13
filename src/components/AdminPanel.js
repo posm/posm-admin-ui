@@ -39,7 +39,7 @@ class AdminPanel extends Component {
             Show Logs
           </BSButton>
         </PageHeader>
-        <LogModal onHide={this.hideLogs} name="backup-data" show={showLogs} />
+        <LogModal onHide={this.hideLogs} event="backup-data" show={showLogs} />
         <Panel>
           <p>
             This will back up the following datasets to

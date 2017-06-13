@@ -59,7 +59,7 @@ class SettingsPanel extends Component {
         </PageHeader>
         <LogModal
           onHide={this.hideLogs}
-          name="network-config"
+          event="network-config"
           show={showLogs}
         />
         <Panel header="Wi-Fi">

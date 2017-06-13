@@ -49,7 +49,7 @@ class AOIPanel extends Component {
             Show Logs
           </BSButton>
         </PageHeader>
-        <LogModal show={showLogs} onHide={this.hideLogs} name="aoi-deploy" />
+        <LogModal show={showLogs} onHide={this.hideLogs} event="aoi-deploy" />
         <Panel>
           <form onSubmit={handleSubmit}>
             <div className="pt-form-group pt-control-group">

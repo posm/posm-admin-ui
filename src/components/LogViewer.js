@@ -31,7 +31,7 @@ export default class LogViewer extends Component {
   }
 
   render() {
-    const { name, style } = this.props;
+    const { event, style } = this.props;
 
     return (
       <div
@@ -39,7 +39,7 @@ export default class LogViewer extends Component {
         ref={c => (this.container = c)}
         style={{ ...styles, ...style }}
       >
-        <Event event={name} handler={this.onMessage} />
+        <Event event={event} handler={this.onMessage} />
       </div>
     );
   }

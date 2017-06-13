@@ -46,7 +46,7 @@ class DeploymentPanel extends Component {
             Show Logs
           </BSButton>
         </PageHeader>
-        <LogModal onHide={this.hideLogs} name="atlas-deploy" show={showLogs} />
+        <LogModal onHide={this.hideLogs} event="atlas-deploy" show={showLogs} />
         <Panel>
           <p>
             Deployments are bundles of OSM XML data and MBTiles archives

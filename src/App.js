@@ -1,5 +1,5 @@
 import { FocusStyleManager } from "@blueprintjs/core";
-import createHistory from "history/createBrowserHistory";
+import createHistory from "history/createHashHistory";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Route } from "react-router-dom";

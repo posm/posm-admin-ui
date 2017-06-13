@@ -15,7 +15,7 @@ export default ({ files, posm, style }) =>
           <ul style={style}>
             {contents.map(({ file, type }, jdx) =>
               <li key={`${idx}-${jdx}`}>
-                <a href={`${posm}/aoi/{file}`}>
+                <a href={`${posm}/aoi/${file}`}>
                   <code>{path.basename(file)}</code> - {type}
                 </a>
               </li>

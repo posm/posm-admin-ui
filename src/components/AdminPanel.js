@@ -1,22 +1,45 @@
 import { Button, Intent } from "@blueprintjs/core";
 import React, { Component } from "react";
-import { PageHeader, Panel } from "react-bootstrap";
+import { Button as BSButton, PageHeader, Panel } from "react-bootstrap";
 import { connect } from "react-redux";
 import { reduxForm } from "redux-form";
 
 import { backup } from "../actions";
-import LogViewer from "./LogViewer";
+import LogModal from "./LogModal";
 
 class AdminPanel extends Component {
+  state = {
+    showLogs: false
+  };
+
+  showLogs = () =>
+    this.setState({
+      showLogs: true
+    });
+
+  hideLogs = () =>
+    this.setState({
+      showLogs: false
+    });
+
   render() {
     const { handleSubmit, submitting } = this.props;
+    const { showLogs } = this.state;
 
     return (
       <div className="posm-panel">
-        <PageHeader>Backups</PageHeader>
-        <Panel>
-          <LogViewer name="backup-data" />
-        </Panel>
+        <PageHeader>
+          Backups
+          <BSButton
+            className="pull-right"
+            bsSize="small"
+            bsStyle="warning"
+            onClick={this.showLogs}
+          >
+            Show Logs
+          </BSButton>
+        </PageHeader>
+        <LogModal onHide={this.hideLogs} name="backup-data" show={showLogs} />
         <Panel>
           <p>
             This will back up the following datasets to

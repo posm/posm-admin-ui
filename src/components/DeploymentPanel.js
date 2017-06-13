@@ -1,11 +1,11 @@
 import { Button, Intent } from "@blueprintjs/core";
 import React, { Component } from "react";
-import { PageHeader, Panel } from "react-bootstrap";
+import { Button as BSButton, PageHeader, Panel } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
 import { createDeployment } from "../actions";
-import LogViewer from "./LogViewer";
+import LogModal from "./LogModal";
 import { renderTextInput } from "../lib";
 
 const styles = {
@@ -15,15 +15,38 @@ const styles = {
 };
 
 class DeploymentPanel extends Component {
+  state = {
+    showLogs: false
+  };
+
+  showLogs = () =>
+    this.setState({
+      showLogs: true
+    });
+
+  hideLogs = () =>
+    this.setState({
+      showLogs: false
+    });
+
   render() {
     const { deployments, handleSubmit, posm, submitting } = this.props;
+    const { showLogs } = this.state;
 
     return (
       <div className="posm-panel">
-        <PageHeader>OpenMapKit Deployments</PageHeader>
-        <Panel>
-          <LogViewer name="atlas-deploy" />
-        </Panel>
+        <PageHeader>
+          OpenMapKit Deployments
+          <BSButton
+            className="pull-right"
+            bsSize="small"
+            bsStyle="warning"
+            onClick={this.showLogs}
+          >
+            Show Logs
+          </BSButton>
+        </PageHeader>
+        <LogModal onHide={this.hideLogs} name="atlas-deploy" show={showLogs} />
         <Panel>
           <p>
             Deployments are bundles of OSM XML data and MBTiles archives

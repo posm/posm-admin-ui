@@ -1,17 +1,13 @@
 import { NonIdealState } from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import React from "react";
-import {
-  Button,
-  Form,
-  FormControl,
-  FormGroup,
-  Modal,
-  PageHeader
-} from "react-bootstrap";
+import { Button, Form, FormGroup, Modal, PageHeader } from "react-bootstrap";
 import { connect } from "react-redux";
+import { Field, reduxForm } from "redux-form";
 
 import ProjectPane from "../components/ProjectPane";
+import { createODMProject, getODMProjects } from "../actions";
+import { renderTextInput } from "../lib";
 
 class OpenDroneMapPanel extends React.Component {
   static propTypes = {
@@ -20,8 +16,6 @@ class OpenDroneMapPanel extends React.Component {
   };
 
   state = {
-    projectName: "",
-    projects: {},
     showModal: false
   };
 
@@ -38,29 +32,13 @@ class OpenDroneMapPanel extends React.Component {
   }
 
   getProjects = () => {
-    const { endpoint } = this.props;
+    const { dispatch, endpoint } = this.props;
 
-    if (endpoint == null) {
-      return;
-    }
-
-    this.setState({
-      loading: true
-    });
-
-    return fetch(`${endpoint}/projects`)
-      .then(rsp => rsp.json())
-      .then(projects =>
-        this.setState({
-          loading: false,
-          projects
-        })
-      )
-      .catch(err => console.warn(err.stack));
+    dispatch(getODMProjects(endpoint));
   };
 
   getRefreshSpinner() {
-    const { loading } = this.state;
+    const { loading } = this.props;
 
     return (
       <Button
@@ -85,29 +63,23 @@ class OpenDroneMapPanel extends React.Component {
     });
   };
 
-  updateProjectName = projectName => {
-    this.setState({
-      projectName
-    });
+  onSubmit = ({ projectName }, dispatch, { endpoint }) => {
+    dispatch(createODMProject(endpoint, projectName));
 
-    const { endpoint } = this.props;
-
-    if (projectName !== this.state.projectName) {
-      // update metadata
-      fetch(`${endpoint}/projects`, {
-        body: JSON.stringify({
-          name: projectName
-        }),
-        method: "PUT"
-      })
-        .then(rsp => this.getProjects())
-        .catch(err => console.warn(err.stack));
-    }
+    this.close();
   };
 
   render() {
-    const { endpoint, imageryEndpoint } = this.props;
-    const { projects } = this.state;
+    const {
+      endpoint,
+      handleSubmit: _handleSubmit,
+      imageryEndpoint,
+      pristine,
+      projects,
+      submitting
+    } = this.props;
+
+    const handleSubmit = _handleSubmit(this.onSubmit);
 
     const projectPanes = Object.keys(projects)
       .sort(
@@ -122,8 +94,6 @@ class OpenDroneMapPanel extends React.Component {
           imageryEndpoint={imageryEndpoint}
         />
       );
-
-    const { projectName } = this.state;
 
     return (
       <div className="posm-panel">
@@ -144,26 +114,31 @@ class OpenDroneMapPanel extends React.Component {
           onHide={this.close}
           onExit={this.getProjects}
         >
-          <Modal.Header closeButton>
-            <Modal.Title>New Project</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form onSubmit={this.saveProject}>
+          <Form onSubmit={handleSubmit}>
+            <Modal.Header closeButton>
+              <Modal.Title>New Project</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
               <FormGroup>
-                <FormControl
-                  type="text"
+                <Field
+                  name="projectName"
+                  component={renderTextInput}
                   placeholder="Project Name"
-                  value={projectName}
-                  onChange={this.updateProjectName}
-                  autoFocus="true"
+                  style={{ width: "100%" }}
                 />
               </FormGroup>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.close}>Close</Button>
-            <Button bsStyle="primary" onClick={this.saveProject}>Create</Button>
-          </Modal.Footer>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button onClick={this.close}>Close</Button>
+              <Button
+                bsStyle="primary"
+                type="submit"
+                disabled={pristine || submitting}
+              >
+                Create
+              </Button>
+            </Modal.Footer>
+          </Form>
         </Modal>
 
         {projectPanes.length === 0
@@ -183,8 +158,14 @@ class OpenDroneMapPanel extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  endpoint: state.config.odmEndpoint,
   imageryEndpoint: state.config.imageryEndpoint,
-  endpoint: state.config.odmEndpoint
+  loading: state.odm.loading,
+  projects: state.odm.projects
 });
 
-export default connect(mapStateToProps)(OpenDroneMapPanel);
+export default connect(mapStateToProps)(
+  reduxForm({
+    form: "createODMProject"
+  })(OpenDroneMapPanel)
+);

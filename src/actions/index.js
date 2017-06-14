@@ -1,5 +1,7 @@
 const types = {
+  FETCHING_ODM_PROJECTS: "FETCHING_ODM_PROJECTS",
   RECEIVE_CONFIG: "RECEIVE_CONFIG",
+  RECEIVE_ODM_PROJECTS: "RECEIVE_ODM_PROJECTS",
   RECEIVE_POSM_STATE: "RECEIVE_POSM_STATE"
 };
 
@@ -89,3 +91,41 @@ export const updateNetworkConfig = (posm, body) => dispatch =>
   })
     .then(rsp => dispatch(loadPOSMState(posm)))
     .catch(err => console.warn(err));
+
+export const getODMProjects = endpoint => dispatch => {
+  if (endpoint == null) {
+    return;
+  }
+
+  dispatch({
+    type: types.FETCHING_ODM_PROJECTS
+  });
+
+  fetch(`${endpoint}/projects`)
+    .then(rsp => rsp.json())
+    .then(projects =>
+      dispatch({
+        type: types.RECEIVE_ODM_PROJECTS,
+        projects
+      })
+    )
+    .catch(err => console.warn(err));
+};
+
+export const createODMProject = (endpoint, projectName) => dispatch => {
+  if (endpoint == null || !projectName) {
+    return;
+  }
+
+  fetch(`${endpoint}/projects`, {
+    body: JSON.stringify({
+      name: projectName
+    }),
+    headers: {
+      "Content-Type": "application/json"
+    },
+    method: "PUT"
+  })
+    .then(rsp => dispatch(getODMProjects(endpoint)))
+    .catch(err => console.warn(err.stack));
+};

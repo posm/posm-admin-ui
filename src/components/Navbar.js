@@ -19,39 +19,6 @@ const Navbar = ({ aois, osm, posm }) =>
       </div>
     </div>
     <div className="pt-navbar-group pt-align-right">
-      <a
-        href={`${posm}/omk/`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="pt-button pt-minimal"
-      >
-        <span
-          className="pt-icon-large pt-icon-mobile-phone"
-          style={styles.icon}
-        />
-      </a>
-      <a
-        href={`${posm}/fp/`}
-        target="_blank"
-        title="Field Papers"
-        rel="noopener noreferrer"
-        className="pt-button pt-minimal"
-      >
-        <span className="pt-icon-large pt-icon-clipboard" style={styles.icon} />
-      </a>
-      <a
-        href={`http://${osm.fqdn}/`}
-        target="_blank"
-        title="OpenStreetMap"
-        rel="noopener noreferrer"
-        className="pt-button pt-minimal"
-      >
-        <span
-          className="pt-icon-large pt-icon-send-to-map"
-          style={styles.icon}
-        />
-      </a>
-      <span className="pt-navbar-divider" />
       <Link to="/aois">
         Active AOI:
         {" "}
@@ -61,12 +28,6 @@ const Navbar = ({ aois, osm, posm }) =>
             </strong>
           : <em>none</em>}
       </Link>
-      <span className="pt-navbar-divider" />
-      <Link
-        to="/settings"
-        className="pt-button pt-minimal pt-icon-cog"
-        title="Settings"
-      />
     </div>
   </nav>;
 

@@ -13,7 +13,7 @@ const styles = {
 export default ({ files, posm, style }) =>
   files != null &&
   files.length > 0 &&
-  <Panel header="AOI Files">
+  <Panel header={<h4>AOI Files</h4>}>
     <ul style={style}>
       {files.map(({ contents, description, title }, idx) =>
         <li key={`aoi-${idx}`} style={styles.li}>

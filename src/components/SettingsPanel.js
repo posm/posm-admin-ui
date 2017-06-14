@@ -63,7 +63,7 @@ class SettingsPanel extends Component {
         <PageHeader>
           Network Settings
         </PageHeader>
-        <Panel header="Wi-Fi">
+        <Panel header={<h4>Wi-Fi</h4>}>
           {running && <Well bsSize="small">{statusMessage}</Well>}
           <NetworkSettingsForm
             initialValues={initialValues}

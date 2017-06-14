@@ -65,6 +65,7 @@ class AOIPanel extends Component {
       change,
       form,
       handleSubmit,
+      osm,
       posm,
       submitting
     } = this.props;
@@ -87,6 +88,30 @@ class AOIPanel extends Component {
         <LogModal show={showLogs} onHide={this.hideLogs} event="aoi-deploy" />
         <Panel>
           {running && <Well bsSize="small">{statusMessage}</Well>}
+          <p>
+            An <em>Area of Interest</em> contains OpenStreetMap data for a given
+            area. It may also include auxiliary files, including OsmAnd OBFs
+            (for offline mapping on Android).
+          </p>
+          <p>
+            AOIs are distributed as "POSM Bundles" produced by the
+            {" "}
+            <a href="http://export.posm.io/">
+              POSM Export Tool
+              {" "}<span className="pt-icon-standard pt-icon-offline" />
+            </a>. They must include "OSM PBF" as an export format.
+          </p>
+          <p>
+            Data contained in an AOI is used to produce offline maps for
+            {" "}<a href={`${posm}/fp/`}>Field Papers</a> and
+            {" "}<a href={`${posm}/fp/`}>OpenMapKit</a>, as well as to bootstrap
+            data that can be edited using OMK and the
+            {" "}
+            <a href={`http://${osm.fqdn}/`}>
+              local OpenStreetMap instance
+            </a>
+            {" "}(using JOSM, if desired).
+          </p>
           <form onSubmit={handleSubmit}>
             <div className="pt-form-group pt-control-group">
               <RadioGroup label="Active AOI">
@@ -143,6 +168,7 @@ const mapStateToProps = state => ({
   initialValues: {
     aoi: state.aois.active
   },
+  osm: state.osm,
   posm: getPOSMEndpoint(state)
 });
 

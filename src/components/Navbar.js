@@ -5,12 +5,6 @@ import { Link } from "react-router-dom";
 
 import posmLogo from "../images/posm@2x.png";
 
-const styles = {
-  icon: {
-    marginRight: 0
-  }
-};
-
 const Navbar = ({ aois, osm, posm }) =>
   <nav className="pt-navbar pt-fixed-top pt-dark">
     <div className="pt-navbar-group pt-align-left">

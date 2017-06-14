@@ -18,7 +18,7 @@ const Navbar = ({ aois, osm, posm }) =>
         {" "}
         {aois.active
           ? <strong>
-              {aois.available.find(x => x.name === aois.active).label}
+              {aois.available.find(x => x.name === aois.active).title}
             </strong>
           : <em>none</em>}
       </Link>

@@ -9,12 +9,8 @@ import { updateNetworkConfig } from "../actions";
 class SettingsPanel extends Component {
   state = {};
 
-  submit = (
-    { bridged, ssid, wpa, wpa_passphrase },
-    dispatch,
-    { updateNetworkConfig }
-  ) =>
-    updateNetworkConfig({
+  submit = ({ bridged, ssid, wpa, wpa_passphrase }) =>
+    this.props.updateNetworkConfig({
       wifi: {
         ssid,
         wpa,

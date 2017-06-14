@@ -1,4 +1,4 @@
-import { Button, Intent, Switch } from "@blueprintjs/core";
+import { Button, Intent, Position, Switch, Tooltip } from "@blueprintjs/core";
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 
@@ -20,14 +20,34 @@ class NetworkSettingsForm extends Component {
             name="bridged"
             component={renderSwitch}
             type="checkbox"
-            label="Bridged"
+            label={
+              <Tooltip
+                content="
+                  allow users to access the internet when connected to POSM
+                  (requires that POSM has an ethernet connection)"
+                position={Position.RIGHT}
+                className="pt-tooltip-indicator"
+              >
+                Bridged
+              </Tooltip>
+            }
           />
           <Field
             name="wpa"
             component={renderSwitch}
             type="checkbox"
             className="pt-icon-standard pt-icon-lock"
-            label=" WPA-Personal"
+            label={
+              <span>
+                &nbsp;<Tooltip
+                  content="requires a password to connect to POSM Wi-Fi. Disable this if computers have trouble connecting."
+                  position={Position.RIGHT}
+                  className="pt-tooltip-indicator"
+                >
+                  WPA-Personal
+                </Tooltip>
+              </span>
+            }
           />
           <Field
             name="ssid"

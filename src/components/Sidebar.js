@@ -3,6 +3,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
+import { getPOSMEndpoint } from "../selectors";
+
 const Sidebar = ({ osm, posm }) =>
   <Menu className="pt-elevation-1 inline-block menu">
     <li>
@@ -136,7 +138,7 @@ const Sidebar = ({ osm, posm }) =>
 
 const mapStateToProps = state => ({
   osm: state.osm,
-  posm: state.config.posm
+  posm: getPOSMEndpoint(state)
 });
 
 export default connect(mapStateToProps)(Sidebar);

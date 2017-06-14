@@ -1,8 +1,10 @@
 import React from "react";
 import { Col, Grid, Image, PageHeader, Row } from "react-bootstrap";
+import { connect } from "react-redux";
 
 import Card from "./Card";
 import FilesPanel from "./FilesPanel";
+import { getPOSMEndpoint } from "../selectors";
 
 import omkLogo from "../images/omk.png";
 import fpLogo from "../images/fp.png";
@@ -15,14 +17,14 @@ const styles = {
   }
 };
 
-const HomePanel = () =>
+const HomePanel = ({ osm, posm }) =>
   <div>
     <div className="posm-panel">
       <PageHeader>Apps</PageHeader>
       <Grid fluid>
         <Row>
           <Col md={4}>
-            <a href="/omk/" target="_blank" rel="noopener noreferrer">
+            <a href={`${posm}/omk/`} target="_blank" rel="noopener noreferrer">
               <Card style={styles.card}>
                 <h3>OpenMapKitServer</h3>
                 <Image src={omkLogo} style={styles.image} responsive />
@@ -30,7 +32,7 @@ const HomePanel = () =>
             </a>
           </Col>
           <Col md={4}>
-            <a href="/fp/" target="_blank" rel="noopener noreferrer">
+            <a href={`${posm}/fp/`} target="_blank" rel="noopener noreferrer">
               <Card style={styles.card}>
                 <h3>Field Papers</h3>
                 <Image src={fpLogo} style={styles.image} responsive />
@@ -38,9 +40,8 @@ const HomePanel = () =>
             </a>
           </Col>
           <Col md={4}>
-            {/* TODO don't hard-code this */}
             <a
-              href="http://osm.posm.io/"
+              href={`http://${osm.fqdn}/`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -58,4 +59,9 @@ const HomePanel = () =>
 
 HomePanel.propTypes = {};
 
-export default HomePanel;
+const mapStateToProps = state => ({
+  osm: state.osm,
+  posm: getPOSMEndpoint(state)
+});
+
+export default connect(mapStateToProps)(HomePanel);

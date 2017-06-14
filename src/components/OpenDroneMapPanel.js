@@ -52,17 +52,15 @@ class OpenDroneMapPanel extends React.Component {
     );
   }
 
-  close = () => {
+  close = () =>
     this.setState({
       showModal: false
     });
-  };
 
-  open = () => {
+  open = () =>
     this.setState({
       showModal: true
     });
-  };
 
   onSubmit = ({ projectName }, dispatch, { createODMProject }) => {
     createODMProject(projectName);

@@ -63,6 +63,15 @@ const Sidebar = ({ osm, posm }) =>
         OpenDroneMap
       </Link>
     </li>
+    <MenuItem
+      iconName="pt-icon-layout-skew-grid"
+      text="ODM GCPs"
+      href={`${posm}/posm-gcpi/`}
+      target="_blank"
+      title="OpenDroneMap Ground Control Points"
+      rel="noopener noreferrer"
+      label={<span className="pt-icon-standard pt-icon-share" />}
+    />
     <li>
       <Link
         to="/imagery"
@@ -82,10 +91,19 @@ const Sidebar = ({ osm, posm }) =>
     <MenuDivider />
     <MenuItem
       iconName="pt-icon-book"
-      text="Guide"
+      text="POSM Guide"
       href={`${posm}/guide/`}
       target="_blank"
-      title="Guide"
+      title="POSM Guide"
+      rel="noopener noreferrer"
+      label={<span className="pt-icon-standard pt-icon-share" />}
+    />
+    <MenuItem
+      iconName="pt-icon-book"
+      text="About OMK"
+      href={`${posm}/openmapkit-website/`}
+      target="_blank"
+      title="About OpenMapKit"
       rel="noopener noreferrer"
       label={<span className="pt-icon-standard pt-icon-share" />}
     />

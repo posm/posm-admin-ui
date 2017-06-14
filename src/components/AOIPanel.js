@@ -15,6 +15,9 @@ const styles = {
   ul: {
     listStyle: "none",
     paddingLeft: 10
+  },
+  textInput: {
+    width: 300
   }
 };
 
@@ -114,6 +117,7 @@ class AOIPanel extends Component {
                   component={renderTextInput}
                   placeholder="POSM bundle URL"
                   onFocus={() => change("aoi", "other")}
+                  style={styles.textInput}
                 />
               </RadioGroup>
             </div>

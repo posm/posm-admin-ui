@@ -51,7 +51,6 @@ export const activateAOI = (posm, { aoi, url }) => dispatch => {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(body)
-    // TODO monitor state
   })
     .then(rsp => dispatch(loadPOSMState(posm)))
     .catch(err => console.warn(err));
@@ -63,7 +62,6 @@ export const backup = posm => dispatch =>
     headers: {
       "Content-Type": "application/json"
     }
-    // TODO monitor state
   }).catch(err => console.warn(err));
 
 export const createDeployment = (posm, url) => dispatch =>
@@ -75,7 +73,6 @@ export const createDeployment = (posm, url) => dispatch =>
     body: JSON.stringify({
       url
     })
-    // TODO monitor state
   })
     .then(rsp => dispatch(loadPOSMState(posm)))
     .catch(err => console.warn(err));
@@ -87,7 +84,6 @@ export const updateNetworkConfig = (posm, body) => dispatch =>
       "Content-Type": "application/json"
     },
     body: JSON.stringify(body)
-    // TODO monitor state
   })
     .then(rsp => dispatch(loadPOSMState(posm)))
     .catch(err => console.warn(err));

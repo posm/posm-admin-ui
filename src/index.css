@@ -55,6 +55,10 @@ label.pt-control {
   top: 48px;
 }
 
+.carousel-control {
+  background-image: none !important;
+}
+
 .modal {
   z-index: 10001;
 }

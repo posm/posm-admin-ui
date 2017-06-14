@@ -107,6 +107,15 @@ const Sidebar = ({ osm, posm }) =>
       rel="noopener noreferrer"
       label={<span className="pt-icon-standard pt-icon-share" />}
     />
+    {/* <MenuItem
+      iconName="pt-icon-book"
+      text="OSM Features"
+      href={`${posm}/wiki.openstreetmap.org/wiki/Map_Features`}
+      target="_blank"
+      title="OpenStreetMap Map Features"
+      rel="noopener noreferrer"
+      label={<span className="pt-icon-standard pt-icon-share" />}
+    /> */}
     <li>
       <Link
         to="/admin"

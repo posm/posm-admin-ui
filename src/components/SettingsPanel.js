@@ -9,17 +9,19 @@ import { updateNetworkConfig } from "../actions";
 class SettingsPanel extends Component {
   state = {};
 
-  submit = ({ bridged, ssid, wpa, wpa_passphrase }, dispatch) =>
-    dispatch(
-      updateNetworkConfig(this.props.posm, {
-        wifi: {
-          ssid,
-          wpa,
-          wpa_passphrase
-        },
-        bridged
-      })
-    );
+  submit = (
+    { bridged, ssid, wpa, wpa_passphrase },
+    dispatch,
+    { updateNetworkConfig }
+  ) =>
+    updateNetworkConfig({
+      wifi: {
+        ssid,
+        wpa,
+        wpa_passphrase
+      },
+      bridged
+    });
 
   onMessage = message => {
     const { status: { msg, running } } = message;
@@ -76,8 +78,7 @@ class SettingsPanel extends Component {
 }
 
 const mapStateToProps = state => ({
-  network: state.network,
-  posm: state.config.posm
+  network: state.network
 });
 
-export default connect(mapStateToProps)(SettingsPanel);
+export default connect(mapStateToProps, { updateNetworkConfig })(SettingsPanel);

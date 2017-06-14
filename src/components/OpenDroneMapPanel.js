@@ -8,6 +8,7 @@ import { Field, reduxForm } from "redux-form";
 import ProjectPane from "../components/ProjectPane";
 import { createODMProject, getODMProjects } from "../actions";
 import { renderTextInput } from "../lib";
+import { getODMEndpoint } from "../selectors";
 
 class OpenDroneMapPanel extends React.Component {
   static propTypes = {
@@ -32,9 +33,9 @@ class OpenDroneMapPanel extends React.Component {
   }
 
   getProjects = () => {
-    const { dispatch, endpoint } = this.props;
+    const { getODMProjects } = this.props;
 
-    dispatch(getODMProjects(endpoint));
+    getODMProjects();
   };
 
   getRefreshSpinner() {
@@ -63,8 +64,8 @@ class OpenDroneMapPanel extends React.Component {
     });
   };
 
-  onSubmit = ({ projectName }, dispatch, { endpoint }) => {
-    dispatch(createODMProject(endpoint, projectName));
+  onSubmit = ({ projectName }, dispatch, { createODMProject }) => {
+    createODMProject(projectName);
 
     this.close();
   };
@@ -158,13 +159,13 @@ class OpenDroneMapPanel extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  endpoint: state.config.odmEndpoint,
+  endpoint: getODMEndpoint(state),
   imageryEndpoint: state.config.imageryEndpoint,
   loading: state.odm.loading,
   projects: state.odm.projects
 });
 
-export default connect(mapStateToProps)(
+export default connect(mapStateToProps, { createODMProject, getODMProjects })(
   reduxForm({
     form: "createODMProject"
   })(OpenDroneMapPanel)

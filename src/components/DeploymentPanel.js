@@ -8,6 +8,7 @@ import { Field, reduxForm } from "redux-form";
 import { createDeployment } from "../actions";
 import LogModal from "./LogModal";
 import { renderTextInput } from "../lib";
+import { getPOSMEndpoint } from "../selectors";
 
 const styles = {
   urlField: {
@@ -139,13 +140,12 @@ class DeploymentPanel extends Component {
 const mapStateToProps = state => ({
   complete: state.tasks.deployments.complete,
   deployments: state.deployments,
-  posm: state.config.posm
+  posm: getPOSMEndpoint(state)
 });
 
-export default connect(mapStateToProps)(
+export default connect(mapStateToProps, { createDeployment })(
   reduxForm({
     form: "createDeployment",
-    onSubmit: ({ url }, dispatch, { posm }) =>
-      dispatch(createDeployment(posm, url))
+    onSubmit: ({ url }, dispatch, { createDeployment }) => createDeployment(url)
   })(DeploymentPanel)
 );

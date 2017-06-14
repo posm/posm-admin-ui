@@ -29,18 +29,18 @@ const SOCKET_OPTIONS = {
 
 class App extends Component {
   componentWillMount() {
-    const { dispatch } = this.props;
+    const { initializeState } = this.props;
 
-    dispatch(initializeState());
+    initializeState();
   }
 
   componentWillUpdate(nextProps, nextState) {
-    const { dispatch, posm: prevPosm } = this.props;
+    const { loadPOSMState, posm: prevPosm } = this.props;
     const { posm, refreshInterval } = nextProps;
 
     if (prevPosm == null && posm != null) {
       this.stateUpdater = setInterval(() => {
-        dispatch(loadPOSMState(posm));
+        loadPOSMState();
       }, refreshInterval);
     }
   }
@@ -85,4 +85,6 @@ const mapStateToProps = state => ({
   refreshInterval: state.config.refreshInterval
 });
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { initializeState, loadPOSMState })(
+  App
+);

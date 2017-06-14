@@ -14,3 +14,7 @@ export const getAOIFiles = createSelector([getAvailableAOIs], aois =>
     }))
   }))
 );
+
+export const getODMEndpoint = state => state.config.odmEndpoint;
+
+export const getPOSMEndpoint = state => state.config.posm;

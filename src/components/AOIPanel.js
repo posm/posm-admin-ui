@@ -8,7 +8,7 @@ import { Field, reduxForm } from "redux-form";
 import AOIFiles from "./AOIFiles";
 import LogModal from "./LogModal";
 import { activateAOI } from "../actions";
-import { getAOIFiles } from "../selectors";
+import { getAOIFiles, getPOSMEndpoint } from "../selectors";
 import { renderTextInput } from "../lib";
 
 const styles = {
@@ -143,14 +143,13 @@ const mapStateToProps = state => ({
   initialValues: {
     aoi: state.aois.active
   },
-  posm: state.config.posm
+  posm: getPOSMEndpoint(state)
 });
 
-export default connect(mapStateToProps)(
+export default connect(mapStateToProps, { activateAOI })(
   reduxForm({
     enableReinitialize: true,
     form: "activateAOI",
-    onSubmit: (values, dispatch, { posm }) =>
-      dispatch(activateAOI(posm, values))
+    onSubmit: (values, dispatch, { activateAOI }) => activateAOI(values)
   })(AOIPanel)
 );

@@ -1,3 +1,5 @@
+import { getODMEndpoint, getPOSMEndpoint } from "../selectors";
+
 const types = {
   FETCHING_ODM_PROJECTS: "FETCHING_ODM_PROJECTS",
   RECEIVE_CONFIG: "RECEIVE_CONFIG",
@@ -7,8 +9,8 @@ const types = {
 
 export default types;
 
-export const loadPOSMState = posmEndpoint => dispatch =>
-  fetch(`${posmEndpoint}/posm-admin/status`)
+export const loadPOSMState = () => (dispatch, getState) => {
+  fetch(`${getPOSMEndpoint(getState())}/posm-admin/status`)
     .then(rsp => rsp.json())
     .then(remoteState =>
       dispatch({
@@ -19,6 +21,7 @@ export const loadPOSMState = posmEndpoint => dispatch =>
     .catch(err => {
       console.warn(err.stack);
     });
+};
 
 export const initializeState = () => dispatch =>
   fetch("/config.json")
@@ -33,8 +36,7 @@ export const initializeState = () => dispatch =>
     })
     .catch(err => console.warn(err));
 
-// aoi:bend_posm_export
-export const activateAOI = (posm, { aoi, url }) => dispatch => {
+export const activateAOI = ({ aoi, url }) => (dispatch, getState) => {
   let body = {
     url
   };
@@ -45,27 +47,26 @@ export const activateAOI = (posm, { aoi, url }) => dispatch => {
     };
   }
 
-  fetch(`${posm}/posm-admin/aoi-deploy`, {
+  fetch(`${getPOSMEndpoint(getState())}/posm-admin/aoi-deploy`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(body)
-  })
-    .then(rsp => dispatch(loadPOSMState(posm)))
-    .catch(err => console.warn(err));
+  }).catch(err => console.warn(err));
 };
 
-export const backup = posm => dispatch =>
-  fetch(`${posm}/posm-admin/backup-data`, {
+export const backup = () => (dispatch, getState) => {
+  fetch(`${getPOSMEndpoint(getState())}/posm-admin/backup-data`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     }
   }).catch(err => console.warn(err));
+};
 
-export const createDeployment = (posm, url) => dispatch =>
-  fetch(`${posm}/posm-admin/atlas-deploy`, {
+export const createDeployment = url => (dispatch, getState) => {
+  fetch(`${getPOSMEndpoint(getState())}/posm-admin/atlas-deploy`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -73,22 +74,22 @@ export const createDeployment = (posm, url) => dispatch =>
     body: JSON.stringify({
       url
     })
-  })
-    .then(rsp => dispatch(loadPOSMState(posm)))
-    .catch(err => console.warn(err));
+  }).catch(err => console.warn(err));
+};
 
-export const updateNetworkConfig = (posm, body) => dispatch =>
-  fetch(`${posm}/posm-admin/network-config`, {
+export const updateNetworkConfig = body => (dispatch, getState) => {
+  fetch(`${getPOSMEndpoint(getState())}/posm-admin/network-config`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(body)
-  })
-    .then(rsp => dispatch(loadPOSMState(posm)))
-    .catch(err => console.warn(err));
+  }).catch(err => console.warn(err));
+};
 
-export const getODMProjects = endpoint => dispatch => {
+export const getODMProjects = () => (dispatch, getState) => {
+  const endpoint = getODMEndpoint(getState());
+
   if (endpoint == null) {
     return;
   }
@@ -108,7 +109,9 @@ export const getODMProjects = endpoint => dispatch => {
     .catch(err => console.warn(err));
 };
 
-export const createODMProject = (endpoint, projectName) => dispatch => {
+export const createODMProject = projectName => (dispatch, getState) => {
+  const endpoint = getODMEndpoint(getState());
+
   if (endpoint == null || !projectName) {
     return;
   }
@@ -122,6 +125,6 @@ export const createODMProject = (endpoint, projectName) => dispatch => {
     },
     method: "PUT"
   })
-    .then(rsp => dispatch(getODMProjects(endpoint)))
+    .then(rsp => dispatch(getODMProjects()))
     .catch(err => console.warn(err.stack));
 };

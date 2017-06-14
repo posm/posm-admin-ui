@@ -96,13 +96,12 @@ class AdminPanel extends Component {
 }
 
 const mapStateToProps = state => ({
-  complete: state.tasks.deployments.complete,
-  posm: state.config.posm
+  complete: state.tasks.deployments.complete
 });
 
-export default connect(mapStateToProps)(
+export default connect(mapStateToProps, { backup })(
   reduxForm({
     form: "backup",
-    onSubmit: (values, dispatch, { posm }) => dispatch(backup(posm, values))
+    onSubmit: (values, dispatch, { backup }) => backup(values)
   })(AdminPanel)
 );

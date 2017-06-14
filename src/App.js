@@ -10,7 +10,7 @@ import { initializeState, loadPOSMState } from "./actions";
 import AdminPanel from "./components/AdminPanel";
 import AOIPanel from "./components/AOIPanel";
 import DeploymentPanel from "./components/DeploymentPanel";
-import DownloadsPanel from "./components/DownloadsPanel";
+import FilesPanel from "./components/FilesPanel";
 import HomePanel from "./components/HomePanel";
 import ImageryPanel from "./components/ImageryPanel";
 import Navbar from "./components/Navbar";
@@ -61,7 +61,7 @@ class App extends Component {
           <Route path="/deployments" component={DeploymentPanel} />
           <Route path="/opendronemap" component={OpenDroneMapPanel} />
           <Route path="/imagery" component={ImageryPanel} />
-          <Route path="/downloads" component={DownloadsPanel} />
+          <Route path="/files" component={FilesPanel} />
           <Route path="/admin" component={AdminPanel} />
           <Route path="/settings" component={SettingsPanel} />
         </div>

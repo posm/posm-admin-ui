@@ -82,10 +82,10 @@ const Sidebar = ({ osm, posm }) =>
     </li>
     <li>
       <Link
-        to="/downloads"
-        className="pt-menu-item pt-popover-dismiss pt-icon-cloud-download"
+        to="/files"
+        className="pt-menu-item pt-popover-dismiss pt-icon-cloud"
       >
-        Downloads
+        Files
       </Link>
     </li>
     <MenuDivider />

@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Grid, Image, PageHeader, Row } from "react-bootstrap";
 
 import Card from "./Card";
-import DownloadsPanel from "./DownloadsPanel";
+import FilesPanel from "./FilesPanel";
 
 import omkLogo from "../images/omk.png";
 import fpLogo from "../images/fp.png";
@@ -53,7 +53,7 @@ const HomePanel = () =>
         </Row>
       </Grid>
     </div>
-    <DownloadsPanel />
+    <FilesPanel />
   </div>;
 
 HomePanel.propTypes = {};

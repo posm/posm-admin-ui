@@ -60,7 +60,7 @@ const styles = {
 
 const DownloadsPanel = ({ aoiFiles, posm, publicFiles }) =>
   <div className="posm-panel">
-    <PageHeader>Downloads</PageHeader>
+    <PageHeader>Files</PageHeader>
     <Panel header="System">
       <ul style={styles.outerUL}>
         {availableDownloads.map((x, idx) =>

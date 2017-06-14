@@ -103,7 +103,7 @@ class DownloadsPanel extends Component {
             <ul style={styles.outerUL}>
               {publicFiles.map((file, idx) =>
                 <li key={idx}>
-                  <a href={`${posm}/public${file}`}>
+                  <a href={`${posm}/public/${file}`}>
                     <code>{path.basename(file)}</code>
                   </a>
                 </li>

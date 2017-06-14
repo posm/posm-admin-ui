@@ -112,6 +112,7 @@ class AOIPanel extends Component {
             </a>
             {" "}(using JOSM, if desired).
           </p>
+          <hr />
           <form onSubmit={handleSubmit}>
             <div className="pt-form-group pt-control-group">
               <RadioGroup label="Active AOI">

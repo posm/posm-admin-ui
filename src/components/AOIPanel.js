@@ -17,7 +17,7 @@ const styles = {
     paddingLeft: 10
   },
   textInput: {
-    width: 300
+    width: 400
   }
 };
 

@@ -21,6 +21,13 @@ const styles = {
   }
 };
 
+const tarball = value =>
+  value && !/-bundle\.tar\.gz$/.test(value)
+    ? <span>
+        Must be the URL of a POSM Bundle (ending in <code>-bundle.tar.gz</code>)
+      </span>
+    : null;
+
 const renderRadio = ({ className, disabled, input, label }) =>
   <Radio className={className} label={label} disabled={disabled} {...input} />;
 
@@ -144,6 +151,7 @@ class AOIPanel extends Component {
                   placeholder="POSM bundle URL"
                   onFocus={() => change("aoi", "other")}
                   style={styles.textInput}
+                  validate={tarball}
                 />
               </RadioGroup>
             </div>

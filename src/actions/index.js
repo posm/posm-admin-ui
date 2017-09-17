@@ -10,7 +10,9 @@ const types = {
 export default types;
 
 export const loadPOSMState = () => (dispatch, getState) => {
-  fetch(`${getPOSMEndpoint(getState())}/posm-admin/status`)
+  fetch(`${getPOSMEndpoint(getState())}/posm-admin/status`, {
+    credentials: "same-origin"
+  })
     .then(rsp => rsp.json())
     .then(remoteState =>
       dispatch({
@@ -24,7 +26,9 @@ export const loadPOSMState = () => (dispatch, getState) => {
 };
 
 export const initializeState = () => dispatch =>
-  fetch("/config.json")
+  fetch("/config.json", {
+    credentials: "same-origin"
+  })
     .then(rsp => rsp.json())
     .then(config => {
       dispatch({
@@ -48,6 +52,7 @@ export const activateAOI = ({ aoi, url }) => (dispatch, getState) => {
   }
 
   fetch(`${getPOSMEndpoint(getState())}/posm-admin/aoi-deploy`, {
+    credentials: "same-origin",
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -58,6 +63,7 @@ export const activateAOI = ({ aoi, url }) => (dispatch, getState) => {
 
 export const backup = () => (dispatch, getState) => {
   fetch(`${getPOSMEndpoint(getState())}/posm-admin/backup-data`, {
+    credentials: "same-origin",
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -67,6 +73,7 @@ export const backup = () => (dispatch, getState) => {
 
 export const createDeployment = url => (dispatch, getState) => {
   fetch(`${getPOSMEndpoint(getState())}/posm-admin/atlas-deploy`, {
+    credentials: "same-origin",
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -79,6 +86,7 @@ export const createDeployment = url => (dispatch, getState) => {
 
 export const updateNetworkConfig = body => (dispatch, getState) => {
   fetch(`${getPOSMEndpoint(getState())}/posm-admin/network-config`, {
+    credentials: "same-origin",
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -98,7 +106,9 @@ export const getODMProjects = () => (dispatch, getState) => {
     type: types.FETCHING_ODM_PROJECTS
   });
 
-  fetch(`${endpoint}/projects`)
+  fetch(`${endpoint}/projects`, {
+    credentials: "same-origin"
+  })
     .then(rsp => rsp.json())
     .then(projects =>
       dispatch({
@@ -117,6 +127,7 @@ export const createODMProject = projectName => (dispatch, getState) => {
   }
 
   fetch(`${endpoint}/projects`, {
+    credentials: "same-origin",
     body: JSON.stringify({
       name: projectName
     }),

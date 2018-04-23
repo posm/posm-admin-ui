@@ -97,7 +97,8 @@ class ImageryPanel extends Component {
           djsConfig={{
             acceptedFiles: "image/tiff",
             addRemoveLinks: false,
-            method: "PUT"
+            method: "PUT",
+            maxFilesize: Infinity
           }}
         >
           <NonIdealState

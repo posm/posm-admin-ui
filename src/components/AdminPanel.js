@@ -22,7 +22,9 @@ class AdminPanel extends Component {
     });
 
   onMessage = message => {
-    const { status: { complete, initialized, msg } } = message;
+    const {
+      status: { complete, initialized, msg }
+    } = message;
 
     this.setState({
       running: initialized && !complete,
@@ -62,33 +64,36 @@ class AdminPanel extends Component {
         </PageHeader>
         <LogModal onHide={this.hideLogs} event="backup-data" show={showLogs} />
         <Panel>
-          {running && <Well bsSize="small">{statusMessage}</Well>}
-          <p>
-            This will back up the following datasets to
-            {" "}<code>/opt/data/backups</code> on the POSM device (available as
-            {" "}
-            <a href="smb://posm/backups"><code>smb://posm/backups</code></a>
-            {" "}(Windows: <code>\\POSM\backups</code>)):
-          </p>
-          <ul>
-            <li>ODK/OMK forms</li>
-            <li>ODK/OMK submissions</li>
-            <li>OMK deployments</li>
-            <li>OSM APIDB</li>
-            <li>Field Papers database</li>
-            <li>Field Papers atlas PDFs</li>
-            <li>Field Papers snapshots</li>
-            <li>POSM AOIs</li>
-          </ul>
-          <form onSubmit={handleSubmit}>
-            <Button
-              text="Backup Data"
-              type="submit"
-              disabled={submitting || running}
-              intent={Intent.PRIMARY}
-              rightIconName="arrow-right"
-            />
-          </form>
+          <Panel.Body>
+            {running && <Well bsSize="small">{statusMessage}</Well>}
+            <p>
+              This will back up the following datasets to{" "}
+              <code>/opt/data/backups</code> on the POSM device (available as{" "}
+              <a href="smb://posm/backups">
+                <code>smb://posm/backups</code>
+              </a>{" "}
+              (Windows: <code>\\POSM\backups</code>)):
+            </p>
+            <ul>
+              <li>ODK/OMK forms</li>
+              <li>ODK/OMK submissions</li>
+              <li>OMK deployments</li>
+              <li>OSM APIDB</li>
+              <li>Field Papers database</li>
+              <li>Field Papers atlas PDFs</li>
+              <li>Field Papers snapshots</li>
+              <li>POSM AOIs</li>
+            </ul>
+            <form onSubmit={handleSubmit}>
+              <Button
+                text="Backup Data"
+                type="submit"
+                disabled={submitting || running}
+                intent={Intent.PRIMARY}
+                rightIconName="arrow-right"
+              />
+            </form>
+          </Panel.Body>
         </Panel>
       </div>
     );
@@ -99,7 +104,10 @@ const mapStateToProps = state => ({
   complete: state.tasks.deployments.complete
 });
 
-export default connect(mapStateToProps, { backup })(
+export default connect(
+  mapStateToProps,
+  { backup }
+)(
   reduxForm({
     form: "backup",
     onSubmit: (values, dispatch, { backup }) => backup(values)

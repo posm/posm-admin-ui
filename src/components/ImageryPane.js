@@ -140,11 +140,7 @@ export default class ImageryPane extends React.Component {
       }
 
       default: {
-        return (
-          <Button bsStyle="danger">
-            Failed
-          </Button>
-        );
+        return <Button bsStyle="danger">Failed</Button>;
       }
     }
   }
@@ -405,9 +401,8 @@ export default class ImageryPane extends React.Component {
     const map = this.getMap();
 
     return (
-      <Panel
-        className="possibly-empty"
-        header={
+      <Panel className="possibly-empty">
+        <Panel.Heading>
           <div>
             <a tabIndex="-1" onClick={this.toggle} className="toggle">
               <span
@@ -426,37 +421,36 @@ export default class ImageryPane extends React.Component {
             />
             {spinner}
             <div className="pull-right">
-              <ButtonGroup bsSize="small">
-                {buttons}
-              </ButtonGroup>
+              <ButtonGroup bsSize="small">{buttons}</ButtonGroup>
               {failure}
             </div>
           </div>
-        }
-      >
-        <Modal show={showModal} onHide={this.hideModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>{sourceName} Status</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <pre
-              dangerouslySetInnerHTML={{
-                __html: highlight(
-                  JSON.stringify(
-                    {
-                      source
-                    },
-                    null,
-                    2
-                  ),
-                  "json"
-                )
-              }}
-            />
-          </Modal.Body>
-        </Modal>
+        </Panel.Heading>
+        <Panel.Body>
+          <Modal show={showModal} onHide={this.hideModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>{sourceName} Status</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <pre
+                dangerouslySetInnerHTML={{
+                  __html: highlight(
+                    JSON.stringify(
+                      {
+                        source
+                      },
+                      null,
+                      2
+                    ),
+                    "json"
+                  )
+                }}
+              />
+            </Modal.Body>
+          </Modal>
 
-        {map}
+          {map}
+        </Panel.Body>
       </Panel>
     );
   }

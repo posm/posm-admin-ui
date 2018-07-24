@@ -116,11 +116,7 @@ export default class ProjectPane extends React.Component {
 
     if (user.mbtiles == null) {
       if (pending.indexOf("ingesting") >= 0) {
-        return (
-          <Button bsStyle="info">
-            Make MBTiles
-          </Button>
-        );
+        return <Button bsStyle="info">Make MBTiles</Button>;
       }
 
       return (
@@ -670,9 +666,8 @@ export default class ProjectPane extends React.Component {
     const spinner = this.getSpinner();
 
     return (
-      <Panel
-        className="possibly-empty"
-        header={
+      <Panel className="possibly-empty">
+        <Panel.Heading>
           <div>
             <a tabIndex="-1" onClick={this.toggle} className="toggle">
               <span
@@ -698,60 +693,62 @@ export default class ProjectPane extends React.Component {
               {failure}
             </div>
           </div>
-        }
-      >
-        <Modal show={showModal} onHide={this.hideModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>{projectName} Status</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <pre
-              dangerouslySetInnerHTML={{
-                __html: highlight(
-                  JSON.stringify(
-                    {
-                      project
-                    },
-                    null,
-                    2
-                  ),
-                  "json"
-                )
-              }}
-            />
-          </Modal.Body>
-        </Modal>
+        </Panel.Heading>
+        <Panel.Body>
+          <Modal show={showModal} onHide={this.hideModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>{projectName} Status</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <pre
+                dangerouslySetInnerHTML={{
+                  __html: highlight(
+                    JSON.stringify(
+                      {
+                        project
+                      },
+                      null,
+                      2
+                    ),
+                    "json"
+                  )
+                }}
+              />
+            </Modal.Body>
+          </Modal>
 
-        {shown &&
-          <Tabs2
-            id={projectName}
-            // onChange={this.handleNavbarTabChange}
-            defaultSelectedTabId={status.state != null ? "Output" : "Sources"}
-          >
-            <Tab2
-              id="Sources"
-              title="Sources"
-              panel={
-                <ProjectSourcesPanel
-                  {...this.props}
-                  getProject={this.getProject}
-                  project={project}
-                  sources={images}
-                />
-              }
-            />
-            <Tab2
-              id="Output"
-              title="Output"
-              panel={
-                <ProjectOutputPanel
-                  {...this.props}
-                  artifacts={artifacts}
-                  project={project}
-                />
-              }
-            />
-          </Tabs2>}
+          {shown && (
+            <Tabs2
+              id={projectName}
+              // onChange={this.handleNavbarTabChange}
+              defaultSelectedTabId={status.state != null ? "Output" : "Sources"}
+            >
+              <Tab2
+                id="Sources"
+                title="Sources"
+                panel={
+                  <ProjectSourcesPanel
+                    {...this.props}
+                    getProject={this.getProject}
+                    project={project}
+                    sources={images}
+                  />
+                }
+              />
+              <Tab2
+                id="Output"
+                title="Output"
+                panel={
+                  <ProjectOutputPanel
+                    {...this.props}
+                    artifacts={artifacts}
+                    project={project}
+                  />
+                }
+              />
+            </Tabs2>
+          )}
+        </Panel.Body>
       </Panel>
     );
   }

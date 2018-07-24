@@ -20,7 +20,9 @@ class SettingsPanel extends Component {
     });
 
   onMessage = message => {
-    const { status: { msg, running } } = message;
+    const {
+      status: { msg, running }
+    } = message;
 
     this.setState({
       running,
@@ -29,7 +31,9 @@ class SettingsPanel extends Component {
   };
 
   componentWillUpdate(nextProps, nextState) {
-    const { network: { changing } } = nextProps;
+    const {
+      network: { changing }
+    } = nextProps;
     const { running } = this.state;
 
     if (running && !changing) {
@@ -42,7 +46,10 @@ class SettingsPanel extends Component {
 
   render() {
     const {
-      network: { bridged, wifi: { ssid, wpa, wpa_passphrase } }
+      network: {
+        bridged,
+        wifi: { ssid, wpa, wpa_passphrase }
+      }
     } = this.props;
     const { running, statusMessage } = this.state;
 
@@ -56,17 +63,20 @@ class SettingsPanel extends Component {
     return (
       <div className="posm-panel">
         <Event event="network-config" handler={this.onMessage} />
-        <PageHeader>
-          Network Settings
-        </PageHeader>
-        <Panel header={<h4>Wi-Fi</h4>}>
-          {running && <Well bsSize="small">{statusMessage}</Well>}
-          <NetworkSettingsForm
-            initialValues={initialValues}
-            enableReinitialize
-            onSubmit={this.submit}
-            running={running}
-          />
+        <PageHeader>Network Settings</PageHeader>
+        <Panel>
+          <Panel.Heading>
+            <h4>Wi-Fi</h4>
+          </Panel.Heading>
+          <Panel.Body>
+            {running && <Well bsSize="small">{statusMessage}</Well>}
+            <NetworkSettingsForm
+              initialValues={initialValues}
+              enableReinitialize
+              onSubmit={this.submit}
+              running={running}
+            />
+          </Panel.Body>
         </Panel>
       </div>
     );
@@ -77,4 +87,7 @@ const mapStateToProps = state => ({
   network: state.network
 });
 
-export default connect(mapStateToProps, { updateNetworkConfig })(SettingsPanel);
+export default connect(
+  mapStateToProps,
+  { updateNetworkConfig }
+)(SettingsPanel);

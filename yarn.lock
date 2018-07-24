@@ -3117,11 +3117,7 @@ dotenv@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
 
-dropzone@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/dropzone/-/dropzone-4.3.0.tgz#48b0b8f2ad092872e4b535b672a7c3f1a1d67c91"
-
-dropzone@^5.0.1:
+dropzone@^5.0.1, dropzone@^5.4.0:
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/dropzone/-/dropzone-5.5.1.tgz#06e2f513e61d6aa363d4b556f18574f47cf7ba26"
 
@@ -3789,7 +3785,7 @@ extend-shallow@^3.0.0, extend-shallow@^3.0.2:
     assign-symbols "^1.0.0"
     is-extendable "^1.0.1"
 
-extend@^3.0.0, extend@~3.0.1:
+extend@^3.0.1, extend@~3.0.1:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
 
@@ -7532,12 +7528,12 @@ react-dom@^16.4.1:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-dropzone-component@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-dropzone-component/-/react-dropzone-component-2.0.0.tgz#35cd011f525c9ca620fcb647e79725eeaa1b5a58"
+react-dropzone-component@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-dropzone-component/-/react-dropzone-component-3.2.0.tgz#8ad4cdce342084fb87302ddec6651caa49d8b103"
   dependencies:
-    dropzone "^4.3.0"
-    extend "^3.0.0"
+    dropzone "^5.4.0"
+    extend "^3.0.1"
 
 react-error-overlay@^4.0.0:
   version "4.0.0"

@@ -8646,9 +8646,9 @@ xmlhttprequest-ssl@1.5.3:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
 
-xterm@^2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/xterm/-/xterm-2.7.0.tgz#05e42d270ff5e67cca95116b62c84c0cfc435baa"
+xterm@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/xterm/-/xterm-3.5.1.tgz#d2e62ab26108a771b7bd1b7be4f6578fb4aff922"
 
 y18n@^3.2.1:
   version "3.2.1"

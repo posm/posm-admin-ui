@@ -18,7 +18,7 @@ export default class LogViewer extends Component {
     this.terminal = new Terminal({
       cursorBlink: false
     });
-    this.terminal.open(this.container, false);
+    this.terminal.open(this.container);
     this.terminal.fit();
   }
 

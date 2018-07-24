@@ -27,7 +27,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
-    "xterm": "^2.7.0"
+    "xterm": "^3.5.1"
   },
   "devDependencies": {
     "@storybook/react": "^3.0.0",

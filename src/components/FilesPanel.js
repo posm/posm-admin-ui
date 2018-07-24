@@ -5,7 +5,7 @@ import { Carousel, Modal, PageHeader, Panel } from "react-bootstrap";
 import { connect } from "react-redux";
 
 import AOIFiles from "./AOIFiles";
-import { getAOIFiles } from "../selectors";
+import { getAOIFiles, getHostname } from "../selectors";
 
 import macSMBConnect1 from "../images/mac-smb-connect-1.png";
 import macSMBConnect2 from "../images/mac-smb-connect-2.png";
@@ -47,7 +47,7 @@ class DownloadsPanel extends Component {
     });
 
   render() {
-    const { aoiFiles, posm, publicFiles } = this.props;
+    const { aoiFiles, hostname, posm, publicFiles } = this.props;
     const { showModal } = this.state;
 
     return (
@@ -96,10 +96,11 @@ class DownloadsPanel extends Component {
           <Panel.Body>
             <p>
               To add to this list, copy files to{" "}
-              <a href="smb://posm/public">
-                <code>smb://posm/public</code>
+              <a href="smb://{hostname}/public">
+                <code>smb://{hostname}/public</code>
               </a>{" "}
-              (Windows: <code>\\POSM\public</code>), connecting as Guest.
+              (Windows: <code>\\{hostname.toUpperCase()}\public</code>),
+              connecting as Guest.
             </p>
             {publicFiles.length > 0 && (
               <ul style={styles.outerUL}>
@@ -130,6 +131,7 @@ class DownloadsPanel extends Component {
 
 const mapStateToProps = state => ({
   aoiFiles: getAOIFiles(state),
+  hostname: getHostname(state),
   posm: state.config.posm,
   publicFiles: state.publicFiles
 });

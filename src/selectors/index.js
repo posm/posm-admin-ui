@@ -28,4 +28,6 @@ export const getActiveAOIName = createSelector(
 
 export const getODMEndpoint = state => state.config.odmEndpoint;
 
+export const getHostname = state => state.network.hostname || "";
+
 export const getPOSMEndpoint = state => state.config.posm;

@@ -7,19 +7,22 @@ import { getActiveAOIName } from "../selectors";
 
 import posmLogo from "../images/posm@2x.png";
 
-const Navbar = ({ activeAOI, osm, posm }) =>
-  <nav className="pt-navbar pt-fixed-top pt-dark">
-    <div className="pt-navbar-group pt-align-left">
-      <div className="pt-navbar-heading">
-        <Link to="/" title="Home"><Image src={posmLogo} height={32} /></Link>
+const Navbar = ({ activeAOI, osm, posm }) => (
+  <nav className="bp3-navbar bp3-fixed-top bp3-dark">
+    <div className="bp3-navbar-group bp3-align-left">
+      <div className="bp3-navbar-heading">
+        <Link to="/" title="Home">
+          <Image src={posmLogo} height={32} />
+        </Link>
       </div>
     </div>
-    <div className="pt-navbar-group pt-align-right">
+    <div className="bp3-navbar-group bp3-align-right">
       <Link to="/aois">
         Active AOI: {activeAOI ? <strong>{activeAOI}</strong> : <em>none</em>}
       </Link>
     </div>
-  </nav>;
+  </nav>
+);
 
 Navbar.propTypes = {};
 

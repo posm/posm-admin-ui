@@ -1,4 +1,4 @@
-import { Button, Intent } from "@blueprintjs/core";
+import { Button, H3, Intent } from "@blueprintjs/core";
 import React, { Component } from "react";
 import { Button as BSButton, PageHeader, Panel, Well } from "react-bootstrap";
 import { connect } from "react-redux";
@@ -77,11 +77,11 @@ class DeploymentPanel extends Component {
               Deployments are bundles of OSM XML data and MBTiles archives
               intended to facilitate enumeration and validation of features.
               These can be downloaded using the{" "}
-              <span className="pt-icon-standard pt-icon-cog" /> menu within
+              <span className="bp3-icon-standard bp3-icon-cog" /> menu within
               OpenMapKit Android when connected to the POSM WiFi network.
             </p>
             <hr />
-            <h3>Available Deployments</h3>
+            <H3>Available Deployments</H3>
             {deployments.length > 0 ? (
               <ul>
                 {deployments.map(({ description, name, title }, i) => (
@@ -106,7 +106,7 @@ class DeploymentPanel extends Component {
               <p>None loaded.</p>
             )}
             <hr />
-            <h3>Create a New Deployment</h3>
+            <H3>Create a New Deployment</H3>
             {running && <Well bsSize="small">{statusMessage}</Well>}
             <p>
               To create a new OMK Deployment, either create an atlas using the{" "}
@@ -118,7 +118,7 @@ class DeploymentPanel extends Component {
               elsewhere).
             </p>
             <form onSubmit={handleSubmit}>
-              <div className="pt-form-group pt-control-group">
+              <div className="bp3-form-group bp3-control-group">
                 <Field
                   name="url"
                   component={renderTextInput}
@@ -132,7 +132,7 @@ class DeploymentPanel extends Component {
                 type="submit"
                 disabled={submitting || running}
                 intent={Intent.PRIMARY}
-                rightIconName="arrow-right"
+                rightIcon="arrow-right"
               />
             </form>
           </Panel.Body>

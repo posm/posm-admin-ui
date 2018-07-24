@@ -1,3 +1,4 @@
+import { H4 } from "@blueprintjs/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { PageHeader, Panel, Well } from "react-bootstrap";
@@ -66,7 +67,7 @@ class SettingsPanel extends Component {
         <PageHeader>Network Settings</PageHeader>
         <Panel>
           <Panel.Heading>
-            <h4>Wi-Fi</h4>
+            <H4>Wi-Fi</H4>
           </Panel.Heading>
           <Panel.Body>
             {running && <Well bsSize="small">{statusMessage}</Well>}

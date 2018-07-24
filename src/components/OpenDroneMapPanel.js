@@ -90,7 +90,7 @@ class OpenDroneMapPanel extends React.Component {
       .sort(
         (a, b) => (projects[a].user.name || a) > (projects[b].user.name || b)
       )
-      .map(name =>
+      .map(name => (
         <ProjectPane
           key={name}
           name={name}
@@ -98,7 +98,7 @@ class OpenDroneMapPanel extends React.Component {
           endpoint={`${endpoint}/projects/${name}`}
           imageryEndpoint={imageryEndpoint}
         />
-      );
+      ));
 
     return (
       <div className="posm-panel">
@@ -146,17 +146,19 @@ class OpenDroneMapPanel extends React.Component {
           </Form>
         </Modal>
 
-        {projectPanes.length === 0
-          ? <NonIdealState
-              visual="airplane"
-              title="No Projects"
-              action={
-                <Button bsSize="small" bsStyle="primary" onClick={this.open}>
-                  Create a New Project
-                </Button>
-              }
-            />
-          : projectPanes}
+        {projectPanes.length === 0 ? (
+          <NonIdealState
+            icon="airplane"
+            title="No Projects"
+            action={
+              <Button bsSize="small" bsStyle="primary" onClick={this.open}>
+                Create a New Project
+              </Button>
+            }
+          />
+        ) : (
+          projectPanes
+        )}
       </div>
     );
   }
@@ -169,7 +171,10 @@ const mapStateToProps = state => ({
   projects: state.odm.projects
 });
 
-export default connect(mapStateToProps, { createODMProject, getODMProjects })(
+export default connect(
+  mapStateToProps,
+  { createODMProject, getODMProjects }
+)(
   reduxForm({
     form: "createODMProject"
   })(OpenDroneMapPanel)

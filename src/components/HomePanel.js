@@ -1,3 +1,4 @@
+import { H3 } from "@blueprintjs/core";
 import React from "react";
 import { Col, Grid, Image, PageHeader, Row } from "react-bootstrap";
 import { connect } from "react-redux";
@@ -17,7 +18,7 @@ const styles = {
   }
 };
 
-const HomePanel = ({ osm, posm }) =>
+const HomePanel = ({ osm, posm }) => (
   <div>
     <div className="posm-panel">
       <PageHeader>Apps</PageHeader>
@@ -26,7 +27,7 @@ const HomePanel = ({ osm, posm }) =>
           <Col md={4}>
             <a href={`${posm}/omk/`} target="_blank" rel="noopener noreferrer">
               <Card style={styles.card}>
-                <h3>OpenMapKitServer</h3>
+                <H3>OpenMapKitServer</H3>
                 <Image src={omkLogo} style={styles.image} responsive />
               </Card>
             </a>
@@ -34,7 +35,7 @@ const HomePanel = ({ osm, posm }) =>
           <Col md={4}>
             <a href={`${posm}/fp/`} target="_blank" rel="noopener noreferrer">
               <Card style={styles.card}>
-                <h3>Field Papers</h3>
+                <H3>Field Papers</H3>
                 <Image src={fpLogo} style={styles.image} responsive />
               </Card>
             </a>
@@ -46,7 +47,7 @@ const HomePanel = ({ osm, posm }) =>
               rel="noopener noreferrer"
             >
               <Card style={styles.card}>
-                <h3>OpenStreetMap</h3>
+                <H3>OpenStreetMap</H3>
                 <Image src={osmLogo} style={styles.image} responsive />
               </Card>
             </a>
@@ -55,7 +56,8 @@ const HomePanel = ({ osm, posm }) =>
       </Grid>
     </div>
     <FilesPanel />
-  </div>;
+  </div>
+);
 
 HomePanel.propTypes = {};
 

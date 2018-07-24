@@ -1,5 +1,6 @@
 import path from "path";
 
+import { Code, H4 } from "@blueprintjs/core";
 import React, { Component } from "react";
 import { Carousel, Modal, PageHeader, Panel } from "react-bootstrap";
 import { connect } from "react-redux";
@@ -85,21 +86,21 @@ class DownloadsPanel extends Component {
         <PageHeader>Files</PageHeader>
         <Panel>
           <Panel.Heading>
-            <h4>
+            <H4>
               Public{" "}
               <span
                 onClick={this.openModal}
-                className="pull-right pt-icon-standard pt-icon-help pt-intent-primary"
+                className="pull-right bp3-icon-standard bp3-icon-help bp3-intent-primary"
               />
-            </h4>
+            </H4>
           </Panel.Heading>
           <Panel.Body>
             <p>
               To add to this list, copy files to{" "}
               <a href="smb://{hostname}/public">
-                <code>smb://{hostname}/public</code>
+                <Code>smb://{hostname}/public</Code>
               </a>{" "}
-              (Windows: <code>\\{hostname.toUpperCase()}\public</code>),
+              (Windows: <Code>\\{hostname.toUpperCase()}\public</Code>),
               connecting as Guest.
             </p>
             {publicFiles.length > 0 && (
@@ -107,7 +108,7 @@ class DownloadsPanel extends Component {
                 {publicFiles.map((file, idx) => (
                   <li key={idx}>
                     <a href={`${posm}/public/${file}`}>
-                      <code>{path.basename(file)}</code>
+                      <Code>{path.basename(file)}</Code>
                     </a>
                   </li>
                 ))}
@@ -117,7 +118,7 @@ class DownloadsPanel extends Component {
               See{" "}
               <a href="https://github.com/posm/posm/wiki/Recommended-Downloads">
                 Recommended Downloads{" "}
-                <span className="pt-icon-standard pt-icon-offline" />
+                <span className="bp3-icon-standard bp3-icon-offline" />
               </a>{" "}
               for a list of tools we recommend making available.
             </p>

@@ -6,7 +6,12 @@ a {
   color: #d33f49;
 }
 
-a, a:hover, a:visited, a:link, a:active, a:focus {
+a,
+a:hover,
+a:visited,
+a:link,
+a:active,
+a:focus {
   text-decoration: none;
 }
 
@@ -20,28 +25,28 @@ a.toggle {
   background-color: #c8e0f0;
 }
 
-.pt-non-ideal-state.dz-message {
+.bp3-non-ideal-state.dz-message {
   margin: 0 auto;
 }
 
-label.pt-control {
+label.bp3-control {
   font-weight: normal;
 }
 
-.pt-editable-text.baseline {
+.bp3-editable-text.baseline {
   vertical-align: baseline;
 }
 
-.panel-title .pt-editable-text {
+.panel-title .bp3-editable-text {
   padding-top: 6px;
   padding-bottom: 6px;
 }
 
-.pt-navbar {
+.bp3-navbar {
   z-index: 10000;
 }
 
-.pt-navbar.pt-dark a {
+.bp3-navbar.bp3-dark a {
   color: white;
   text-decoration: none;
 }
@@ -66,6 +71,20 @@ label.pt-control {
 .panel.possibly-empty .panel-body {
   padding-top: 0px;
   padding-bottom: 0px;
+}
+
+.panel-heading .toggle {
+  float: left;
+  font-size: 20px;
+  padding-top: 2px;
+}
+
+.panel-heading .toggle::before {
+  content: "\2212";
+}
+
+.panel-heading .toggle.collapsed::before {
+  content: "+";
 }
 
 .posm-panel {
@@ -94,12 +113,15 @@ label.pt-control {
   color: #e74c3c;
 }
 
-.hljs-comment, .hljs-quote {
+.hljs-comment,
+.hljs-quote {
   color: #998;
   font-style: italic;
 }
 
-.hljs-keyword, .hljs-selector-tag, .hljs-subst {
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
   color: #333;
   font-weight: bold;
 }
@@ -112,11 +134,14 @@ label.pt-control {
   color: #008080;
 }
 
-.hljs-string, .hljs-doctag {
+.hljs-string,
+.hljs-doctag {
   color: #d14;
 }
 
-.hljs-title, .hljs-section, .hljs-selector-id {
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
   color: #900;
   font-weight: bold;
 }
@@ -125,25 +150,31 @@ label.pt-control {
   font-weight: normal;
 }
 
-.hljs-type, .hljs-class .hljs-title {
+.hljs-type,
+.hljs-class .hljs-title {
   color: #458;
   font-weight: bold;
 }
 
-.hljs-tag, .hljs-name, .hljs-attribute {
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
   color: #000080;
   font-weight: normal;
 }
 
-.hljs-regexp, .hljs-link {
+.hljs-regexp,
+.hljs-link {
   color: #009926;
 }
 
-.hljs-symbol, .hljs-bullet {
+.hljs-symbol,
+.hljs-bullet {
   color: #990073;
 }
 
-.hljs-built_in, .hljs-builtin-name {
+.hljs-built_in,
+.hljs-builtin-name {
   color: #0086b3;
 }
 

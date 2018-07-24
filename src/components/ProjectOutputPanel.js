@@ -1,3 +1,4 @@
+import { Code, H4 } from "@blueprintjs/core";
 import prettyBytes from "pretty-bytes";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
@@ -19,7 +20,7 @@ export default class ProjectSourcesPanel extends Component {
 
     return (
       <div>
-        <h4 className="x_title">API Output</h4>
+        <H4 className="x_title">API Output</H4>
         <pre
           dangerouslySetInnerHTML={{
             __html: highlight(JSON.stringify(project, null, 2), "json")
@@ -33,13 +34,17 @@ export default class ProjectSourcesPanel extends Component {
     const { endpoint } = this.props;
     return (
       <div>
-        <h4 className="x_title">Logs</h4>
+        <H4 className="x_title">Logs</H4>
         <ul className="row list-unstyled">
           <li className="col-xs-4">
-            <a href={`${endpoint}/logs/stderr`}><code>stderr.log</code></a>
+            <a href={`${endpoint}/logs/stderr`}>
+              <Code>stderr.log</Code>
+            </a>
           </li>
           <li className="col-xs-4">
-            <a href={`${endpoint}/logs/stdout`}><code>stdout.log</code></a>
+            <a href={`${endpoint}/logs/stdout`}>
+              <Code>stdout.log</Code>
+            </a>
           </li>
         </ul>
       </div>
@@ -55,15 +60,15 @@ export default class ProjectSourcesPanel extends Component {
 
     return (
       <div>
-        <h4 className="x_title">Outputs</h4>
+        <H4 className="x_title">Outputs</H4>
         <ul className="row list-unstyled">
-          {artifacts.map((artifact, col) =>
+          {artifacts.map((artifact, col) => (
             <li className="col-xs-4" key={col}>
               <a href={`${endpoint}/artifacts/${artifact}`}>
-                <code>{artifact}</code>
+                <Code>{artifact}</Code>
               </a>
             </li>
-          )}
+          ))}
         </ul>
       </div>
     );
@@ -106,19 +111,24 @@ export default class ProjectSourcesPanel extends Component {
                 <dt>Resolution</dt>
                 <dd>{resolution}</dd>
                 <dt>Width × Height</dt>
-                <dd>{width} × {height}</dd>
+                <dd>
+                  {width} × {height}
+                </dd>
                 <dt>Filesize</dt>
                 <dd>{size}</dd>
                 <dt>Coordinate Reference System</dt>
-                <dd>{projName} (EPSG:{epsgCode})</dd>
+                <dd>
+                  {projName} (EPSG:{epsgCode})
+                </dd>
               </dl>
             </div>
           </div>
         </div>
-        {user.imagery != null &&
+        {user.imagery != null && (
           <div className="col-md-8">
             <Map tileJSON={user.imagery} minHeight="400px" width="100%" />
-          </div>}
+          </div>
+        )}
       </div>
     );
   }
@@ -132,7 +142,6 @@ export default class ProjectSourcesPanel extends Component {
 
     return (
       <div>
-
         {preview}
 
         {outputs}

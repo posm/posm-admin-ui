@@ -61,9 +61,9 @@ export default class ProjectSourcesPanel extends React.Component {
 
     const thumbnails = sources
       .slice(0, count)
-      .map((image, col) =>
+      .map((image, col) => (
         <SourceThumbnail key={col} image={image} {...this.props} />
-      );
+      ));
 
     const showAllButton = this.getShowAllButton();
 
@@ -85,14 +85,12 @@ export default class ProjectSourcesPanel extends React.Component {
         >
           <NonIdealState
             className="dz-message"
-            visual="cloud-upload"
+            icon="cloud-upload"
             action="Drop images here to upload"
           />
         </Dropzone>
 
-        <div className="row sources">
-          {thumbnails}
-        </div>
+        <div className="row sources">{thumbnails}</div>
 
         {showAllButton}
       </div>

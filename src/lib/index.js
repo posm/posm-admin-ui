@@ -20,7 +20,7 @@ export const highlight = (str, lang) => {
   return "";
 };
 
-const decorate = (content, intent, child) =>
+const decorate = (content, intent, child) => (
   <Tooltip
     content={content}
     intent={intent}
@@ -30,7 +30,8 @@ const decorate = (content, intent, child) =>
     isOpen
   >
     {child}
-  </Tooltip>;
+  </Tooltip>
+);
 
 export const renderTextInput = ({
   input,
@@ -41,11 +42,10 @@ export const renderTextInput = ({
   ...props
 }) => {
   const widget = (
-    <label className="pt-label">
-      {label}
-      {" "}{required && <span className="pt-text-muted">(required)</span>}
+    <label className="bp3-label">
+      {label} {required && <span className="bp3-text-muted">(required)</span>}
       <input
-        className="pt-input"
+        className="bp3-input"
         type="text"
         dir="auto"
         placeholder={placeholder}

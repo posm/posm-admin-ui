@@ -1,4 +1,4 @@
-import { Button, Intent } from "@blueprintjs/core";
+import { Button, Code, Intent } from "@blueprintjs/core";
 import React, { Component } from "react";
 import { Button as BSButton, PageHeader, Panel, Well } from "react-bootstrap";
 import { connect } from "react-redux";
@@ -7,6 +7,7 @@ import { reduxForm } from "redux-form";
 
 import { backup } from "../actions";
 import LogModal from "./LogModal";
+import { getHostname } from "../selectors";
 
 class AdminPanel extends Component {
   state = {};
@@ -45,7 +46,7 @@ class AdminPanel extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, hostname, submitting } = this.props;
     const { running, showLogs, statusMessage } = this.state;
 
     return (
@@ -68,11 +69,11 @@ class AdminPanel extends Component {
             {running && <Well bsSize="small">{statusMessage}</Well>}
             <p>
               This will back up the following datasets to{" "}
-              <code>/opt/data/backups</code> on the POSM device (available as{" "}
-              <a href="smb://posm/backups">
-                <code>smb://posm/backups</code>
+              <Code>/opt/data/backups</Code> on the POSM device (available as{" "}
+              <a href="smb://{hostname}/backups">
+                <Code>smb://{hostname}/backups</Code>
               </a>{" "}
-              (Windows: <code>\\POSM\backups</code>)):
+              (Windows: <Code>\\{hostname.toUpperCase()}\backups</Code>)):
             </p>
             <ul>
               <li>ODK/OMK forms</li>
@@ -90,7 +91,7 @@ class AdminPanel extends Component {
                 type="submit"
                 disabled={submitting || running}
                 intent={Intent.PRIMARY}
-                rightIconName="arrow-right"
+                rightIcon="arrow-right"
               />
             </form>
           </Panel.Body>
@@ -101,7 +102,8 @@ class AdminPanel extends Component {
 }
 
 const mapStateToProps = state => ({
-  complete: state.tasks.deployments.complete
+  complete: state.tasks.deployments.complete,
+  hostname: getHostname(state)
 });
 
 export default connect(

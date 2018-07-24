@@ -1,4 +1,4 @@
-import { Button, Intent, Radio, RadioGroup } from "@blueprintjs/core";
+import { Button, Code, Intent, Radio, RadioGroup } from "@blueprintjs/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button as BSButton, PageHeader, Panel, Well } from "react-bootstrap";
@@ -24,7 +24,7 @@ const styles = {
 const tarball = value =>
   value && !/-bundle\.tar\.gz$/.test(value) ? (
     <span>
-      Must be the URL of a POSM Bundle (ending in <code>-bundle.tar.gz</code>)
+      Must be the URL of a POSM Bundle (ending in <Code>-bundle.tar.gz</Code>)
     </span>
   ) : null;
 
@@ -108,7 +108,7 @@ class AOIPanel extends Component {
               AOIs are distributed as "POSM Bundles" produced by the{" "}
               <a href="http://export.posm.io/">
                 POSM Export Tool{" "}
-                <span className="pt-icon-standard pt-icon-offline" />
+                <span className="bp3-icon-standard bp3-icon-offline" />
               </a>. They must include "OSM PBF" as an export format.
             </p>
             <p>
@@ -121,7 +121,7 @@ class AOIPanel extends Component {
             </p>
             <hr />
             <form onSubmit={handleSubmit}>
-              <div className="pt-form-group pt-control-group">
+              <div className="bp3-form-group bp3-control-group">
                 <RadioGroup label="Active AOI">
                   {available.map(({ description, name, title }, idx) => (
                     <Field
@@ -165,7 +165,7 @@ class AOIPanel extends Component {
                 type="submit"
                 disabled={submitting || running}
                 intent={Intent.PRIMARY}
-                rightIconName="arrow-right"
+                rightIcon="arrow-right"
               />
             </form>
           </Panel.Body>

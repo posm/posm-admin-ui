@@ -1,5 +1,6 @@
 import path from "path";
 
+import { Code, H4 } from "@blueprintjs/core";
 import React from "react";
 import { Panel } from "react-bootstrap";
 
@@ -13,7 +14,7 @@ const styles = {
 export default ({ files, posm, style }) =>
   files != null &&
   files.length > 0 && (
-    <Panel header={<h4>AOI Files</h4>}>
+    <Panel header={<H4>AOI Files</H4>}>
       <Panel.Body>
         <ul style={style}>
           {files.map(({ contents, description, title }, idx) => (
@@ -29,7 +30,7 @@ export default ({ files, posm, style }) =>
                 {contents.map(({ file, type }, jdx) => (
                   <li key={`${idx}-${jdx}`}>
                     <a href={`${posm}/aoi/${file}`}>
-                      <code>{path.basename(file)}</code> - {type}
+                      <Code>{path.basename(file)}</Code> - {type}
                     </a>
                   </li>
                 ))}

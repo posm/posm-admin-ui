@@ -1,4 +1,4 @@
-import { EditableText, Tab2, Tabs2 } from "@blueprintjs/core";
+import { EditableText, Tab, Tabs } from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import React from "react";
 import { Button, ButtonGroup, Modal, Panel } from "react-bootstrap";
@@ -26,7 +26,6 @@ export default class ProjectPane extends React.Component {
     project: this.props.project,
     projectName: this.props.project.user.name || this.props.name,
     showModal: false,
-    shown: false,
     showSpinner: false,
     tiling: false
   };
@@ -285,12 +284,6 @@ export default class ProjectPane extends React.Component {
       .catch(err => {
         console.warn(err.stack);
       });
-  };
-
-  toggle = () => {
-    this.setState({
-      shown: !this.state.shown
-    });
   };
 
   updateProjectName = projectName => {
@@ -657,7 +650,7 @@ export default class ProjectPane extends React.Component {
   }
 
   render() {
-    const { project, projectName, showModal, shown } = this.state;
+    const { project, projectName, showModal } = this.state;
     const { artifacts, images, status } = project;
 
     const buttons = this.getButtons();
@@ -668,16 +661,10 @@ export default class ProjectPane extends React.Component {
     return (
       <Panel className="possibly-empty">
         <Panel.Heading>
-          <div>
-            <a tabIndex="-1" onClick={this.toggle} className="toggle">
-              <span
-                className={
-                  shown
-                    ? "pt-icon-standard pt-icon-minus"
-                    : "pt-icon-standard pt-icon-plus"
-                }
-              />
-            </a>
+          <Panel.Toggle componentClass="a" className="toggle">
+            <span className="bp3-icon-standard" />
+          </Panel.Toggle>
+          <Panel.Title>
             <EditableText
               defaultValue={projectName}
               onConfirm={this.updateProjectName}
@@ -692,38 +679,37 @@ export default class ProjectPane extends React.Component {
               </ButtonGroup>
               {failure}
             </div>
-          </div>
+          </Panel.Title>
         </Panel.Heading>
-        <Panel.Body>
-          <Modal show={showModal} onHide={this.hideModal}>
-            <Modal.Header closeButton>
-              <Modal.Title>{projectName} Status</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <pre
-                dangerouslySetInnerHTML={{
-                  __html: highlight(
-                    JSON.stringify(
-                      {
-                        project
-                      },
-                      null,
-                      2
-                    ),
-                    "json"
-                  )
-                }}
-              />
-            </Modal.Body>
-          </Modal>
-
-          {shown && (
-            <Tabs2
+        <Panel.Collapse>
+          <Panel.Body>
+            <Modal show={showModal} onHide={this.hideModal}>
+              <Modal.Header closeButton>
+                <Modal.Title>{projectName} Status</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <pre
+                  dangerouslySetInnerHTML={{
+                    __html: highlight(
+                      JSON.stringify(
+                        {
+                          project
+                        },
+                        null,
+                        2
+                      ),
+                      "json"
+                    )
+                  }}
+                />
+              </Modal.Body>
+            </Modal>
+            <Tabs
               id={projectName}
               // onChange={this.handleNavbarTabChange}
               defaultSelectedTabId={status.state != null ? "Output" : "Sources"}
             >
-              <Tab2
+              <Tab
                 id="Sources"
                 title="Sources"
                 panel={
@@ -735,7 +721,7 @@ export default class ProjectPane extends React.Component {
                   />
                 }
               />
-              <Tab2
+              <Tab
                 id="Output"
                 title="Output"
                 panel={
@@ -746,9 +732,9 @@ export default class ProjectPane extends React.Component {
                   />
                 }
               />
-            </Tabs2>
-          )}
-        </Panel.Body>
+            </Tabs>
+          </Panel.Body>
+        </Panel.Collapse>
       </Panel>
     );
   }

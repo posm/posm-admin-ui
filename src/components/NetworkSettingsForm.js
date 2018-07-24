@@ -4,8 +4,9 @@ import { Field, reduxForm } from "redux-form";
 
 import { renderTextInput } from "../lib";
 
-const renderSwitch = ({ className, disabled, input, label }) =>
-  <Switch className={className} label={label} disabled={disabled} {...input} />;
+const renderSwitch = ({ className, disabled, input, label }) => (
+  <Switch className={className} label={label} disabled={disabled} {...input} />
+);
 
 class NetworkSettingsForm extends Component {
   static propTypes = {};
@@ -15,7 +16,7 @@ class NetworkSettingsForm extends Component {
 
     return (
       <form onSubmit={handleSubmit}>
-        <div className="pt-form-group pt-control-group">
+        <div className="bp3-form-group bp3-control-group">
           <Field
             name="bridged"
             component={renderSwitch}
@@ -26,7 +27,7 @@ class NetworkSettingsForm extends Component {
                   allow users to access the internet when connected to POSM
                   (requires that POSM has an ethernet connection)"
                 position={Position.RIGHT}
-                className="pt-tooltip-indicator"
+                className="bp3-tooltip-indicator"
               >
                 Bridged
               </Tooltip>
@@ -36,13 +37,13 @@ class NetworkSettingsForm extends Component {
             name="wpa"
             component={renderSwitch}
             type="checkbox"
-            className="pt-icon-standard pt-icon-lock"
+            className="bp3-icon-standard bp3-icon-lock"
             label={
               <span>
                 &nbsp;<Tooltip
                   content="requires a password to connect to POSM Wi-Fi. Disable this if computers have trouble connecting."
                   position={Position.RIGHT}
-                  className="pt-tooltip-indicator"
+                  className="bp3-tooltip-indicator"
                 >
                   WPA-Personal
                 </Tooltip>
@@ -68,7 +69,7 @@ class NetworkSettingsForm extends Component {
           type="submit"
           disabled={submitting || running}
           intent={Intent.PRIMARY}
-          rightIconName="arrow-right"
+          rightIcon="arrow-right"
         />
       </form>
     );

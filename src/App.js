@@ -1,9 +1,9 @@
 import { FocusStyleManager } from "@blueprintjs/core";
-import createHistory from "history/createHashHistory";
+import { ConnectedRouter } from "connected-react-router";
+import { createBrowserHistory } from "history";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Route } from "react-router-dom";
-import { ConnectedRouter } from "react-router-redux";
 import { Socket } from "react-socket-io";
 
 import { initializeState, loadPOSMState } from "./actions";
@@ -20,7 +20,7 @@ import Sidebar from "./components/Sidebar";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
-const history = createHistory();
+const history = createBrowserHistory();
 
 const SOCKET_OPTIONS = {
   path: "/posm-admin/socket.io",
@@ -57,13 +57,13 @@ class App extends Component {
           <Navbar />
           <Sidebar />
           <Route exact path="/" component={HomePanel} />
-          <Route path="/aois" component={AOIPanel} />
-          <Route path="/deployments" component={DeploymentPanel} />
-          <Route path="/opendronemap" component={OpenDroneMapPanel} />
-          <Route path="/imagery" component={ImageryPanel} />
-          <Route path="/files" component={FilesPanel} />
-          <Route path="/admin" component={AdminPanel} />
-          <Route path="/settings" component={SettingsPanel} />
+          <Route path="/posm/aois" component={AOIPanel} />
+          <Route path="/posm/deployments" component={DeploymentPanel} />
+          <Route path="/posm/opendronemap" component={OpenDroneMapPanel} />
+          <Route path="/posm/imagery" component={ImageryPanel} />
+          <Route path="/posm/files" component={FilesPanel} />
+          <Route path="/posm/admin" component={AdminPanel} />
+          <Route path="/posm/settings" component={SettingsPanel} />
         </div>
       </ConnectedRouter>
     );
@@ -85,6 +85,7 @@ const mapStateToProps = state => ({
   refreshInterval: state.config.refreshInterval
 });
 
-export default connect(mapStateToProps, { initializeState, loadPOSMState })(
-  App
-);
+export default connect(
+  mapStateToProps,
+  { initializeState, loadPOSMState }
+)(App);

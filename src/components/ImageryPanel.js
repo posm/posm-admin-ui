@@ -66,7 +66,7 @@ class ImageryPanel extends Component {
         (a, b) =>
           (sources[a].meta.user.name || a) > (sources[b].meta.user.name || b)
       )
-      .map(name =>
+      .map(name => (
         <ImageryPane
           key={name}
           name={name}
@@ -74,7 +74,7 @@ class ImageryPanel extends Component {
           endpoint={`${endpoint}/imagery/${name}`}
           refreshInterval={refreshInterval}
         />
-      );
+      ));
 
     return (
       <div className="posm-panel">
@@ -103,7 +103,7 @@ class ImageryPanel extends Component {
         >
           <NonIdealState
             className="dz-message"
-            visual="cloud-upload"
+            icon="cloud-upload"
             action="Drop GeoTIFFs here to upload"
           />
         </Dropzone>

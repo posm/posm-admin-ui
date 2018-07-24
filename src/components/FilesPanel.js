@@ -1,11 +1,12 @@
 import path from "path";
 
+import { Code, H4 } from "@blueprintjs/core";
 import React, { Component } from "react";
 import { Carousel, Modal, PageHeader, Panel } from "react-bootstrap";
 import { connect } from "react-redux";
 
 import AOIFiles from "./AOIFiles";
-import { getAOIFiles } from "../selectors";
+import { getAOIFiles, getHostname } from "../selectors";
 
 import macSMBConnect1 from "../images/mac-smb-connect-1.png";
 import macSMBConnect2 from "../images/mac-smb-connect-2.png";
@@ -47,7 +48,7 @@ class DownloadsPanel extends Component {
     });
 
   render() {
-    const { aoiFiles, posm, publicFiles } = this.props;
+    const { aoiFiles, hostname, posm, publicFiles } = this.props;
     const { showModal } = this.state;
 
     return (
@@ -83,41 +84,45 @@ class DownloadsPanel extends Component {
           </Modal.Body>
         </Modal>
         <PageHeader>Files</PageHeader>
-        <Panel
-          header={
-            <h4>
+        <Panel>
+          <Panel.Heading>
+            <H4>
               Public{" "}
               <span
                 onClick={this.openModal}
-                className="pull-right pt-icon-standard pt-icon-help pt-intent-primary"
+                className="pull-right bp3-icon-standard bp3-icon-help bp3-intent-primary"
               />
-            </h4>
-          }
-        >
-          <p>
-            To add to this list, copy files to
-            {" "}<a href="smb://posm/public"><code>smb://posm/public</code></a>
-            {" "}(Windows: <code>\\POSM\public</code>), connecting as Guest.
-          </p>
-          {publicFiles.length > 0 &&
-            <ul style={styles.outerUL}>
-              {publicFiles.map((file, idx) =>
-                <li key={idx}>
-                  <a href={`${posm}/public/${file}`}>
-                    <code>{path.basename(file)}</code>
-                  </a>
-                </li>
-              )}
-            </ul>}
-          <p>
-            See
-            {" "}
-            <a href="https://github.com/posm/posm/wiki/Recommended-Downloads">
-              Recommended Downloads
-              {" "}<span className="pt-icon-standard pt-icon-offline" />
-            </a>
-            {" "}for a list of tools we recommend making available.
-          </p>
+            </H4>
+          </Panel.Heading>
+          <Panel.Body>
+            <p>
+              To add to this list, copy files to{" "}
+              <a href="smb://{hostname}/public">
+                <Code>smb://{hostname}/public</Code>
+              </a>{" "}
+              (Windows: <Code>\\{hostname.toUpperCase()}\public</Code>),
+              connecting as Guest.
+            </p>
+            {publicFiles.length > 0 && (
+              <ul style={styles.outerUL}>
+                {publicFiles.map((file, idx) => (
+                  <li key={idx}>
+                    <a href={`${posm}/public/${file}`}>
+                      <Code>{path.basename(file)}</Code>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <p>
+              See{" "}
+              <a href="https://github.com/posm/posm/wiki/Recommended-Downloads">
+                Recommended Downloads{" "}
+                <span className="bp3-icon-standard bp3-icon-offline" />
+              </a>{" "}
+              for a list of tools we recommend making available.
+            </p>
+          </Panel.Body>
         </Panel>
         <AOIFiles files={aoiFiles} posm={posm} style={styles.ul} />
       </div>
@@ -127,6 +132,7 @@ class DownloadsPanel extends Component {
 
 const mapStateToProps = state => ({
   aoiFiles: getAOIFiles(state),
+  hostname: getHostname(state),
   posm: state.config.posm,
   publicFiles: state.publicFiles
 });

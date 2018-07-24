@@ -1,4 +1,4 @@
-import { Button, Intent, Radio, RadioGroup } from "@blueprintjs/core";
+import { Button, Code, Intent, Radio, RadioGroup } from "@blueprintjs/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button as BSButton, PageHeader, Panel, Well } from "react-bootstrap";
@@ -22,14 +22,15 @@ const styles = {
 };
 
 const tarball = value =>
-  value && !/-bundle\.tar\.gz$/.test(value)
-    ? <span>
-        Must be the URL of a POSM Bundle (ending in <code>-bundle.tar.gz</code>)
-      </span>
-    : null;
+  value && !/-bundle\.tar\.gz$/.test(value) ? (
+    <span>
+      Must be the URL of a POSM Bundle (ending in <Code>-bundle.tar.gz</Code>)
+    </span>
+  ) : null;
 
-const renderRadio = ({ className, disabled, input, label }) =>
-  <Radio className={className} label={label} disabled={disabled} {...input} />;
+const renderRadio = ({ className, disabled, input, label }) => (
+  <Radio className={className} label={label} disabled={disabled} {...input} />
+);
 
 class AOIPanel extends Component {
   state = {};
@@ -45,7 +46,9 @@ class AOIPanel extends Component {
     });
 
   onMessage = message => {
-    const { status: { complete, initialized, msg } } = message;
+    const {
+      status: { complete, initialized, msg }
+    } = message;
 
     this.setState({
       running: initialized && !complete,
@@ -94,75 +97,78 @@ class AOIPanel extends Component {
         </PageHeader>
         <LogModal show={showLogs} onHide={this.hideLogs} event="aoi-deploy" />
         <Panel>
-          {running && <Well bsSize="small">{statusMessage}</Well>}
-          <p>
-            An <em>Area of Interest</em> contains OpenStreetMap data for a given
-            area. It may also include auxiliary files, including OsmAnd OBFs
-            (for offline mapping on Android).
-          </p>
-          <p>
-            AOIs are distributed as "POSM Bundles" produced by the
-            {" "}
-            <a href="http://export.posm.io/">
-              POSM Export Tool
-              {" "}<span className="pt-icon-standard pt-icon-offline" />
-            </a>. They must include "OSM PBF" as an export format.
-          </p>
-          <p>
-            Data contained in an AOI is used to produce offline maps for
-            {" "}<a href={`${posm}/fp/`}>Field Papers</a> and
-            {" "}<a href={`${posm}/fp/`}>OpenMapKit</a>, as well as to bootstrap
-            data that can be edited using OMK and the
-            {" "}
-            <a href={`http://${osm.fqdn}/`}>
-              local OpenStreetMap instance
-            </a>
-            {" "}(using JOSM, if desired).
-          </p>
-          <hr />
-          <form onSubmit={handleSubmit}>
-            <div className="pt-form-group pt-control-group">
-              <RadioGroup label="Active AOI">
-                {available.map(({ description, name, title }, idx) =>
+          <Panel.Body>
+            {running && <Well bsSize="small">{statusMessage}</Well>}
+            <p>
+              An <em>Area of Interest</em> contains OpenStreetMap data for a
+              given area. It may also include auxiliary files, including OsmAnd
+              OBFs (for offline mapping on Android).
+            </p>
+            <p>
+              AOIs are distributed as "POSM Bundles" produced by the{" "}
+              <a href="http://export.posm.io/">
+                POSM Export Tool{" "}
+                <span className="bp3-icon-standard bp3-icon-offline" />
+              </a>. They must include "OSM PBF" as an export format.
+            </p>
+            <p>
+              Data contained in an AOI is used to produce offline maps for{" "}
+              <a href={`${posm}/fp/`}>Field Papers</a> and{" "}
+              <a href={`${posm}/fp/`}>OpenMapKit</a>, as well as to bootstrap
+              data that can be edited using OMK and the{" "}
+              <a href={`http://${osm.fqdn}/`}>local OpenStreetMap instance</a>{" "}
+              (using JOSM, if desired).
+            </p>
+            <hr />
+            <form onSubmit={handleSubmit}>
+              <div className="bp3-form-group bp3-control-group">
+                <RadioGroup label="Active AOI">
+                  {available.map(({ description, name, title }, idx) => (
+                    <Field
+                      key={idx}
+                      name="aoi"
+                      component={renderRadio}
+                      type="radio"
+                      label={
+                        <span>
+                          {title}
+                          {description && (
+                            <span>
+                              {" "}
+                              - <em>{description}</em>
+                            </span>
+                          )}
+                        </span>
+                      }
+                      value={name}
+                    />
+                  ))}
                   <Field
-                    key={idx}
                     name="aoi"
                     component={renderRadio}
                     type="radio"
-                    label={
-                      <span>
-                        {title}
-                        {description && <span> - <em>{description}</em></span>}
-                      </span>
-                    }
-                    value={name}
+                    label="Other:"
+                    value="other"
                   />
-                )}
-                <Field
-                  name="aoi"
-                  component={renderRadio}
-                  type="radio"
-                  label="Other:"
-                  value="other"
-                />
-                <Field
-                  name="url"
-                  component={renderTextInput}
-                  placeholder="POSM bundle URL"
-                  onFocus={() => change("aoi", "other")}
-                  style={styles.textInput}
-                  validate={tarball}
-                />
-              </RadioGroup>
-            </div>
-            <Button
-              text="Activate"
-              type="submit"
-              disabled={submitting || running}
-              intent={Intent.PRIMARY}
-              rightIconName="arrow-right"
-            />
-          </form>
+                  <Field
+                    name="url"
+                    component={renderTextInput}
+                    placeholder="POSM bundle URL"
+                    onFocus={() => change("aoi", "other")}
+                    style={styles.textInput}
+                    validate={tarball}
+                  />
+                </RadioGroup>
+              </div>
+              <Button
+                text="Activate"
+                type="submit"
+                disabled={submitting || running}
+                intent={Intent.PRIMARY}
+                rightIcon="arrow-right"
+              />
+            </form>
+          </Panel.Body>
         </Panel>
         <AOIFiles files={aoiFiles} posm={posm} style={styles.ul} />
       </div>
@@ -181,7 +187,10 @@ const mapStateToProps = state => ({
   posm: getPOSMEndpoint(state)
 });
 
-export default connect(mapStateToProps, { activateAOI })(
+export default connect(
+  mapStateToProps,
+  { activateAOI }
+)(
   reduxForm({
     enableReinitialize: true,
     form: "activateAOI",

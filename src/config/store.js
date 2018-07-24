@@ -1,5 +1,5 @@
-import createHistory from "history/createBrowserHistory";
-import { routerMiddleware } from "react-router-redux";
+import { connectRouter, routerMiddleware } from "connected-react-router";
+import { createBrowserHistory } from "history";
 import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { createLogger } from "redux-logger";
@@ -8,12 +8,12 @@ import thunk from "redux-thunk";
 import * as actionCreators from "../actions";
 import reducers from "../reducers";
 
-const history = createHistory();
+const history = createBrowserHistory();
 
 export default preloadedState => {
   const composeEnhancers = composeWithDevTools({ actionCreators });
   const store = createStore(
-    reducers,
+    connectRouter(history)(reducers),
     preloadedState,
     composeEnhancers(
       applyMiddleware(

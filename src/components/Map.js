@@ -2,19 +2,18 @@ import { Slider } from "@blueprintjs/core";
 import Leaflet from "leaflet";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
+import { getPOSMEndpoint } from "../selectors";
 
 import "leaflet/dist/leaflet.css";
-
-const config = {
-  backgroundTileLayer: "http://posm.io/tiles/mm/{z}/{x}/{y}.png"
-};
 
 const MEDIA_QUERY = `(-webkit-min-device-pixel-ratio: 1.5),
                      (min--moz-device-pixel-ratio: 1.5),
                      (-o-min-device-pixel-ratio: 3/2),
                      (min-resolution: 1.5dppx)`;
 
-export default class Map extends Component {
+class Map extends Component {
   static defaultProps = {
     bounds: [[-85.05112877980659, -180], [85.0511287798066, 180]],
     maxzoom: 18,
@@ -45,10 +44,10 @@ export default class Map extends Component {
   };
 
   componentDidMount() {
-    const { showBackground, tileJSON } = this.props;
+    const { posm, showBackground, tileJSON } = this.props;
     const { bounds, maxzoom, minzoom } = this.state;
     let { url } = this.state;
-    let { backgroundTileLayer } = config;
+    let backgroundTileLayer = `${posm}/tiles/mm/{z}/{x}/{y}.png`;
 
     if (tileJSON != null) {
       fetch(tileJSON)
@@ -114,6 +113,16 @@ export default class Map extends Component {
   componentDidUpdate() {
     const { bounds, maxzoom, minzoom, opacity, url } = this.state;
 
+    const size = this.leaflet.getSize();
+
+    if (size.x === 0 && size.y === 0) {
+      this.leaflet.invalidateSize();
+
+      if (this.leaflet.getSize() !== size) {
+        this.leaflet.fitBounds(bounds);
+      }
+    }
+
     if (this.imageryLayer == null) {
       this.imageryLayer = Leaflet.tileLayer(url, {
         minZoom: minzoom,
@@ -127,7 +136,12 @@ export default class Map extends Component {
   }
 
   componentWillUnmount() {
-    this.leaflet.remove();
+    try {
+      // this throws when the map is invisible (size: 0x0), but we should still attempt to clean up event listeners
+      this.leaflet.remove();
+    } catch (err) {
+      console.warn(err);
+    }
   }
 
   updateOpacity = opacity =>
@@ -154,3 +168,9 @@ export default class Map extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  posm: getPOSMEndpoint(state)
+});
+
+export default connect(mapStateToProps)(Map);

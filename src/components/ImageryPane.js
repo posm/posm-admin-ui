@@ -32,7 +32,6 @@ export default class ImageryPane extends React.Component {
   state = {
     pending: [],
     showModal: false,
-    shown: false,
     showSpinner:
       ["PENDING", "RUNNING"].indexOf(
         this.props.source.meta.status.ingest.state
@@ -140,11 +139,7 @@ export default class ImageryPane extends React.Component {
       }
 
       default: {
-        return (
-          <Button bsStyle="danger">
-            Failed
-          </Button>
-        );
+        return <Button bsStyle="danger">Failed</Button>;
       }
     }
   }
@@ -177,7 +172,7 @@ export default class ImageryPane extends React.Component {
   }
 
   getMap() {
-    if (!this.state.shown || !this.isReady()) {
+    if (!this.isReady()) {
       return null;
     }
     // TODO make GDAL XML available for download
@@ -367,12 +362,6 @@ export default class ImageryPane extends React.Component {
     return this.isIngesting() || this.isTiling();
   }
 
-  toggle = () => {
-    this.setState({
-      shown: !this.state.shown
-    });
-  };
-
   updateMetadata(body) {
     const { endpoint } = this.props;
 
@@ -396,7 +385,7 @@ export default class ImageryPane extends React.Component {
   };
 
   render() {
-    const { showModal, shown, source, sourceName } = this.state;
+    const { showModal, source, sourceName } = this.state;
 
     // TODO delete button
     const buttons = this.getButtons();
@@ -405,19 +394,12 @@ export default class ImageryPane extends React.Component {
     const map = this.getMap();
 
     return (
-      <Panel
-        className="possibly-empty"
-        header={
-          <div>
-            <a tabIndex="-1" onClick={this.toggle} className="toggle">
-              <span
-                className={
-                  shown
-                    ? "pt-icon-standard pt-icon-minus"
-                    : "pt-icon-standard pt-icon-plus"
-                }
-              />
-            </a>
+      <Panel className="possibly-empty">
+        <Panel.Heading>
+          <Panel.Toggle componentClass="a" className="toggle">
+            <span className="bp3-icon-standard" />
+          </Panel.Toggle>
+          <Panel.Title>
             <EditableText
               defaultValue={sourceName}
               onConfirm={this.updateSourceName}
@@ -426,37 +408,38 @@ export default class ImageryPane extends React.Component {
             />
             {spinner}
             <div className="pull-right">
-              <ButtonGroup bsSize="small">
-                {buttons}
-              </ButtonGroup>
+              <ButtonGroup bsSize="small">{buttons}</ButtonGroup>
               {failure}
             </div>
-          </div>
-        }
-      >
-        <Modal show={showModal} onHide={this.hideModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>{sourceName} Status</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <pre
-              dangerouslySetInnerHTML={{
-                __html: highlight(
-                  JSON.stringify(
-                    {
-                      source
-                    },
-                    null,
-                    2
-                  ),
-                  "json"
-                )
-              }}
-            />
-          </Modal.Body>
-        </Modal>
+          </Panel.Title>
+        </Panel.Heading>
+        <Panel.Collapse>
+          <Panel.Body>
+            <Modal show={showModal} onHide={this.hideModal}>
+              <Modal.Header closeButton>
+                <Modal.Title>{sourceName} Status</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <pre
+                  dangerouslySetInnerHTML={{
+                    __html: highlight(
+                      JSON.stringify(
+                        {
+                          source
+                        },
+                        null,
+                        2
+                      ),
+                      "json"
+                    )
+                  }}
+                />
+              </Modal.Body>
+            </Modal>
 
-        {map}
+            {map}
+          </Panel.Body>
+        </Panel.Collapse>
       </Panel>
     );
   }

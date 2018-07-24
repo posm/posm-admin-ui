@@ -4,7 +4,8 @@ import { Provider } from "react-redux";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/css/bootstrap-theme.css";
-import "@blueprintjs/core/dist/blueprint.css";
+import "@blueprintjs/core/lib/css/blueprint.css";
+import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "font-awesome/css/font-awesome.css";
 
 import App from "./App";

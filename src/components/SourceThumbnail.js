@@ -1,3 +1,4 @@
+import { Code } from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Image } from "react-bootstrap";
@@ -21,7 +22,9 @@ export default class SourceThumbnail extends Component {
               src={`${endpoint}/images/${image}/thumb`}
             />
             <div className="mask">
-              <p><code>{image}</code></p>
+              <p>
+                <Code>{image}</Code>
+              </p>
               <div className="tools tools-bottom">
                 <a href={`${endpoint}/images/${image}`}>
                   <i className="fa fa-download" />

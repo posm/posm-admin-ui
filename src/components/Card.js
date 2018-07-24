@@ -5,10 +5,11 @@ const styles = {
   textAlign: "center"
 };
 
-const Card = ({ children, style }) =>
-  <div className="pt-cart pt-elevation-2" style={{ ...style, ...styles }}>
+const Card = ({ children, style }) => (
+  <div className="bp3-cart bp3-elevation-2" style={{ ...style, ...styles }}>
     {children}
-  </div>;
+  </div>
+);
 
 Card.propTypes = {};
 

@@ -1,4 +1,4 @@
-import { Button, Intent } from "@blueprintjs/core";
+import { Button, Code, Intent } from "@blueprintjs/core";
 import React, { Component } from "react";
 import { Button as BSButton, PageHeader, Panel, Well } from "react-bootstrap";
 import { connect } from "react-redux";
@@ -7,6 +7,7 @@ import { reduxForm } from "redux-form";
 
 import { backup } from "../actions";
 import LogModal from "./LogModal";
+import { getHostname } from "../selectors";
 
 class AdminPanel extends Component {
   state = {};
@@ -22,7 +23,9 @@ class AdminPanel extends Component {
     });
 
   onMessage = message => {
-    const { status: { complete, initialized, msg } } = message;
+    const {
+      status: { complete, initialized, msg }
+    } = message;
 
     this.setState({
       running: initialized && !complete,
@@ -43,7 +46,7 @@ class AdminPanel extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, hostname, submitting } = this.props;
     const { running, showLogs, statusMessage } = this.state;
 
     return (
@@ -62,33 +65,36 @@ class AdminPanel extends Component {
         </PageHeader>
         <LogModal onHide={this.hideLogs} event="backup-data" show={showLogs} />
         <Panel>
-          {running && <Well bsSize="small">{statusMessage}</Well>}
-          <p>
-            This will back up the following datasets to
-            {" "}<code>/opt/data/backups</code> on the POSM device (available as
-            {" "}
-            <a href="smb://posm/backups"><code>smb://posm/backups</code></a>
-            {" "}(Windows: <code>\\POSM\backups</code>)):
-          </p>
-          <ul>
-            <li>ODK/OMK forms</li>
-            <li>ODK/OMK submissions</li>
-            <li>OMK deployments</li>
-            <li>OSM APIDB</li>
-            <li>Field Papers database</li>
-            <li>Field Papers atlas PDFs</li>
-            <li>Field Papers snapshots</li>
-            <li>POSM AOIs</li>
-          </ul>
-          <form onSubmit={handleSubmit}>
-            <Button
-              text="Backup Data"
-              type="submit"
-              disabled={submitting || running}
-              intent={Intent.PRIMARY}
-              rightIconName="arrow-right"
-            />
-          </form>
+          <Panel.Body>
+            {running && <Well bsSize="small">{statusMessage}</Well>}
+            <p>
+              This will back up the following datasets to{" "}
+              <Code>/opt/data/backups</Code> on the POSM device (available as{" "}
+              <a href="smb://{hostname}/backups">
+                <Code>smb://{hostname}/backups</Code>
+              </a>{" "}
+              (Windows: <Code>\\{hostname.toUpperCase()}\backups</Code>)):
+            </p>
+            <ul>
+              <li>ODK/OMK forms</li>
+              <li>ODK/OMK submissions</li>
+              <li>OMK deployments</li>
+              <li>OSM APIDB</li>
+              <li>Field Papers database</li>
+              <li>Field Papers atlas PDFs</li>
+              <li>Field Papers snapshots</li>
+              <li>POSM AOIs</li>
+            </ul>
+            <form onSubmit={handleSubmit}>
+              <Button
+                text="Backup Data"
+                type="submit"
+                disabled={submitting || running}
+                intent={Intent.PRIMARY}
+                rightIcon="arrow-right"
+              />
+            </form>
+          </Panel.Body>
         </Panel>
       </div>
     );
@@ -96,10 +102,14 @@ class AdminPanel extends Component {
 }
 
 const mapStateToProps = state => ({
-  complete: state.tasks.deployments.complete
+  complete: state.tasks.deployments.complete,
+  hostname: getHostname(state)
 });
 
-export default connect(mapStateToProps, { backup })(
+export default connect(
+  mapStateToProps,
+  { backup }
+)(
   reduxForm({
     form: "backup",
     onSubmit: (values, dispatch, { backup }) => backup(values)

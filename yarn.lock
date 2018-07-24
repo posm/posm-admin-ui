@@ -7695,11 +7695,10 @@ react-scripts@^1.0.7:
   optionalDependencies:
     fsevents "^1.1.3"
 
-"react-socket-io@github:Lube/react-socket-io":
+"react-socket-io@github:charleslxh/react-socket-io#e2f381d3c2d79c58250281fd9f50f9c322906995":
   version "0.2.4"
-  resolved "https://codeload.github.com/Lube/react-socket-io/tar.gz/9b76d0a668df6c69db2be2858b48e68f99b57166"
+  resolved "https://codeload.github.com/charleslxh/react-socket-io/tar.gz/e2f381d3c2d79c58250281fd9f50f9c322906995"
   dependencies:
-    prop-types "^15.6.0"
     socket.io-client "^1.5.0"
 
 react-split-pane@^0.1.77:

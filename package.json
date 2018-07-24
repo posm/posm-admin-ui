@@ -20,7 +20,7 @@
     "react-dropzone-component": "^3.2.0",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
-    "react-socket-io": "github:Lube/react-socket-io",
+    "react-socket-io": "github:charleslxh/react-socket-io#e2f381d3c2d79c58250281fd9f50f9c322906995",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-form": "^7.4.2",

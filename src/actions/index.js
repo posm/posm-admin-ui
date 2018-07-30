@@ -9,38 +9,44 @@ const types = {
 
 export default types;
 
-export const loadPOSMState = () => (dispatch, getState) => {
-  fetch(`${getPOSMEndpoint(getState())}/posm-admin/status`, {
-    credentials: "same-origin"
-  })
-    .then(rsp => rsp.json())
-    .then(remoteState =>
-      dispatch({
-        type: types.RECEIVE_POSM_STATE,
-        remoteState
-      })
-    )
-    .catch(err => {
-      console.warn(err.stack);
+export const loadPOSMState = () => async (dispatch, getState) => {
+  try {
+    const rsp = await fetch(
+      `${getPOSMEndpoint(getState())}/posm-admin/status`,
+      {
+        credentials: "same-origin"
+      }
+    );
+
+    dispatch({
+      type: types.RECEIVE_POSM_STATE,
+      remoteState: await rsp.json()
     });
+  } catch (err) {
+    console.warn(err);
+  }
 };
 
-export const initializeState = () => dispatch =>
-  fetch("/config.json", {
-    credentials: "same-origin"
-  })
-    .then(rsp => rsp.json())
-    .then(config => {
-      dispatch({
-        type: types.RECEIVE_CONFIG,
-        config
-      });
+export const initializeState = () => async dispatch => {
+  try {
+    const rsp = await fetch("/config.json", {
+      credentials: "same-origin"
+    });
 
-      dispatch(loadPOSMState(config.posm));
-    })
-    .catch(err => console.warn(err));
+    const config = await rsp.json();
 
-export const activateAOI = ({ aoi, url }) => (dispatch, getState) => {
+    dispatch({
+      type: types.RECEIVE_CONFIG,
+      config
+    });
+
+    dispatch(loadPOSMState(config.posm));
+  } catch (err) {
+    console.warn(err);
+  }
+};
+
+export const activateAOI = ({ aoi, url }) => async (dispatch, getState) => {
   let body = {
     url
   };
@@ -51,51 +57,67 @@ export const activateAOI = ({ aoi, url }) => (dispatch, getState) => {
     };
   }
 
-  fetch(`${getPOSMEndpoint(getState())}/posm-admin/aoi-deploy`, {
-    credentials: "same-origin",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(body)
-  }).catch(err => console.warn(err));
+  try {
+    await fetch(`${getPOSMEndpoint(getState())}/posm-admin/aoi-deploy`, {
+      credentials: "same-origin",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
+  } catch (err) {
+    console.warn(err);
+  }
 };
 
-export const backup = () => (dispatch, getState) => {
-  fetch(`${getPOSMEndpoint(getState())}/posm-admin/backup-data`, {
-    credentials: "same-origin",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  }).catch(err => console.warn(err));
+export const backup = () => async (dispatch, getState) => {
+  try {
+    await fetch(`${getPOSMEndpoint(getState())}/posm-admin/backup-data`, {
+      credentials: "same-origin",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+  } catch (err) {
+    console.warn(err);
+  }
 };
 
-export const createDeployment = url => (dispatch, getState) => {
-  fetch(`${getPOSMEndpoint(getState())}/posm-admin/atlas-deploy`, {
-    credentials: "same-origin",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      url
-    })
-  }).catch(err => console.warn(err));
+export const createDeployment = url => async (dispatch, getState) => {
+  try {
+    await fetch(`${getPOSMEndpoint(getState())}/posm-admin/atlas-deploy`, {
+      credentials: "same-origin",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        url
+      })
+    });
+  } catch (err) {
+    console.warn(err);
+  }
 };
 
-export const updateNetworkConfig = body => (dispatch, getState) => {
-  fetch(`${getPOSMEndpoint(getState())}/posm-admin/network-config`, {
-    credentials: "same-origin",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(body)
-  }).catch(err => console.warn(err));
+export const updateNetworkConfig = body => async (dispatch, getState) => {
+  try {
+    await fetch(`${getPOSMEndpoint(getState())}/posm-admin/network-config`, {
+      credentials: "same-origin",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
+  } catch (err) {
+    console.warn(err);
+  }
 };
 
-export const getODMProjects = () => (dispatch, getState) => {
+export const getODMProjects = () => async (dispatch, getState) => {
   const endpoint = getODMEndpoint(getState());
 
   if (endpoint == null) {
@@ -106,36 +128,41 @@ export const getODMProjects = () => (dispatch, getState) => {
     type: types.FETCHING_ODM_PROJECTS
   });
 
-  fetch(`${endpoint}/projects`, {
-    credentials: "same-origin"
-  })
-    .then(rsp => rsp.json())
-    .then(projects =>
-      dispatch({
-        type: types.RECEIVE_ODM_PROJECTS,
-        projects
-      })
-    )
-    .catch(err => console.warn(err));
+  try {
+    const rsp = await fetch(`${endpoint}/projects`, {
+      credentials: "same-origin"
+    });
+
+    dispatch({
+      type: types.RECEIVE_ODM_PROJECTS,
+      projects: await rsp.json()
+    });
+  } catch (err) {
+    console.warn(err);
+  }
 };
 
-export const createODMProject = projectName => (dispatch, getState) => {
+export const createODMProject = projectName => async (dispatch, getState) => {
   const endpoint = getODMEndpoint(getState());
 
   if (endpoint == null || !projectName) {
     return;
   }
 
-  fetch(`${endpoint}/projects`, {
-    credentials: "same-origin",
-    body: JSON.stringify({
-      name: projectName
-    }),
-    headers: {
-      "Content-Type": "application/json"
-    },
-    method: "PUT"
-  })
-    .then(rsp => dispatch(getODMProjects()))
-    .catch(err => console.warn(err.stack));
+  try {
+    await fetch(`${endpoint}/projects`, {
+      credentials: "same-origin",
+      body: JSON.stringify({
+        name: projectName
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "PUT"
+    });
+
+    dispatch(getODMProjects());
+  } catch (err) {
+    console.warn(err);
+  }
 };

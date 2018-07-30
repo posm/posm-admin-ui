@@ -7,22 +7,22 @@
     {
       "name": "OpenMapKit",
       "icon": "mobile-phone",
-      "url": "http://posm.io/omk/"
+      "url": "//posm.io/omk/"
     },
     {
       "name": "Field Papers",
       "icon": "clipboard",
-      "url": "http://posm.io/fp/"
+      "url": "//posm.io/fp/"
     },
     {
       "name": "OpenStreetMap",
       "icon": "send-to-map",
-      "url": "http://osm.posm.io/"
+      "url": "//osm.posm.io/"
     },
     {
       "name": "ODM GCPs",
       "icon": "layout-skew-grid",
-      "url": "http://posm.io/posm-gcpi/",
+      "url": "//posm.io/posm-gcpi/",
       "description": "OpenDroneMap Ground Control Points"
     }
   ],
@@ -30,18 +30,18 @@
     {
       "name": "POSM Guide",
       "icon": "book",
-      "url": "http://posm.io/guide/"
+      "url": "//posm.io/guide/"
     },
     {
       "name": "About OMK",
       "icon": "book",
-      "url": "http://posm.io/openmapkit-website/",
+      "url": "//posm.io/openmapkit-website/",
       "description": "About OpenMapKit"
     },
     {
       "name": "OSM Features",
       "icon": "book",
-      "url": "http://wiki.openstreetmap.org/wiki/Map_Features",
+      "url": "https://wiki.openstreetmap.org/wiki/Map_Features",
       "description": "OpenStreetMap Map Features"
     }
   ]

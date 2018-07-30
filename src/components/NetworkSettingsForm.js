@@ -1,6 +1,7 @@
 import { Button, Intent, Position, Switch, Tooltip } from "@blueprintjs/core";
 import React, { Component } from "react";
-import { Field, reduxForm } from "redux-form";
+import { connect } from "react-redux";
+import { Field, reduxForm, formValueSelector } from "redux-form";
 
 import { renderTextInput } from "../lib";
 
@@ -12,7 +13,7 @@ class NetworkSettingsForm extends Component {
   static propTypes = {};
 
   render() {
-    const { handleSubmit, running, submitting } = this.props;
+    const { handleSubmit, running, submitting, wpa } = this.props;
 
     return (
       <form onSubmit={handleSubmit}>
@@ -40,7 +41,8 @@ class NetworkSettingsForm extends Component {
             className="bp3-icon-standard bp3-icon-lock"
             label={
               <span>
-                &nbsp;<Tooltip
+                &nbsp;
+                <Tooltip
                   content="requires a password to connect to POSM Wi-Fi. Disable this if computers have trouble connecting."
                   position={Position.RIGHT}
                   className="bp3-tooltip-indicator"
@@ -57,12 +59,14 @@ class NetworkSettingsForm extends Component {
             required
             placeholder="SSID"
           />
-          <Field
-            name="wpa_passphrase"
-            component={renderTextInput}
-            label="WPA Passphrase"
-            placeholder="Passphrase"
-          />
+          {wpa && (
+            <Field
+              name="wpa_passphrase"
+              component={renderTextInput}
+              label="WPA Passphrase"
+              placeholder="Passphrase"
+            />
+          )}
         </div>
         <Button
           text="Apply"
@@ -76,21 +80,25 @@ class NetworkSettingsForm extends Component {
   }
 }
 
-export default reduxForm({
-  form: "networkSettings",
-  validate: values => {
-    const { wpa, wpa_passphrase } = values;
-    const errors = {};
+export default connect(state => ({
+  wpa: formValueSelector("networkSettings")(state, "wpa")
+}))(
+  reduxForm({
+    form: "networkSettings",
+    validate: values => {
+      const { wpa, wpa_passphrase } = values;
+      const errors = {};
 
-    if (
-      wpa &&
-      (wpa_passphrase == null ||
-        wpa_passphrase.length < 8 ||
-        wpa_passphrase.length > 63)
-    ) {
-      errors.wpa_passphrase = "Must be between 8 and 63 characters.";
+      if (
+        wpa &&
+        (wpa_passphrase == null ||
+          wpa_passphrase.length < 8 ||
+          wpa_passphrase.length > 63)
+      ) {
+        errors.wpa_passphrase = "Must be between 8 and 63 characters.";
+      }
+
+      return errors;
     }
-
-    return errors;
-  }
-})(NetworkSettingsForm);
+  })(NetworkSettingsForm)
+);

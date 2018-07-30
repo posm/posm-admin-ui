@@ -1,9 +1,15 @@
-import { getODMEndpoint, getPOSMEndpoint } from "../selectors";
+import {
+  getImageryEndpoint,
+  getODMEndpoint,
+  getPOSMEndpoint
+} from "../selectors";
 
 const types = {
   FETCHING_ODM_PROJECTS: "FETCHING_ODM_PROJECTS",
   RECEIVE_CONFIG: "RECEIVE_CONFIG",
+  RECEIVE_IMAGERY_STATUS: "RECEIVE_IMAGERY_STATUS",
   RECEIVE_ODM_PROJECTS: "RECEIVE_ODM_PROJECTS",
+  RECEIVE_ODM_STATUS: "RECEIVE_ODM_STATUS",
   RECEIVE_POSM_STATE: "RECEIVE_POSM_STATE"
 };
 
@@ -27,6 +33,60 @@ export const loadPOSMState = () => async (dispatch, getState) => {
   }
 };
 
+export const loadImageryStatus = () => async (dispatch, getState) => {
+  const endpoint = getImageryEndpoint(getState());
+
+  if (endpoint == null) {
+    return dispatch({
+      type: types.RECEIVE_IMAGERY_STATUS,
+      available: false
+    });
+  }
+
+  try {
+    await fetch(`${endpoint}/imagery`, {
+      credentials: "same-origin"
+    });
+
+    dispatch({
+      type: types.RECEIVE_IMAGERY_STATUS,
+      available: true
+    });
+  } catch (err) {
+    dispatch({
+      type: types.RECEIVE_IMAGERY_STATUS,
+      available: false
+    });
+  }
+};
+
+export const loadODMStatus = () => async (dispatch, getState) => {
+  const endpoint = getODMEndpoint(getState());
+
+  if (endpoint == null) {
+    dispatch({
+      type: types.RECEIVE_ODM_STATUS,
+      available: false
+    });
+  }
+
+  try {
+    await fetch(`${endpoint}/projects`, {
+      credentials: "same-origin"
+    });
+
+    dispatch({
+      type: types.RECEIVE_ODM_STATUS,
+      available: true
+    });
+  } catch (err) {
+    dispatch({
+      type: types.RECEIVE_ODM_STATUS,
+      available: false
+    });
+  }
+};
+
 export const initializeState = () => async dispatch => {
   try {
     const rsp = await fetch("/config.json", {
@@ -40,7 +100,9 @@ export const initializeState = () => async dispatch => {
       config
     });
 
-    dispatch(loadPOSMState(config.posm));
+    dispatch(loadPOSMState());
+    dispatch(loadImageryStatus());
+    dispatch(loadODMStatus());
   } catch (err) {
     console.warn(err);
   }

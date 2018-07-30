@@ -2,5 +2,47 @@
   "posm": "http://posm.io",
   "imageryEndpoint": "http://posm.io",
   "odmEndpoint": "http://posm.io",
-  "refreshInterval": 10000
+  "refreshInterval": 10000,
+  "apps": [
+    {
+      "name": "OpenMapKit",
+      "icon": "mobile-phone",
+      "url": "http://posm.io/omk/"
+    },
+    {
+      "name": "Field Papers",
+      "icon": "clipboard",
+      "url": "http://posm.io/fp/"
+    },
+    {
+      "name": "OpenStreetMap",
+      "icon": "send-to-map",
+      "url": "http://osm.posm.io/"
+    },
+    {
+      "name": "ODM GCPs",
+      "icon": "layout-skew-grid",
+      "url": "http://posm.io/posm-gcpi/",
+      "description": "OpenDroneMap Ground Control Points"
+    }
+  ],
+  "docs": [
+    {
+      "name": "POSM Guide",
+      "icon": "book",
+      "url": "http://posm.io/guide/"
+    },
+    {
+      "name": "About OMK",
+      "icon": "book",
+      "url": "http://posm.io/openmapkit-website/",
+      "description": "About OpenMapKit"
+    },
+    {
+      "name": "OSM Features",
+      "icon": "book",
+      "url": "http://wiki.openstreetmap.org/wiki/Map_Features",
+      "description": "OpenStreetMap Map Features"
+    }
+  ]
 }

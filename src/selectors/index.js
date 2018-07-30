@@ -26,11 +26,19 @@ export const getActiveAOIName = createSelector(
   }
 );
 
+export const getApps = state => state.config.apps || [];
+
+export const getDocs = state => state.config.docs || [];
+
 export const getFQDN = state => state.network.fqdn || "";
 
 export const getHostname = state => state.network.hostname || "";
 
+export const getImageryAvailability = state => state.config.imageryAvailable;
+
 export const getImageryEndpoint = state => state.config.imageryEndpoint;
+
+export const getODMAvailability = state => state.config.odmAvailable;
 
 export const getODMEndpoint = state => state.config.odmEndpoint;
 

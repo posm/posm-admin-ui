@@ -70,10 +70,20 @@ class AdminPanel extends Component {
             <p>
               This will back up the following datasets to{" "}
               <Code>/opt/data/backups</Code> on the POSM device (available as{" "}
-              <a href="smb://{hostname}/backups">
-                <Code>smb://{hostname}/backups</Code>
+              <a href={`smb://${hostname}/backups`}>
+                <Code>
+                  smb://
+                  {hostname}
+                  /backups
+                </Code>
               </a>{" "}
-              (Windows: <Code>\\{hostname.toUpperCase()}\backups</Code>)):
+              (Windows:{" "}
+              <Code>
+                \\
+                {hostname.toUpperCase()}
+                \backups
+              </Code>
+              )):
             </p>
             <ul>
               <li>ODK/OMK forms</li>

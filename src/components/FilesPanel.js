@@ -97,11 +97,20 @@ class DownloadsPanel extends Component {
           <Panel.Body>
             <p>
               To add to this list, copy files to{" "}
-              <a href="smb://{hostname}/public">
-                <Code>smb://{hostname}/public</Code>
+              <a href={`smb://${hostname}/public`}>
+                <Code>
+                  smb://
+                  {hostname}
+                  /public
+                </Code>
               </a>{" "}
-              (Windows: <Code>\\{hostname.toUpperCase()}\public</Code>),
-              connecting as Guest.
+              (Windows:{" "}
+              <Code>
+                \\
+                {hostname.toUpperCase()}
+                \public
+              </Code>
+              ), connecting as Guest.
             </p>
             {publicFiles.length > 0 && (
               <ul style={styles.outerUL}>

@@ -8,7 +8,7 @@ import { Field, reduxForm } from "redux-form";
 import ProjectPane from "../components/ProjectPane";
 import { createODMProject, getODMProjects } from "../actions";
 import { renderTextInput } from "../lib";
-import { getODMEndpoint } from "../selectors";
+import { getImageryEndpoint, getODMEndpoint } from "../selectors";
 
 class OpenDroneMapPanel extends React.Component {
   static propTypes = {
@@ -166,7 +166,7 @@ class OpenDroneMapPanel extends React.Component {
 
 const mapStateToProps = state => ({
   endpoint: getODMEndpoint(state),
-  imageryEndpoint: state.config.imageryEndpoint,
+  imageryEndpoint: getImageryEndpoint(state),
   loading: state.odm.loading,
   projects: state.odm.projects
 });

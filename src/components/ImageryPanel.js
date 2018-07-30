@@ -9,6 +9,7 @@ import "react-dropzone-component/styles/filepicker.css";
 import "dropzone/dist/dropzone.css";
 
 import ImageryPane from "../components/ImageryPane";
+import { getImageryEndpoint } from "../selectors";
 
 class ImageryPanel extends Component {
   static propTypes = {
@@ -115,7 +116,7 @@ class ImageryPanel extends Component {
 }
 
 const mapStateToProps = state => ({
-  endpoint: state.config.imageryEndpoint,
+  endpoint: getImageryEndpoint(state),
   refreshInterval: state.config.refreshInterval
 });
 

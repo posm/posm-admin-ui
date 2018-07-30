@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { Event } from "react-socket-io";
-import Terminal from "xterm";
+import { Terminal } from "xterm";
+import * as fit from "xterm/lib/addons/fit/fit";
 
 import "xterm/dist/xterm.css";
+
+Terminal.applyAddon(fit);
 
 const styles = {
   height: 400
@@ -14,7 +17,6 @@ export default class LogViewer extends Component {
   };
 
   componentDidMount() {
-    Terminal.loadAddon("fit");
     this.terminal = new Terminal({
       cursorBlink: false
     });

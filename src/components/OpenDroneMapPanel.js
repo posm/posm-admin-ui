@@ -104,12 +104,8 @@ class OpenDroneMapPanel extends React.Component {
       <div className="posm-panel">
         <PageHeader>
           OpenDroneMap {this.getRefreshSpinner()}
-          <Button
-            className="pull-right"
-            bsSize="small"
-            bsStyle="primary"
-            onClick={this.open}
-          >
+          <br />
+          <Button bsStyle="primary" onClick={this.open}>
             New Project
           </Button>
         </PageHeader>

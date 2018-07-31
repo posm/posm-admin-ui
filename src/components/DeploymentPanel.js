@@ -10,12 +10,6 @@ import LogModal from "./LogModal";
 import { renderTextInput } from "../lib";
 import { getPOSMEndpoint } from "../selectors";
 
-const styles = {
-  urlField: {
-    width: 400
-  }
-};
-
 class DeploymentPanel extends Component {
   state = {};
 
@@ -124,7 +118,7 @@ class DeploymentPanel extends Component {
                   component={renderTextInput}
                   label="Field Papers Atlas GeoJSON URL"
                   placeholder="http://fieldpapers.org/atlases/4ncr1bzn.geojson"
-                  style={styles.urlField}
+                  className="url"
                 />
               </div>
               <Button

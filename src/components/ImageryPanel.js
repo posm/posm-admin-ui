@@ -105,7 +105,7 @@ class ImageryPanel extends Component {
           <NonIdealState
             className="dz-message"
             icon="cloud-upload"
-            action="Drop GeoTIFFs here to upload"
+            action="Tap, click, or drop GeoTIFFs here to upload"
           />
         </Dropzone>
 

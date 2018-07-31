@@ -55,7 +55,9 @@ class App extends Component {
       <ConnectedRouter history={history}>
         <div>
           <Navbar />
-          <Sidebar />
+          <div className="sidebar">
+            <Sidebar />
+          </div>
           <Route exact path="/" component={HomePanel} />
           <Route path="/posm/aois" component={AOIPanel} />
           <Route path="/posm/deployments" component={DeploymentPanel} />

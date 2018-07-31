@@ -22,7 +22,6 @@ const styles = {
     marginRight: "auto"
   },
   outerUL: {
-    columnCount: 3,
     listStyle: "none",
     paddingLeft: 10
   },
@@ -113,7 +112,7 @@ class DownloadsPanel extends Component {
               ), connecting as Guest.
             </p>
             {publicFiles.length > 0 && (
-              <ul style={styles.outerUL}>
+              <ul style={styles.outerUL} className="files">
                 {publicFiles.map((file, idx) => (
                   <li key={idx}>
                     <a href={`${posm}/public/${file}`}>

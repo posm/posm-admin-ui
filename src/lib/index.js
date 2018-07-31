@@ -39,13 +39,14 @@ export const renderTextInput = ({
   meta: { touched, error, warning },
   placeholder,
   required,
+  className,
   ...props
 }) => {
   const widget = (
     <label className="bp3-label">
       {label} {required && <span className="bp3-text-muted">(required)</span>}
       <input
-        className="bp3-input"
+        className={`bp3-input ${className}`}
         type="text"
         dir="auto"
         placeholder={placeholder}

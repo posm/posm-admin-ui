@@ -15,9 +15,6 @@ const styles = {
   ul: {
     listStyle: "none",
     paddingLeft: 10
-  },
-  textInput: {
-    width: 400
   }
 };
 
@@ -109,7 +106,8 @@ class AOIPanel extends Component {
               <a href="http://export.posm.io/">
                 POSM Export Tool{" "}
                 <span className="bp3-icon-standard bp3-icon-offline" />
-              </a>. They must include "OSM PBF" as an export format.
+              </a>
+              . They must include "OSM PBF" as an export format.
             </p>
             <p>
               Data contained in an AOI is used to produce offline maps for{" "}
@@ -155,7 +153,7 @@ class AOIPanel extends Component {
                     component={renderTextInput}
                     placeholder="POSM bundle URL"
                     onFocus={() => change("aoi", "other")}
-                    style={styles.textInput}
+                    className="url"
                     validate={tarball}
                   />
                 </RadioGroup>

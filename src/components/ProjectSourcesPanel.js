@@ -86,7 +86,7 @@ export default class ProjectSourcesPanel extends React.Component {
           <NonIdealState
             className="dz-message"
             icon="cloud-upload"
-            action="Drop images here to upload"
+            action="Tap, click, or drop images here to upload"
           />
         </Dropzone>
 

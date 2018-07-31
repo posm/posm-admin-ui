@@ -20,7 +20,7 @@ const styles = {
 
 const HomePanel = ({ apps, osm, posm }) => (
   <div>
-    <div className="posm-panel">
+    <div className="posm-panel apps">
       <PageHeader>Apps</PageHeader>
       <Grid fluid>
         <Row>

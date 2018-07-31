@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import Card from "./Card";
 import FilesPanel from "./FilesPanel";
-import { getPOSMEndpoint } from "../selectors";
+import { getPOSMEndpoint, getApps } from "../selectors";
 
 import omkLogo from "../images/omk.png";
 import fpLogo from "../images/fp.png";
@@ -18,40 +18,50 @@ const styles = {
   }
 };
 
-const HomePanel = ({ osm, posm }) => (
+const HomePanel = ({ apps, osm, posm }) => (
   <div>
     <div className="posm-panel">
       <PageHeader>Apps</PageHeader>
       <Grid fluid>
         <Row>
-          <Col md={4}>
-            <a href={`${posm}/omk/`} target="_blank" rel="noopener noreferrer">
-              <Card style={styles.card}>
-                <H3>OpenMapKitServer</H3>
-                <Image src={omkLogo} style={styles.image} responsive />
-              </Card>
-            </a>
-          </Col>
-          <Col md={4}>
-            <a href={`${posm}/fp/`} target="_blank" rel="noopener noreferrer">
-              <Card style={styles.card}>
-                <H3>Field Papers</H3>
-                <Image src={fpLogo} style={styles.image} responsive />
-              </Card>
-            </a>
-          </Col>
-          <Col md={4}>
-            <a
-              href={`http://${osm.fqdn}/`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Card style={styles.card}>
-                <H3>OpenStreetMap</H3>
-                <Image src={osmLogo} style={styles.image} responsive />
-              </Card>
-            </a>
-          </Col>
+          {apps.map(x => x.name).includes("OpenMapKit") && (
+            <Col md={4}>
+              <a
+                href={`${posm}/omk/`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Card style={styles.card}>
+                  <H3>OpenMapKitServer</H3>
+                  <Image src={omkLogo} style={styles.image} responsive />
+                </Card>
+              </a>
+            </Col>
+          )}
+          {apps.map(x => x.name).includes("Field Papers") && (
+            <Col md={4}>
+              <a href={`${posm}/fp/`} target="_blank" rel="noopener noreferrer">
+                <Card style={styles.card}>
+                  <H3>Field Papers</H3>
+                  <Image src={fpLogo} style={styles.image} responsive />
+                </Card>
+              </a>
+            </Col>
+          )}
+          {apps.map(x => x.name).includes("OpenStreetMap") && (
+            <Col md={4}>
+              <a
+                href={`http://${osm.fqdn}/`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Card style={styles.card}>
+                  <H3>OpenStreetMap</H3>
+                  <Image src={osmLogo} style={styles.image} responsive />
+                </Card>
+              </a>
+            </Col>
+          )}
         </Row>
       </Grid>
     </div>
@@ -62,6 +72,7 @@ const HomePanel = ({ osm, posm }) => (
 HomePanel.propTypes = {};
 
 const mapStateToProps = state => ({
+  apps: getApps(state),
   osm: state.osm,
   posm: getPOSMEndpoint(state)
 });

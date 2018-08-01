@@ -241,6 +241,10 @@ ul.files code {
   width: 100%;
 }
 
+#terminal {
+  height: calc(100vh - 155px);
+}
+
 @media (min-width: 768px) {
   .bp3-navbar {
     padding-left: 15px;

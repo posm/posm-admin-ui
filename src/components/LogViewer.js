@@ -7,10 +7,6 @@ import "xterm/dist/xterm.css";
 
 Terminal.applyAddon(fit);
 
-const styles = {
-  height: 400
-};
-
 export default class LogViewer extends Component {
   onMessage = msg => {
     this.terminal.writeln(msg.output.replace(/\n/, "\r\n"));
@@ -35,11 +31,7 @@ export default class LogViewer extends Component {
     const { event, style } = this.props;
 
     return (
-      <div
-        id="terminal"
-        ref={c => (this.container = c)}
-        style={{ ...styles, ...style }}
-      >
+      <div id="terminal" ref={c => (this.container = c)} style={{ ...style }}>
         <Event event={event} handler={this.onMessage} />
       </div>
     );

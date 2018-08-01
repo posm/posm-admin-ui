@@ -58,6 +58,8 @@ class NetworkSettingsForm extends Component {
             label="SSID"
             required
             placeholder="SSID"
+            size={16}
+            maxLength={32}
           />
           {wpa && (
             <Field
@@ -65,6 +67,8 @@ class NetworkSettingsForm extends Component {
               component={renderTextInput}
               label="WPA Passphrase"
               placeholder="Passphrase"
+              size={16}
+              maxLength={64}
             />
           )}
         </div>

@@ -17,7 +17,6 @@ class Map extends Component {
   static defaultProps = {
     bounds: [[-85.05112877980659, -180], [85.0511287798066, 180]],
     maxzoom: 18,
-    minHeight: "500px",
     minzoom: 0,
     showBackground: true,
     url: "",
@@ -27,7 +26,6 @@ class Map extends Component {
   static propTypes = {
     bounds: PropTypes.array,
     maxzoom: PropTypes.number,
-    minHeight: PropTypes.string,
     minzoom: PropTypes.number,
     showBackground: PropTypes.bool,
     tileJSON: PropTypes.string,
@@ -150,12 +148,16 @@ class Map extends Component {
     });
 
   render() {
-    const { minHeight, width } = this.props;
+    const { width } = this.props;
     const { opacity } = this.state;
 
     return (
       <div>
-        <div ref={c => (this.container = c)} style={{ minHeight, width }} />
+        <div
+          className="mapContainer"
+          ref={c => (this.container = c)}
+          style={{ width }}
+        />
 
         <h4>Opacity</h4>
         <Slider

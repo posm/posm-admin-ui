@@ -245,6 +245,10 @@ ul.files code {
   height: calc(100vh - 155px);
 }
 
+.mapContainer {
+  height: calc(100vh - 60px);
+}
+
 @media (min-width: 768px) {
   .bp3-navbar {
     padding-left: 15px;
@@ -287,5 +291,10 @@ ul.files code {
 
   .bp3-input.url {
     width: 400px;
+  }
+
+  .mapContainer {
+    height: auto;
+    min-height: 500px;
   }
 }

@@ -118,7 +118,8 @@ export default class ProjectSourcesPanel extends Component {
                 <dd>{size}</dd>
                 <dt>Coordinate Reference System</dt>
                 <dd>
-                  {projName} (EPSG:{epsgCode})
+                  {projName} (EPSG:
+                  {epsgCode})
                 </dd>
               </dl>
             </div>
@@ -126,7 +127,7 @@ export default class ProjectSourcesPanel extends Component {
         </div>
         {user.imagery != null && (
           <div className="col-md-8">
-            <Map tileJSON={user.imagery} minHeight="400px" width="100%" />
+            <Map tileJSON={user.imagery} width="100%" />
           </div>
         )}
       </div>

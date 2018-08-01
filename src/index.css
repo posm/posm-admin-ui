@@ -52,8 +52,14 @@ label.bp3-control {
   text-decoration: none;
 }
 
-.bp3-portal {
-  top: 7px;
+.bp3-popover {
+  top: 14px;
+  position: fixed;
+}
+
+.bp3-popover-content {
+  height: calc(100vh - 60px);
+  overflow-y: scroll;
 }
 
 .inline-block {

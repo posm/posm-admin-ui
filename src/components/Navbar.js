@@ -16,7 +16,7 @@ const Navbar = ({ activeAOI, osm, posm }) => (
         <Link to="/" title="Home" className="homeLink">
           <Image src={posmLogo} height={32} />
         </Link>
-        <Popover minimal position="bottom-left">
+        <Popover minimal usePortal={false} position="bottom-left">
           <Image src={posmLogo} height={32} className="logo" />
           <Sidebar />
         </Popover>

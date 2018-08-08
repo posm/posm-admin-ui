@@ -298,4 +298,8 @@ ul.files code {
     height: auto;
     min-height: 500px;
   }
+
+  .modal-dialog {
+    width: 80vw;
+  }
 }

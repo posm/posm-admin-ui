@@ -4,14 +4,14 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import {
+  getShouldShowAdmin,
   getApps,
   getDocs,
   getImageryAvailability,
-  getODMAvailability,
-  getPOSMEndpoint
+  getODMAvailability
 } from "../selectors";
 
-const Sidebar = ({ apps, docs, imageryAvailable, odmAvailable, osm, posm }) => (
+const Sidebar = ({ apps, docs, imageryAvailable, odmAvailable, showAdmin }) => (
   <Menu className="bp3-elevation-1 inline-block menu">
     <li>
       <Link to="/" className="bp3-menu-item bp3-popover-dismiss bp3-icon-home">
@@ -92,33 +92,36 @@ const Sidebar = ({ apps, docs, imageryAvailable, odmAvailable, osm, posm }) => (
         ))}
       </div>
     )}
-    <MenuDivider />
-    <li>
-      <Link
-        to="/posm/admin"
-        className="bp3-menu-item bp3-popover-dismiss bp3-icon-pulse"
-      >
-        Admin
-      </Link>
-    </li>
-    <li>
-      <Link
-        to="/posm/settings"
-        className="bp3-menu-item bp3-popover-dismiss bp3-icon-cog"
-      >
-        Settings
-      </Link>
-    </li>
+    {showAdmin && (
+      <div>
+        <MenuDivider />
+        <li>
+          <Link
+            to="/posm/admin"
+            className="bp3-menu-item bp3-popover-dismiss bp3-icon-pulse"
+          >
+            Admin
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/posm/settings"
+            className="bp3-menu-item bp3-popover-dismiss bp3-icon-cog"
+          >
+            Settings
+          </Link>
+        </li>
+      </div>
+    )}
   </Menu>
 );
 
 const mapStateToProps = state => ({
+  showAdmin: getShouldShowAdmin(state),
   apps: getApps(state),
   docs: getDocs(state),
   imageryAvailable: getImageryAvailability(state),
-  odmAvailable: getODMAvailability(state),
-  osm: state.osm,
-  posm: getPOSMEndpoint(state)
+  odmAvailable: getODMAvailability(state)
 });
 
 export default connect(mapStateToProps)(Sidebar);

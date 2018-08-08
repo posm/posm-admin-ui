@@ -26,6 +26,9 @@ export const getActiveAOIName = createSelector(
   }
 );
 
+export const getShouldShowAdmin = state =>
+  state.config.showAdmin != null ? state.config.showAdmin : true;
+
 export const getApps = state => state.config.apps || [];
 
 export const getDocs = state => state.config.docs || [];

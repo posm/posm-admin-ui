@@ -44,13 +44,13 @@ export const loadImageryStatus = () => async (dispatch, getState) => {
   }
 
   try {
-    await fetch(`${endpoint}/imagery`, {
+    const rsp = await fetch(`${endpoint}/imagery`, {
       credentials: "same-origin"
     });
 
     dispatch({
       type: types.RECEIVE_IMAGERY_STATUS,
-      available: true
+      available: rsp.ok
     });
   } catch (err) {
     dispatch({
@@ -71,13 +71,13 @@ export const loadODMStatus = () => async (dispatch, getState) => {
   }
 
   try {
-    await fetch(`${endpoint}/projects`, {
+    const rsp = await fetch(`${endpoint}/projects`, {
       credentials: "same-origin"
     });
 
     dispatch({
       type: types.RECEIVE_ODM_STATUS,
-      available: true
+      available: rsp.ok
     });
   } catch (err) {
     dispatch({

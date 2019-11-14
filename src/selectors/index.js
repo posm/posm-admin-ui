@@ -33,6 +33,11 @@ export const getApps = state => state.config.apps || [];
 
 export const getDocs = state => state.config.docs || [];
 
+export const getUserDetails = state => state.user.userDetails || {};
+
+export const getUserAccessApps = state =>
+  (state.user.userDetails || {}).accessApps || [];
+
 export const getFQDN = state => state.network.fqdn || "";
 
 export const getHostname = state => state.network.hostname || "";

@@ -5,21 +5,25 @@
   "refreshInterval": 10000,
   "apps": [
     {
+      "key": "omk",
       "name": "OpenMapKit",
       "icon": "mobile-phone",
       "url": "//posm.io/omk/"
     },
     {
+      "key": "fp",
       "name": "Field Papers",
       "icon": "clipboard",
       "url": "//posm.io/fp/"
     },
     {
+      "key": "osm",
       "name": "OpenStreetMap",
       "icon": "send-to-map",
       "url": "//osm.posm.io/"
     },
     {
+      "key": "odmgcp",
       "name": "ODM GCPs",
       "icon": "layout-skew-grid",
       "url": "//posm.io/posm-gcpi/",

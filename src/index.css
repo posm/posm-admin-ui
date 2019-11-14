@@ -53,6 +53,21 @@ label.bp3-control {
   text-decoration: none;
 }
 
+.bp3-navbar .bp3-navbar-user {
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  margin-left: 15px;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  text-transform: capitalize;
+  align-self: stretch;
+  pointer-events: none;
+}
+
+.user-icon {
+  padding-right: 6px;
+}
+
 .bp3-popover {
   top: 14px;
   position: fixed;

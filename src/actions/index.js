@@ -10,10 +10,30 @@ const types = {
   RECEIVE_IMAGERY_STATUS: "RECEIVE_IMAGERY_STATUS",
   RECEIVE_ODM_PROJECTS: "RECEIVE_ODM_PROJECTS",
   RECEIVE_ODM_STATUS: "RECEIVE_ODM_STATUS",
-  RECEIVE_POSM_STATE: "RECEIVE_POSM_STATE"
+  RECEIVE_POSM_STATE: "RECEIVE_POSM_STATE",
+  RECEIVE_USER_DETAILS: "RECEIVE_USER_DETAILS"
 };
 
 export default types;
+
+// TODO: Use appropriate user detail end point here
+const userDetailEndPoint =
+  "https://ea8cdbe5-6bf5-4c15-abf9-726991f4736b.mock.pstmn.io/user-detail/";
+
+export const loadUserDetails = () => async (dispatch, getState) => {
+  try {
+    const rsp = await fetch(userDetailEndPoint, {
+      credentials: "same-origin"
+    });
+
+    dispatch({
+      type: types.RECEIVE_USER_DETAILS,
+      remoteState: await rsp.json()
+    });
+  } catch (err) {
+    console.warn(err);
+  }
+};
 
 export const loadPOSMState = () => async (dispatch, getState) => {
   try {

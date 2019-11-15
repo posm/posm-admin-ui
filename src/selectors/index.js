@@ -35,8 +35,8 @@ export const getDocs = state => state.config.docs || [];
 
 export const getUserDetails = state => state.user.userDetails || {};
 
-export const getUserAccessApps = state =>
-  (state.user.userDetails || {}).accessApps || [];
+export const getAllowedApps = state =>
+  ((state.user.userDetails || {}).allowedPosmComponents || []).map(c => c.code);
 
 export const getFQDN = state => state.network.fqdn || "";
 

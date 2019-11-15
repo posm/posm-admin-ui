@@ -2,6 +2,7 @@ import { Menu, MenuDivider, MenuItem } from "@blueprintjs/core";
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { posmAdminEndpoint } from "../actions";
 
 import {
   getShouldShowAdmin,
@@ -9,7 +10,7 @@ import {
   getDocs,
   getImageryAvailability,
   getODMAvailability,
-  getUserAccessApps
+  getAllowedApps
 } from "../selectors";
 
 const Sidebar = ({
@@ -18,9 +19,9 @@ const Sidebar = ({
   imageryAvailable,
   odmAvailable,
   showAdmin,
-  userAccessApps
+  allowedApps
 }) => {
-  const filteredApps = apps.filter(app => userAccessApps.includes(app.key));
+  const filteredApps = apps.filter(app => allowedApps.includes(app.key));
 
   return (
     <Menu className="bp3-elevation-1 inline-block menu">
@@ -118,12 +119,36 @@ const Sidebar = ({
             </Link>
           </li>
           <li>
+            <a
+              href={`${posmAdminEndpoint}/admin/`}
+              className="bp3-menu-item bp3-popover-dismiss bp3-icon-dashboard"
+            >
+              Admin Panel
+            </a>
+          </li>
+          <li>
             <Link
               to="/posm/settings"
               className="bp3-menu-item bp3-popover-dismiss bp3-icon-cog"
             >
               Settings
             </Link>
+          </li>
+          <li>
+            <a
+              href={`${posmAdminEndpoint}/change-password/`}
+              className="bp3-menu-item bp3-popover-dismiss bp3-icon-key"
+            >
+              Change password
+            </a>
+          </li>
+          <li>
+            <a
+              href={`${posmAdminEndpoint}/logout/`}
+              className="bp3-menu-item bp3-popover-dismiss bp3-icon-log-out"
+            >
+              Logout
+            </a>
           </li>
         </div>
       )}
@@ -135,7 +160,7 @@ const mapStateToProps = state => ({
   showAdmin: getShouldShowAdmin(state),
   apps: getApps(state),
   docs: getDocs(state),
-  userAccessApps: getUserAccessApps(state),
+  allowedApps: getAllowedApps(state),
   imageryAvailable: getImageryAvailability(state),
   odmAvailable: getODMAvailability(state)
 });

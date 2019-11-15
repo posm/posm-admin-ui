@@ -4,6 +4,9 @@ import {
   getPOSMEndpoint
 } from "../selectors";
 
+// TODO: Fetch this from enviornment variable
+export const posmAdminEndpoint = "http://localhost:8050";
+
 const types = {
   FETCHING_ODM_PROJECTS: "FETCHING_ODM_PROJECTS",
   RECEIVE_CONFIG: "RECEIVE_CONFIG",
@@ -16,14 +19,10 @@ const types = {
 
 export default types;
 
-// TODO: Use appropriate user detail end point here
-const userDetailEndPoint =
-  "https://ea8cdbe5-6bf5-4c15-abf9-726991f4736b.mock.pstmn.io/user-detail/";
-
 export const loadUserDetails = () => async (dispatch, getState) => {
   try {
-    const rsp = await fetch(userDetailEndPoint, {
-      credentials: "same-origin"
+    const rsp = await fetch(`${posmAdminEndpoint}/users/me/`, {
+      credentials: "include"
     });
 
     dispatch({

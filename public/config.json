@@ -8,19 +8,35 @@
       "key": "omk",
       "name": "OpenMapKit",
       "icon": "mobile-phone",
-      "url": "//posm.io/omk/"
+      "url": "//posm.io/omk/",
+      "visibleInHomePanel": true
     },
     {
       "key": "fp",
       "name": "Field Papers",
       "icon": "clipboard",
-      "url": "//posm.io/fp/"
+      "url": "//posm.io/fp/",
+      "visibleInHomePanel": true
+    },
+    {
+      "key": "odkc",
+      "name": "ODK Central",
+      "icon": "mobile-phone",
+      "url": "//odk-central.posm.io/",
+      "visibleInHomePanel": true
+    },
+    {
+      "key": "replay",
+      "name": "Replay Tool",
+      "icon": "automatic-updates",
+      "url": "//replay-tool.posm.io/"
     },
     {
       "key": "osm",
       "name": "OpenStreetMap",
       "icon": "send-to-map",
-      "url": "//osm.posm.io/"
+      "url": "//osm.posm.io/",
+      "visibleInHomePanel": true
     },
     {
       "key": "odmgcp",

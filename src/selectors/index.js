@@ -33,10 +33,15 @@ export const getApps = state => state.config.apps || [];
 
 export const getDocs = state => state.config.docs || [];
 
-export const getUserDetails = state => state.user.userDetails || {};
+export const getUserDetails = state => (state.user || {}).userDetails || {};
 
-export const getAllowedApps = state =>
-  ((state.user.userDetails || {}).allowedPosmComponents || []).map(c => c.code);
+export const getSuperuserStatus = state => getUserDetails(state).isSuperuser;
+
+export const getAllowedApps = state => {
+  const { allowedPosmComponents = [] } = getUserDetails(state);
+
+  return allowedPosmComponents.map(c => c.code);
+};
 
 export const getFQDN = state => state.network.fqdn || "";
 

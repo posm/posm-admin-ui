@@ -4,8 +4,8 @@ import {
   getPOSMEndpoint
 } from "../selectors";
 
-// TODO: Fetch this from enviornment variable
-export const posmAdminEndpoint = "http://localhost:8050";
+export const posmAdminEndpoint =
+  process.env.REACT_APP_POSM_AUTH_END_POINT || "http://localhost:8050";
 
 const types = {
   FETCHING_ODM_PROJECTS: "FETCHING_ODM_PROJECTS",

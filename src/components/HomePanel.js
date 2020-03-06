@@ -3,77 +3,104 @@ import React from "react";
 import { Col, Grid, Image, PageHeader, Row } from "react-bootstrap";
 import { connect } from "react-redux";
 
-import Card from "./Card";
 import FilesPanel from "./FilesPanel";
-import { getPOSMEndpoint, getApps } from "../selectors";
+import { getPOSMEndpoint, getApps, getAllowedApps } from "../selectors";
 
 import omkLogo from "../images/omk.png";
+import odkLogo from "../images/odk.png";
 import fpLogo from "../images/fp.png";
 import osmLogo from "../images/osm.png";
 
 const styles = {
-  card: {},
+  row: {
+    display: "flex",
+    justifyContent: "space-between"
+  },
+  imageContainer: {
+    display: "flex",
+    flexGrow: 1,
+    alignItems: "center"
+  },
+  heading: {
+    flexShrink: 0
+  },
+  link: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "8px",
+    flexGrow: 1
+  },
   image: {
-    margin: "auto"
+    margin: "auto",
+    maxWidth: "160px"
+  },
+  cardContainer: {
+    display: "flex",
+    flexDirection: "column",
+    width: "auto",
+    margin: "8px",
+    padding: "0 32px"
   }
 };
 
-const HomePanel = ({ apps, osm, posm }) => (
-  <div>
-    <div className="posm-panel apps">
-      <PageHeader>Apps</PageHeader>
-      <Grid fluid>
-        <Row>
-          {apps.map(x => x.name).includes("OpenMapKit") && (
-            <Col md={4}>
-              <a
-                href={`${posm}/omk/`}
-                target="_blank"
-                rel="noopener noreferrer"
+const logos = {
+  omk: omkLogo,
+  fp: fpLogo,
+  odkc: odkLogo,
+  replay: fpLogo,
+  osm: osmLogo,
+  odmgcp: fpLogo
+};
+
+const HomePanel = ({ apps, osm, posm, allowedApps }) => {
+  const filteredApps = apps.filter(
+    app => allowedApps.includes(app.key) && app.visibleInHomePanel
+  );
+
+  return (
+    <div>
+      <div className="posm-panel apps">
+        <PageHeader>Apps</PageHeader>
+        <Grid fluid>
+          <Row style={styles.row}>
+            {filteredApps.map(app => (
+              <Col
+                className="bp3-cart bp3-elevation-2"
+                md={4}
+                style={styles.cardContainer}
               >
-                <Card style={styles.card}>
-                  <H3>OpenMapKitServer</H3>
-                  <Image src={omkLogo} style={styles.image} responsive />
-                </Card>
-              </a>
-            </Col>
-          )}
-          {apps.map(x => x.name).includes("Field Papers") && (
-            <Col md={4}>
-              <a href={`${posm}/fp/`} target="_blank" rel="noopener noreferrer">
-                <Card style={styles.card}>
-                  <H3>Field Papers</H3>
-                  <Image src={fpLogo} style={styles.image} responsive />
-                </Card>
-              </a>
-            </Col>
-          )}
-          {apps.map(x => x.name).includes("OpenStreetMap") && (
-            <Col md={4}>
-              <a
-                href={`http://${osm.fqdn}/`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Card style={styles.card}>
-                  <H3>OpenStreetMap</H3>
-                  <Image src={osmLogo} style={styles.image} responsive />
-                </Card>
-              </a>
-            </Col>
-          )}
-        </Row>
-      </Grid>
+                <a
+                  style={styles.link}
+                  href={app.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <H3 style={styles.heading}>{app.name}</H3>
+                  <div style={styles.imageContainer}>
+                    <Image
+                      src={logos[app.key]}
+                      style={styles.image}
+                      responsive
+                    />
+                  </div>
+                </a>
+              </Col>
+            ))}
+          </Row>
+        </Grid>
+      </div>
+      <FilesPanel />
     </div>
-    <FilesPanel />
-  </div>
-);
+  );
+};
 
 HomePanel.propTypes = {};
 
 const mapStateToProps = state => ({
   apps: getApps(state),
   osm: state.osm,
+  allowedApps: getAllowedApps(state),
   posm: getPOSMEndpoint(state)
 });
 

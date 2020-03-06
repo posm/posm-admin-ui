@@ -10,6 +10,8 @@ import {
   getDocs,
   getImageryAvailability,
   getODMAvailability,
+  getSuperuserStatus,
+  getUserDetails,
   getAllowedApps
 } from "../selectors";
 
@@ -18,10 +20,13 @@ const Sidebar = ({
   docs,
   imageryAvailable,
   odmAvailable,
+  isSuperuser,
   showAdmin,
+  userDetails,
   allowedApps
 }) => {
   const filteredApps = apps.filter(app => allowedApps.includes(app.key));
+  const isLoggedIn = !!userDetails.displayName;
 
   return (
     <Menu className="bp3-elevation-1 inline-block menu">
@@ -119,14 +124,6 @@ const Sidebar = ({
             </Link>
           </li>
           <li>
-            <a
-              href={`${posmAdminEndpoint}/admin/`}
-              className="bp3-menu-item bp3-popover-dismiss bp3-icon-dashboard"
-            >
-              Admin Panel
-            </a>
-          </li>
-          <li>
             <Link
               to="/posm/settings"
               className="bp3-menu-item bp3-popover-dismiss bp3-icon-cog"
@@ -134,22 +131,36 @@ const Sidebar = ({
               Settings
             </Link>
           </li>
-          <li>
-            <a
-              href={`${posmAdminEndpoint}/change-password/`}
-              className="bp3-menu-item bp3-popover-dismiss bp3-icon-key"
-            >
-              Change password
-            </a>
-          </li>
-          <li>
-            <a
-              href={`${posmAdminEndpoint}/logout/`}
-              className="bp3-menu-item bp3-popover-dismiss bp3-icon-log-out"
-            >
-              Logout
-            </a>
-          </li>
+          {isSuperuser && (
+            <li>
+              <a
+                href={`${posmAdminEndpoint}/admin/`}
+                className="bp3-menu-item bp3-popover-dismiss bp3-icon-dashboard"
+              >
+                User Management
+              </a>
+            </li>
+          )}
+          {isLoggedIn && (
+            <li>
+              <a
+                href={`${posmAdminEndpoint}/change-password/`}
+                className="bp3-menu-item bp3-popover-dismiss bp3-icon-key"
+              >
+                Change Password
+              </a>
+            </li>
+          )}
+          {isLoggedIn && (
+            <li>
+              <a
+                href={`${posmAdminEndpoint}/logout/`}
+                className="bp3-menu-item bp3-popover-dismiss bp3-icon-log-out"
+              >
+                Logout
+              </a>
+            </li>
+          )}
         </div>
       )}
     </Menu>
@@ -162,7 +173,9 @@ const mapStateToProps = state => ({
   docs: getDocs(state),
   allowedApps: getAllowedApps(state),
   imageryAvailable: getImageryAvailability(state),
-  odmAvailable: getODMAvailability(state)
+  odmAvailable: getODMAvailability(state),
+  isSuperuser: getSuperuserStatus(state),
+  userDetails: getUserDetails(state)
 });
 
 export default connect(mapStateToProps)(Sidebar);

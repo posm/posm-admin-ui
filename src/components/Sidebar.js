@@ -131,6 +131,11 @@ const Sidebar = ({
               Settings
             </Link>
           </li>
+        </div>
+      )}
+      {isLoggedIn && (
+        <div>
+          <MenuDivider />
           {isSuperuser && (
             <li>
               <a
@@ -141,26 +146,22 @@ const Sidebar = ({
               </a>
             </li>
           )}
-          {isLoggedIn && (
-            <li>
-              <a
-                href={`${posmAdminEndpoint}/change-password/`}
-                className="bp3-menu-item bp3-popover-dismiss bp3-icon-key"
-              >
-                Change Password
-              </a>
-            </li>
-          )}
-          {isLoggedIn && (
-            <li>
-              <a
-                href={`${posmAdminEndpoint}/logout/`}
-                className="bp3-menu-item bp3-popover-dismiss bp3-icon-log-out"
-              >
-                Logout
-              </a>
-            </li>
-          )}
+          <li>
+            <a
+              href={`${posmAdminEndpoint}/change-password/`}
+              className="bp3-menu-item bp3-popover-dismiss bp3-icon-key"
+            >
+              Change Password
+            </a>
+          </li>
+          <li>
+            <a
+              href={`${posmAdminEndpoint}/logout/`}
+              className="bp3-menu-item bp3-popover-dismiss bp3-icon-log-out"
+            >
+              Logout
+            </a>
+          </li>
         </div>
       )}
     </Menu>

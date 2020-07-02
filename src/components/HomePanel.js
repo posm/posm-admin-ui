@@ -10,6 +10,7 @@ import omkLogo from "../images/omk.png";
 import odkLogo from "../images/odk.png";
 import fpLogo from "../images/fp.png";
 import osmLogo from "../images/osm.png";
+import posmLogo from "../images/posm@2x.png";
 
 const styles = {
   row: {
@@ -48,9 +49,10 @@ const logos = {
   omk: omkLogo,
   fp: fpLogo,
   odkc: odkLogo,
-  replay: fpLogo,
   osm: osmLogo,
-  odmgcp: fpLogo
+
+  replay: posmLogo,
+  odmgcp: posmLogo
 };
 
 const HomePanel = ({ apps, osm, posm, allowedApps }) => {

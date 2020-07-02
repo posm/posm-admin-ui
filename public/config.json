@@ -53,10 +53,10 @@
       "url": "//posm.io/guide/"
     },
     {
-      "name": "About OMK",
+      "name": "POSM Docs",
       "icon": "book",
-      "url": "//posm.io/openmapkit-website/",
-      "description": "About OpenMapKit"
+      "url": "//docs.posm.io",
+      "description": "POSM Documentation"
     },
     {
       "name": "OSM Features",

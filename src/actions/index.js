@@ -4,16 +4,35 @@ import {
   getPOSMEndpoint
 } from "../selectors";
 
+export const posmAdminEndpoint =
+  process.env.REACT_APP_POSM_AUTH_END_POINT || "http://localhost:8050";
+
 const types = {
   FETCHING_ODM_PROJECTS: "FETCHING_ODM_PROJECTS",
   RECEIVE_CONFIG: "RECEIVE_CONFIG",
   RECEIVE_IMAGERY_STATUS: "RECEIVE_IMAGERY_STATUS",
   RECEIVE_ODM_PROJECTS: "RECEIVE_ODM_PROJECTS",
   RECEIVE_ODM_STATUS: "RECEIVE_ODM_STATUS",
-  RECEIVE_POSM_STATE: "RECEIVE_POSM_STATE"
+  RECEIVE_POSM_STATE: "RECEIVE_POSM_STATE",
+  RECEIVE_USER_DETAILS: "RECEIVE_USER_DETAILS"
 };
 
 export default types;
+
+export const loadUserDetails = () => async (dispatch, getState) => {
+  try {
+    const rsp = await fetch(`${posmAdminEndpoint}/users/me/`, {
+      credentials: "include"
+    });
+
+    dispatch({
+      type: types.RECEIVE_USER_DETAILS,
+      remoteState: await rsp.json()
+    });
+  } catch (err) {
+    console.warn(err);
+  }
+};
 
 export const loadPOSMState = () => async (dispatch, getState) => {
   try {

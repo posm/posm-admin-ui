@@ -8,12 +8,14 @@ import network from "./network";
 import odm from "./odm";
 import osm from "./osm";
 import publicFiles from "./publicFiles";
+import user from "./user";
 import tasks from "./tasks";
 
 export default combineReducers({
   aois,
   config,
   deployments,
+  user,
   form,
   network,
   odm,

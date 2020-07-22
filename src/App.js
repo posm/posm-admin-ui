@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { Route } from "react-router-dom";
 import { Socket } from "react-socket-io";
 
-import { initializeState, loadPOSMState } from "./actions";
+import { initializeState, loadPOSMState, loadUserDetails } from "./actions";
 import AdminPanel from "./components/AdminPanel";
 import AOIPanel from "./components/AOIPanel";
 import DeploymentPanel from "./components/DeploymentPanel";
@@ -29,9 +29,10 @@ const SOCKET_OPTIONS = {
 
 class App extends Component {
   componentWillMount() {
-    const { initializeState } = this.props;
+    const { initializeState, loadUserDetails } = this.props;
 
     initializeState();
+    loadUserDetails();
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -89,5 +90,9 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { initializeState, loadPOSMState }
+  {
+    initializeState,
+    loadPOSMState,
+    loadUserDetails
+  }
 )(App);
